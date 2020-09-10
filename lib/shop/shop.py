@@ -27,4 +27,3 @@ class Shop:
     @property
     def category_list(self):
         return self._category_list
-    
