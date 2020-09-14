@@ -1,10 +1,7 @@
+from lib.lists.list_without_duplicates import StringListWithoutDuplicates
 
 
-class CategoryList(list):
-
-    def append(self, element: str) -> None:
-        if not element.lower() in self:
-            super().append(element.lower())
+class CategoryList(StringListWithoutDuplicates):
 
     def move_up(self, element: str):
         index = self.index(element)

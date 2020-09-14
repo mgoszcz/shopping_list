@@ -11,6 +11,7 @@ class ShoppingArticle:
         self._name = name
         self._category = category
         self._amount = amount
+        self._selection = 0
 
     @property
     def name(self):
@@ -35,3 +36,11 @@ class ShoppingArticle:
     @amount.setter
     def amount(self, value: int):
         self._amount = value
+
+    @property
+    def selection(self):
+        return self._selection
+
+    @selection.setter
+    def selection(self, value: int):
+        self._selection = value
