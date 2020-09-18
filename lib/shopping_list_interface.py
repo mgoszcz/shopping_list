@@ -8,9 +8,8 @@ class ShoppingListInterface:
 
     def __init__(self):
         self.categories = CategoryList()
-        # TODO: wykminic zeby ShoppingList nie potrzebowal CategoryList tylko ShoppingArticlesList, obsluzyc dodawanie kategorii
         self.shopping_articles = ShoppingArticlesList(self.categories)
-        self.shopping_list = ShoppingList(self.categories)
+        self.shopping_list = ShoppingList(self.shopping_articles)
         self.shops = ShopsList()
 
     def add_new_article_to_shopping_list(self, name: str, category: str):
