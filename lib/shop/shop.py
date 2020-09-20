@@ -1,3 +1,4 @@
+from lib.save_load.events import SAVE_NEEDED
 from lib.shopping_categories.category_list import CategoryList
 
 
@@ -7,6 +8,10 @@ class Shop:
         self._name = name
         self._logo = logo
         self._category_list = CategoryList()
+
+    def __setattr__(self, key, value):
+        super(Shop, self).__setattr__(key, value)
+        SAVE_NEEDED.set()
 
     @property
     def name(self):

@@ -1,6 +1,7 @@
 """
 Module contains ShoppingArticle class declaration
 """
+from lib.save_load.events import SAVE_NEEDED
 
 
 class ShoppingArticle:
@@ -12,6 +13,10 @@ class ShoppingArticle:
         self._category = category
         self._amount = amount
         self._selection = 0
+
+    def __setattr__(self, key, value):
+        super(ShoppingArticle, self).__setattr__(key, value)
+        SAVE_NEEDED.set()
 
     @property
     def name(self):

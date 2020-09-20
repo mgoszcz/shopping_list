@@ -1,3 +1,4 @@
+from lib.save_load.save_load import SaveLoad, AutoSave
 from lib.shop.shops_list import ShopsList
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
 from lib.shopping_article_list.shopping_list import ShoppingList
@@ -11,8 +12,7 @@ class ShoppingListInterface:
         self.shopping_articles = ShoppingArticlesList(self.categories)
         self.shopping_list = ShoppingList(self.shopping_articles)
         self.shops = ShopsList()
-
-    def add_new_article_to_shopping_list(self, name: str, category: str):
-        article = self.shopping_list.add_new_article(name, category)
-        self.shopping_articles.append(article)
-        article.selection += 1
+        self._save_load = SaveLoad(self)
+        self._save_load.load_data()
+        self._auto_save = AutoSave(self._save_load)
+        self._auto_save.start()
