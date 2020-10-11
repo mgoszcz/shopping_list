@@ -1,6 +1,7 @@
 from typing import Union, TYPE_CHECKING
 
 from lib.save_load.events import SAVE_NEEDED
+from lib.ui.signals.list_signals import LIST_SIGNALS
 
 if TYPE_CHECKING:
     from lib.shop.shop import Shop
@@ -29,13 +30,16 @@ class ShoppingListWithoutDuplicates(list):
         if not element.name.lower() in [item.name.lower() for item in self]:
             super().append(element)
             SAVE_NEEDED.set()
+            LIST_SIGNALS.list_changed.emit()
         else:
             raise AttributeError(f'Item with name {element.name} already exists')
 
     def __setitem__(self, key, value):
         super(ShoppingListWithoutDuplicates, self).__setitem__(key, value)
         SAVE_NEEDED.set()
+        LIST_SIGNALS.list_changed.emit()
 
     def remove(self, item) -> None:
         super(ShoppingListWithoutDuplicates, self).remove(item)
         SAVE_NEEDED.set()
+        LIST_SIGNALS.list_changed.emit()
