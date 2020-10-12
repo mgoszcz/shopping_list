@@ -22,7 +22,7 @@ class ArticleComboBox(QComboBox):
     def _populate_list(self):
         try:
             current_item = self.get_current_article()
-        except RuntimeError:
+        except IndexError:
             current_item = 0
         for i in reversed(range(1, self.count())):
             self.removeItem(i)
@@ -43,5 +43,7 @@ class ArticleComboBox(QComboBox):
 
     def get_current_article(self):
         if self.currentIndex() == 0:
-            raise RuntimeError('Current index is 0')
+            raise IndexError('Current index is 0')
+        if self.currentIndex() < 0:
+            raise IndexError('Current index is below 0')
         return self.items[self.currentIndex() - 1]

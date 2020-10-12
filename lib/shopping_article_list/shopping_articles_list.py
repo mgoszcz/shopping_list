@@ -16,7 +16,7 @@ class ShoppingArticlesList(ShoppingListBase):
         self.shopping_categories.append(element.category)
 
     def sort_by_article_name(self):
-        self.sort(key=lambda x: x.name)
+        return sorted(self, key=lambda x: x.name)
 
     def add_new_article(self, name: str, category: str) -> ShoppingArticle:
         article = ShoppingArticle(name, category)

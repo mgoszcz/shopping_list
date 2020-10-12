@@ -43,3 +43,8 @@ class ShoppingListWithoutDuplicates(list):
         super(ShoppingListWithoutDuplicates, self).remove(item)
         SAVE_NEEDED.set()
         LIST_SIGNALS.list_changed.emit()
+
+    def clear(self):
+        super().clear()
+        SAVE_NEEDED.set()
+        LIST_SIGNALS.list_changed.emit()
