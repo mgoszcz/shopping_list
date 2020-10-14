@@ -1,18 +1,15 @@
-from typing import Union
-
 from PyQt5.QtWidgets import QDialog
 
-from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
 from lib.shopping_article_list.shopping_list import ShoppingList
 from lib.ui.layouts.add_article_dialog_layout import AddArticleDialogLayout
 
 
 class AddNewArticleDialog(QDialog):
 
-    def __init__(self, items_list: Union[ShoppingArticlesList, ShoppingList]):
+    def __init__(self, items_list: ShoppingList):
         super(AddNewArticleDialog, self).__init__()
         self._items_list = items_list
-        self.new_article = AddArticleDialogLayout()
+        self.new_article = AddArticleDialogLayout(self._items_list)
         self.setLayout(self.new_article)
         self.new_article.buttonbox.rejected.connect(self.reject)
         self.new_article.buttonbox.accepted.connect(self.accept_button)

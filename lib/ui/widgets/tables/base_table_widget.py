@@ -34,17 +34,17 @@ class BaseTableWidget(QTableWidget):
             for column, value in zip(range(self._columns_count), [item.name, item.category, item.amount]):
                 self.setItem(row, column, QTableWidgetItem(str(value)))
 
-    def _action_if_existing_article(self):
-        pass
+    def _action_if_existing_article(self, article: ShoppingArticle, shopping_list: ShoppingList, new_value: str):
+        raise NotImplementedError
 
-    def _action_if_non_existing_article(self):
-        pass
+    def _action_if_non_existing_article(self, article: ShoppingArticle, shopping_list: ShoppingList, new_value: str):
+        raise NotImplementedError
 
     def _amount_changed(self, article: ShoppingArticle, new_value: str):
         raise NotImplementedError
 
     def _name_change(self, article: ShoppingArticle, new_value: str):
-        print(article.name)
+        # print(article.name)
         try:
             self._items_list.get_article_by_name(new_value)
             # TODO: dialog
@@ -52,14 +52,13 @@ class BaseTableWidget(QTableWidget):
             return False
         except AttributeError:
             if isinstance(self._items_list, ShoppingList):
-                if self._action_if_existing_article:
+                if self._action_if_existing_article(article, self._items_list, new_value):
                     return True
-            if self._action_if_non_existing_article:
+            if self._action_if_non_existing_article(article, self._items_list, new_value):
                 return True
             return False
 
     def _category_change(self, article: ShoppingArticle, new_value: str):
-        # TODO: odswiezanie list po zmianie kategorii
         raise NotImplementedError
 
     def _cell_changed(self):
@@ -69,16 +68,22 @@ class BaseTableWidget(QTableWidget):
         new_value = self.item(current_row, current_column).text()
         if new_value == self._get_item_by_column(article, current_column):
             return
+        self.blockSignals(True)
+        success = False
         if current_column == 0:
             if self._name_change(article, new_value):
-                return
+                success = True
         elif current_column == 1:
             if self._category_change(article, new_value):
-                return
+                success = True
         elif current_column == 2:
             if self._amount_changed(article, new_value):
-                return
+                success = True
         else:
             raise RuntimeError(f'Invalid column number {self.currentColumn()}')
-        self.setItem(current_row, current_column,
-                     QTableWidgetItem(self._get_item_by_column(article, current_column)))
+        if success:
+            LIST_SIGNALS.list_changed.emit()
+        else:
+            self.setItem(current_row, current_column,
+                         QTableWidgetItem(self._get_item_by_column(article, current_column)))
+        self.blockSignals(False)
