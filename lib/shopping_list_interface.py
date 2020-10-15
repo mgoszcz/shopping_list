@@ -10,7 +10,7 @@ class ShoppingListInterface:
     def __init__(self):
         self.categories = CategoryList()
         self.shops = ShopsList()
-        self.shopping_articles = ShoppingArticlesList(self.categories)
+        self.shopping_articles = ShoppingArticlesList(self.categories, self.shops)
         self.shopping_list = ShoppingList(self.shopping_articles, self.shops)
         self._save_load = SaveLoad(self)
         self._save_load.load_data()

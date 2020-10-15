@@ -30,5 +30,7 @@ class ShoppingListLayout(QVBoxLayout):
         self._shopping_list.clear()
 
     def open_articles_list(self):
+        self._shopping_list_table.blockSignals(True)
         dialog = ArticlesDialog(self._shopping_list)
         dialog.exec_()
+        self._shopping_list_table.blockSignals(False)

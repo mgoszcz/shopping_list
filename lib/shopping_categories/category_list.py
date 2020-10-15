@@ -16,3 +16,5 @@ class CategoryList(StringListWithoutDuplicates):
             raise AttributeError(f'Attribute {element} is already at the bottom of the list')
         self[index] = self[index + 1]
         self[index + 1] = element
+
+

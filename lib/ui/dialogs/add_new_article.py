@@ -16,6 +16,6 @@ class AddNewArticleDialog(QDialog):
 
     def accept_button(self):
         article = self.new_article.product.text()
-        category = self.new_article.category.text()
+        category = self.new_article.category.currentText()
         self._items_list.add_new_article(article, category)
         self.accept()
