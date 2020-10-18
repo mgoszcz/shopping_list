@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QLineEdit, QLabel, QPushButton, QDialogButtonBox
 
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
-from lib.ui.widgets.category_combo_box import CategoryComboBox
+from lib.ui.widgets.combo_boxes.category_combo_box import CategoryComboBox
 
 
 class AddArticleDialogLayout(QVBoxLayout):

@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QVBoxLayout
 from lib.shopping_article_list.shopping_list import ShoppingList
 from lib.ui.dialogs.articles_dialog import ArticlesDialog
 from lib.ui.layouts.shopping_list_buttons_layout import ShoppingListButtonsLayout
+from lib.ui.signals.list_signals import LIST_SIGNALS
 from lib.ui.widgets.tables.shopping_list_table import ShoppingListTable
 
 
@@ -21,10 +22,13 @@ class ShoppingListLayout(QVBoxLayout):
         self._shopping_list_buttons_layout.remove_button.pressed.connect(self.remove_article)
         self._shopping_list_buttons_layout.clear_list_button.pressed.connect(self.clear_list)
         self._shopping_list_buttons_layout.article_list_button.pressed.connect(self.open_articles_list)
+        self._shopping_list_buttons_layout.print_button.pressed.connect(self.print_list)
 
     def remove_article(self):
+        self._shopping_list_table.blockSignals(True)
         article = self._shopping_list_table.item(self._shopping_list_table.currentRow(), 0).text()
         self._shopping_list.remove_article(article)
+        self._shopping_list_table.blockSignals(False)
 
     def clear_list(self):
         self._shopping_list.clear()
@@ -34,3 +38,7 @@ class ShoppingListLayout(QVBoxLayout):
         dialog = ArticlesDialog(self._shopping_list)
         dialog.exec_()
         self._shopping_list_table.blockSignals(False)
+
+    def print_list(self):
+        for article in self._shopping_list:
+            print(f'{article.name} {article.amount}')

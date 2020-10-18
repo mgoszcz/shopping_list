@@ -34,6 +34,7 @@ class SaveLoad:
         self._interface.categories = content['categories']
         self._interface.shopping_articles = content['shopping_articles']
         self._interface.shopping_list = content['shopping_list']
+        self._interface.shopping_list.sort_by_shop()
         AUTO_SAVE_PAUSED.clear()
 
 

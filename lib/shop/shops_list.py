@@ -3,6 +3,7 @@ from typing import Union
 from lib.lists.list_without_duplicates import ShoppingListWithoutDuplicates
 from lib.save_load.events import SAVE_NEEDED
 from lib.shop.shop import Shop
+from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
 class ShopsList(ShoppingListWithoutDuplicates):
@@ -21,9 +22,11 @@ class ShopsList(ShoppingListWithoutDuplicates):
             raise AttributeError(f'Shop {value} does not exist')
         self._selected_shop = value
         SAVE_NEEDED.set()
+        LIST_SIGNALS.shop_changed.emit()
 
     def clear_selected_shop(self):
         self._selected_shop = None
+        LIST_SIGNALS.shop_changed.emit()
 
     def add_shop(self, name: str, logo: str = None):
         shop = Shop(name, logo)

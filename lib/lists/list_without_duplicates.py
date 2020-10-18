@@ -30,10 +30,13 @@ class StringListWithoutDuplicates(list):
 class ShoppingListWithoutDuplicates(list):
 
     def append(self, element: Union['ShoppingArticle', 'Shop']) -> None:
+        self.append_silent(element)
+        SAVE_NEEDED.set()
+        LIST_SIGNALS.list_changed.emit()
+
+    def append_silent(self, element: Union['ShoppingArticle', 'Shop']) -> None:
         if not element.name.lower() in [item.name.lower() for item in self]:
             super().append(element)
-            SAVE_NEEDED.set()
-            LIST_SIGNALS.list_changed.emit()
         else:
             raise AttributeError(f'Item with name {element.name} already exists')
 
@@ -42,12 +45,19 @@ class ShoppingListWithoutDuplicates(list):
         SAVE_NEEDED.set()
         LIST_SIGNALS.list_changed.emit()
 
-    def remove(self, item) -> None:
+    def remove_silent(self, item) -> None:
         super(ShoppingListWithoutDuplicates, self).remove(item)
+
+    def remove(self, item) -> None:
+        self.remove_silent(item)
         SAVE_NEEDED.set()
         LIST_SIGNALS.list_changed.emit()
 
-    def clear(self):
+    def clear_silent(self):
         super().clear()
+
+    def clear(self):
+        self.clear_silent()
         SAVE_NEEDED.set()
         LIST_SIGNALS.list_changed.emit()
+

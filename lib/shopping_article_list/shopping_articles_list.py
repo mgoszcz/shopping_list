@@ -50,3 +50,7 @@ class ShoppingArticlesList(ShoppingListBase):
         old_category = article.category
         article.category = new_category
         self._remove_if_unused_category(old_category)
+
+    def clear(self):
+        super().clear()
+        self.shopping_categories.clear()

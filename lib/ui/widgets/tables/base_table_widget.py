@@ -23,16 +23,22 @@ class BaseTableWidget(QTableWidget):
     def _items_modifier(self):
         return self._items_list
 
+    def _color_unordered_rows(self):
+        pass
+
     @staticmethod
     def _get_item_by_column(article: ShoppingArticle, column: int):
         return [article.name, article.category, article.amount][column]
 
     def populate_table(self):
+        self.blockSignals(True)
         modified_list = self._items_modifier()
         self.setRowCount(len(modified_list))
         for row, item in enumerate(modified_list):
             for column, value in zip(range(self._columns_count), [item.name, item.category, item.amount]):
                 self.setItem(row, column, QTableWidgetItem(str(value)))
+        self._color_unordered_rows()
+        self.blockSignals(False)
 
     def _action_if_existing_article(self, article: ShoppingArticle, shopping_list: ShoppingList, new_value: str):
         raise NotImplementedError
@@ -44,11 +50,10 @@ class BaseTableWidget(QTableWidget):
         raise NotImplementedError
 
     def _name_change(self, article: ShoppingArticle, new_value: str):
-        # print(article.name)
         try:
             self._items_list.get_article_by_name(new_value)
             # TODO: dialog
-            print('Artykuł juz jest na liscie!!')
+            print(f'Artykuł {new_value} juz jest na liscie!!')
             return False
         except AttributeError:
             if isinstance(self._items_list, ShoppingList):

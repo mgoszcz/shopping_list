@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QHBoxLayout
 from lib.shopping_article_list.shopping_list import ShoppingList
 from lib.ui.signals.list_signals import LIST_SIGNALS
 from lib.ui.widgets.buttons.add_button import AddButton
-from lib.ui.widgets.combo_box import ArticleComboBox
+from lib.ui.widgets.combo_boxes.combo_box import ArticleComboBox
 
 
 class AddArticleLayout(QHBoxLayout):
