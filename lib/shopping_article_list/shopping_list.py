@@ -17,10 +17,13 @@ class ShoppingList(ShoppingListBase):
     def sort_by_shop(self):
         ordered_items = []
         sorted_list = sorted(self, key=lambda x: x.name)
-        for category in self._shops_list.selected_shop.category_list:
-            for item in sorted_list:
-                if item.category == category:
-                    ordered_items.append(item)
+        if self._shops_list.selected_shop:
+            for category in self._shops_list.selected_shop.category_list:
+                for item in sorted_list:
+                    if item.category == category:
+                        ordered_items.append(item)
+        else:
+            ordered_items = sorted_list[:]
         self.unordered_items = [item for item in sorted_list if item not in ordered_items]
         self.clear_silent()
         for item in self.unordered_items + ordered_items:

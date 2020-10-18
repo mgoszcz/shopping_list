@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QComboBox
 
 from lib.shop.shops_list import ShopsList
+from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
 class ShopsComboBox(QComboBox):
@@ -12,8 +13,18 @@ class ShopsComboBox(QComboBox):
         self._populate_list()
         self.setEditable(False)
 
+        LIST_SIGNALS.shop_list_changed.connect(self._populate_list)
+
+    def select_current_shop(self):
+        if self.items.selected_shop:
+            self.setCurrentIndex(self.items.index(self.items.selected_shop))
+        else:
+            self.setCurrentText('')
+
     def _populate_list(self):
+        # TODO: naprawic comboboxa przy odawaniu sklepu z dialoga
+        print('pop')
         for i in reversed(range(1, self.count())):
             self.removeItem(i)
         self.addItems([x.name for x in self.items])
-        self.setCurrentIndex(self.items.index(self.items.selected_shop))
+        self.select_current_shop()
