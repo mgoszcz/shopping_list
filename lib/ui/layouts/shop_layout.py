@@ -16,15 +16,17 @@ class ShopLayout(QHBoxLayout):
         self._shops_list = shops_list
         self._shops_combo_box = ShopsComboBox(self._shops_list)
         self._add_shop_button = AddButton()
+        self._remove_shop_button = RemoveButton()
         self.addWidget(QLabel('SKLEP:'))
         self.addWidget(self._shops_combo_box)
         self.addWidget(QLabel('<logo>'))
         self.addWidget(self._add_shop_button)
-        self.addWidget(RemoveButton())
+        self.addWidget(self._remove_shop_button)
         self.addWidget(CategoryListButton())
 
         self._shops_combo_box.activated.connect(self._shop_changed)
         self._add_shop_button.pressed.connect(self._add_shop)
+        self._remove_shop_button.pressed.connect(self._remove_shop)
 
     def _shop_changed(self):
         if self._shops_list.selected_shop.name != self._shops_combo_box.currentText():
@@ -33,3 +35,11 @@ class ShopLayout(QHBoxLayout):
     def _add_shop(self):
         dialog = AddShopDialog(self._shops_list)
         dialog.exec_()
+
+    def _remove_shop(self):
+        # TODO: dialog do wywalania
+        print('DIALOG DO WYWALANIA')
+        shop_name = self._shops_combo_box.currentText()
+        print(shop_name)
+        if shop_name:
+            self._shops_list.remove_shop(shop_name)

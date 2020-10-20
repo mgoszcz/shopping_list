@@ -31,8 +31,8 @@ class ShopsList(ShoppingListWithoutDuplicates):
     def add_shop(self, name: str, logo: str = None):
         shop = Shop(name, logo)
         self.append(shop)
-        LIST_SIGNALS.shop_list_changed.emit()
         self.selected_shop = shop
+        LIST_SIGNALS.shop_list_changed.emit()
 
     def get_shop_by_name(self, name: str) -> Shop:
         for shop in self:
@@ -43,6 +43,9 @@ class ShopsList(ShoppingListWithoutDuplicates):
     def remove_shop(self, name: str):
         shop = self.get_shop_by_name(name)
         self.remove(shop)
-        LIST_SIGNALS.shop_list_changed.emit()
         if self.selected_shop == shop:
-            self.clear_selected_shop()
+            if self:
+                self.selected_shop = self[0]
+            else:
+                self.clear_selected_shop()
+        LIST_SIGNALS.shop_list_changed.emit()

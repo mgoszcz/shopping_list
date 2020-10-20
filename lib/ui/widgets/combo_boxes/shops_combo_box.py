@@ -22,9 +22,7 @@ class ShopsComboBox(QComboBox):
             self.setCurrentText('')
 
     def _populate_list(self):
-        # TODO: naprawic comboboxa przy odawaniu sklepu z dialoga
-        print('pop')
-        for i in reversed(range(1, self.count())):
+        for i in reversed(range(0, self.count())):
             self.removeItem(i)
         self.addItems([x.name for x in self.items])
         self.select_current_shop()
