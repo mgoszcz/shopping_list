@@ -3,14 +3,16 @@ from typing import Union
 from lib.lists.list_without_duplicates import ShoppingListWithoutDuplicates
 from lib.save_load.events import SAVE_NEEDED
 from lib.shop.shop import Shop
+from lib.shopping_categories.category_list import CategoryList
 from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
 class ShopsList(ShoppingListWithoutDuplicates):
 
-    def __init__(self):
+    def __init__(self, categories: CategoryList):
         super(ShopsList, self).__init__()
         self._selected_shop = None
+        self.categories = categories
 
     @property
     def selected_shop(self) -> Union[Shop, None]:

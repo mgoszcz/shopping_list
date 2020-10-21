@@ -13,6 +13,7 @@ class StringListWithoutDuplicates(list):
     def append(self, element: str) -> None:
         if not element.lower() in self:
             super().append(element.lower())
+            self.sort()
             SAVE_NEEDED.set()
             LIST_SIGNALS.category_list_changed.emit()
 
