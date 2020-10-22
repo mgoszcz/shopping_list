@@ -30,6 +30,45 @@ class _CategoryListLayout(QHBoxLayout):
         self.addWidget(self.category_list_widget)
         self.addLayout(self.buttons)
 
+        self._disable_up_down_buttons_when_needed()
+
+        self.category_list_widget.itemSelectionChanged.connect(self._disable_up_down_buttons_when_needed)
+        self.buttons.remove_button.pressed.connect(self._remove_category)
+        self.buttons.move_up_button.pressed.connect(self._move_up_category)
+        self.buttons.move_down_button.pressed.connect(self._move_down_category)
+
+    def _disable_up_down_buttons_when_needed(self):
+        self.buttons.move_up_button.setDisabled(False)
+        self.buttons.move_down_button.setDisabled(False)
+        items_count = self.category_list_widget.count()
+        selected_qmodel_index_list = self.category_list_widget.selectedIndexes()
+        if not selected_qmodel_index_list:
+            self.buttons.move_up_button.setDisabled(True)
+            self.buttons.move_down_button.setDisabled(True)
+            return
+        index = selected_qmodel_index_list[0].row()
+        if items_count == 1:
+            self.buttons.move_up_button.setDisabled(True)
+            self.buttons.move_down_button.setDisabled(True)
+        elif index == 0:
+            self.buttons.move_up_button.setDisabled(True)
+        elif index + 1 == items_count:
+            self.buttons.move_down_button.setDisabled(True)
+        else:
+            pass
+
+    def _move_up_category(self):
+        category = self.category_list_widget.currentItem().text()
+        self._category_list.move_up(category)
+
+    def _move_down_category(self):
+        category = self.category_list_widget.currentItem().text()
+        self._category_list.move_down(category)
+
+    def _remove_category(self):
+        selected_item = self.category_list_widget.currentItem()
+        if selected_item:
+            self._category_list.remove(selected_item.text())
 
 class _AddCategoryLayout(QHBoxLayout):
     def __init__(self, category_list: CategoryList):
@@ -61,7 +100,6 @@ class CategoriesDialogLayout(QVBoxLayout):
         if selected in self._shops_list.selected_shop.category_list:
             raise RuntimeError(f'Category {selected} already in shop')
         self._shops_list.selected_shop.category_list.append(selected)
-        LIST_SIGNALS.category_list_changed.emit()
 
     def disable_add_button_when_item_added(self):
         selected = self.combobox_layout.category_combobox.currentText()

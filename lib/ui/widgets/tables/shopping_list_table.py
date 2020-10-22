@@ -16,6 +16,7 @@ class ShoppingListTable(BaseTableWidget):
     def __init__(self, items_list: Union[ShoppingList, ShoppingArticlesList], columns_count: int):
         super().__init__(items_list, columns_count)
         LIST_SIGNALS.shop_changed.connect(self._shop_changed)
+        LIST_SIGNALS.category_list_changed.connect(self._category_list_changed)
 
     def _color_unordered_rows(self):
         for i in range(self.rowCount()):
@@ -50,3 +51,7 @@ class ShoppingListTable(BaseTableWidget):
         shopping_list.add_new_article(new_value, article.category)
         shopping_list.remove(article)
         return True
+
+    def _category_list_changed(self):
+        self._items_list.sort_by_shop()
+        LIST_SIGNALS.list_changed.emit()

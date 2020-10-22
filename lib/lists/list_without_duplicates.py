@@ -17,11 +17,6 @@ class StringListWithoutDuplicates(list):
             SAVE_NEEDED.set()
             LIST_SIGNALS.category_list_changed.emit()
 
-    def __setitem__(self, key, value):
-        super(StringListWithoutDuplicates, self).__setitem__(key, value)
-        SAVE_NEEDED.set()
-        LIST_SIGNALS.category_list_changed.emit()
-
     def remove(self, item) -> None:
         super(StringListWithoutDuplicates, self).remove(item)
         SAVE_NEEDED.set()
