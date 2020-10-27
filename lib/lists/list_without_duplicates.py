@@ -10,10 +10,15 @@ if TYPE_CHECKING:
 
 class StringListWithoutDuplicates(list):
 
+    def __init__(self):
+        super().__init__()
+        self._custom_sort = False
+
     def append(self, element: str) -> None:
         if not element.lower() in self:
             super().append(element.lower())
-            self.sort()
+            if not self._custom_sort:
+                self.sort()
             SAVE_NEEDED.set()
             LIST_SIGNALS.category_list_changed.emit()
 

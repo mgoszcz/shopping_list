@@ -11,6 +11,7 @@ class CategoryList(StringListWithoutDuplicates):
             raise AttributeError(f'Attribute {element} is already at the top of the list')
         self[index] = self[index - 1]
         self[index - 1] = element
+        self._custom_sort = True
         SAVE_NEEDED.set()
         LIST_SIGNALS.category_list_changed.emit()
 
@@ -20,6 +21,7 @@ class CategoryList(StringListWithoutDuplicates):
             raise AttributeError(f'Attribute {element} is already at the bottom of the list')
         self[index] = self[index + 1]
         self[index + 1] = element
+        self._custom_sort = True
         SAVE_NEEDED.set()
         LIST_SIGNALS.category_list_changed.emit()
 
