@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QVBoxLayout
 
+from lib.printer.printer import Printer
 from lib.shopping_article_list.shopping_list import ShoppingList
 from lib.ui.dialogs.articles_dialog import ArticlesDialog
 from lib.ui.layouts.shopping_list_buttons_layout import ShoppingListButtonsLayout
@@ -40,5 +41,7 @@ class ShoppingListLayout(QVBoxLayout):
         self._shopping_list_table.blockSignals(False)
 
     def print_list(self):
-        for article in self._shopping_list:
-            print(f'{article.name} {article.amount}')
+        printer = Printer(self._shopping_list)
+        # printer.file_path = 'c:\\Users\\marci\\Documents\\abc.pdf'
+        # printer.printer_name = 'Microsoft Print to PDF'
+        printer.print()

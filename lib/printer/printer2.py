@@ -7,7 +7,7 @@ interface = ShoppingListInterface()
 
 # if you just want to use the default printer, you need
 # to retrieve its name.
-# printer = win32print.GetPrinter()
+printer = win32print.GetDefaultPrinter()
 
 # open the printer.
 import win32ui
@@ -48,6 +48,8 @@ for item in interface.shopping_list:
     length = dc.GetTextExtent(f'{item.name} {item.amount}\t')[0]
     if length > max_length:
         max_length = length
+
+max_length += 100
 
 i = 1
 y = 100
