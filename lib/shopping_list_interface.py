@@ -15,4 +15,4 @@ class ShoppingListInterface:
         self._save_load = SaveLoad(self)
         self._save_load.load_data()
         self._auto_save = AutoSave(self._save_load)
-        # self._auto_save.start()
+        self._auto_save.start()

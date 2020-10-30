@@ -1,4 +1,10 @@
+# Usuwanie z listy
+# zmiana kategorii na instniejaca - jebie sie category list
+
+
 import sys
+
+
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import pyqtRemoveInputHook, QTimer
 
