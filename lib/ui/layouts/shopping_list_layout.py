@@ -10,8 +10,6 @@ from lib.ui.widgets.tables.shopping_list_table import ShoppingListTable
 
 class ShoppingListLayout(QVBoxLayout):
 
-    # TODO: drukuj, edytuj
-
     def __init__(self, shopping_list: ShoppingList):
         super().__init__()
         self._shopping_list = shopping_list

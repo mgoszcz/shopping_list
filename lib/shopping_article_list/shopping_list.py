@@ -40,6 +40,7 @@ class ShoppingList(ShoppingListBase):
         article = ShoppingArticle(name, category)
         self.append_silent(article)
         self.shopping_articles_list.append(article)
+        article.selection += 1
         self.sort_by_shop()
         SAVE_NEEDED.set()
         LIST_SIGNALS.list_changed.emit()

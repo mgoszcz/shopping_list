@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QListWidget
+from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QListWidget, QListWidgetItem
 
 from lib.shop.shops_list import ShopsList
 from lib.shopping_categories.category_list import CategoryList
@@ -59,11 +59,15 @@ class _CategoryListLayout(QHBoxLayout):
 
     def _move_up_category(self):
         category = self.category_list_widget.currentItem().text()
+        row = self.category_list_widget.currentRow()
         self._category_list.move_up(category)
+        self.category_list_widget.setCurrentRow(row - 1)
 
     def _move_down_category(self):
         category = self.category_list_widget.currentItem().text()
+        row = self.category_list_widget.currentRow()
         self._category_list.move_down(category)
+        self.category_list_widget.setCurrentRow(row + 1)
 
     def _remove_category(self):
         selected_item = self.category_list_widget.currentItem()

@@ -1,5 +1,4 @@
-# Usuwanie z listy
-# zmiana kategorii na instniejaca - jebie sie category list
+# Zmiana kategori w oknie artykulow nie zmioenia kolejnosci listy zakupow
 
 
 import sys

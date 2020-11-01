@@ -14,7 +14,7 @@ class ShoppingArticlesList(ShoppingListBase):
         self._shops = shops
 
     def _remove_if_unused_category(self, category):
-        if category in self.shopping_categories:
+        if category not in [article.category for article in self]:
             self.shopping_categories.remove(category)
             for shop in self._shops:
                 if category in shop.category_list:

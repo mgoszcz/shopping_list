@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem
 from lib.shopping_article.shopping_article import ShoppingArticle
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
 from lib.shopping_article_list.shopping_list import ShoppingList
+from lib.ui.dialogs.error_dialog import ErrorDialog
 from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
@@ -52,8 +53,7 @@ class BaseTableWidget(QTableWidget):
     def _name_change(self, article: ShoppingArticle, new_value: str):
         try:
             self._items_list.get_article_by_name(new_value)
-            # TODO: dialog
-            print(f'Artykuł {new_value} juz jest na liscie!!')
+            ErrorDialog(f'Artykuł {new_value} juz jest na liscie').exec_()
             return False
         except AttributeError:
             if isinstance(self._items_list, ShoppingList):
@@ -86,9 +86,11 @@ class BaseTableWidget(QTableWidget):
                 success = True
         else:
             raise RuntimeError(f'Invalid column number {self.currentColumn()}')
-        if success:
-            LIST_SIGNALS.list_changed.emit()
-        else:
+        if not success:
             self.setItem(current_row, current_column,
                          QTableWidgetItem(self._get_item_by_column(article, current_column)))
         self.blockSignals(False)
+        if success:
+            print(1)
+            LIST_SIGNALS.list_changed.emit()
+            self.populate_table()

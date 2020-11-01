@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QHBoxLayout, QLabel
 from lib.shop.shops_list import ShopsList
 from lib.ui.dialogs.add_shop_dialog import AddShopDialog
 from lib.ui.dialogs.categories_dialog import CategoriesDialog
+from lib.ui.dialogs.confirm_dialog import ConfirmDialog
 from lib.ui.signals.list_signals import LIST_SIGNALS
 from lib.ui.widgets.buttons.add_button import AddButton
 from lib.ui.widgets.buttons.category_list_button import CategoryListButton
@@ -40,12 +41,11 @@ class ShopLayout(QHBoxLayout):
         dialog.exec_()
 
     def _remove_shop(self):
-        # TODO: dialog do wywalania
-        print('DIALOG DO WYWALANIA')
         shop_name = self._shops_combo_box.currentText()
-        print(shop_name)
         if shop_name:
-            self._shops_list.remove_shop(shop_name)
+            dialog = ConfirmDialog(f'Czy jesteś pewien aby usunąć sklep {shop_name}?')
+            if dialog.exec_():
+                self._shops_list.remove_shop(shop_name)
 
     def _categories_dialog(self):
         dialog = CategoriesDialog(self._shops_list)

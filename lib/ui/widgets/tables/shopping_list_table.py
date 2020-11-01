@@ -28,12 +28,17 @@ class ShoppingListTable(BaseTableWidget):
         self._items_list.sort_by_shop()
         LIST_SIGNALS.list_changed.emit()
 
+    def _items_modifier(self):
+        self._items_list.sort_by_shop()
+        return self._items_list
+
     def _amount_changed(self, article: ShoppingArticle, new_value: str) -> bool:
         article.amount = new_value
         return True
 
     def _category_change(self, article: ShoppingArticle, new_value: str) -> bool:
         self._items_list.shopping_articles_list.edit_category(article, new_value)
+        self._items_list.sort_by_shop()
         return True
 
     def _action_if_existing_article(self, article: ShoppingArticle, shopping_list: ShoppingList,
@@ -50,6 +55,7 @@ class ShoppingListTable(BaseTableWidget):
                                         new_value: str) -> bool:
         shopping_list.add_new_article(new_value, article.category)
         shopping_list.remove(article)
+        article.selection -= 1
         return True
 
     def _category_list_changed(self):
