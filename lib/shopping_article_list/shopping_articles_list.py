@@ -37,13 +37,6 @@ class ShoppingArticlesList(ShoppingListBase):
         self.append(article)
         return article
 
-    def print_names_and_categories(self) -> List[str]:
-        if not self:
-            return []
-        article_length = len(max([x.name for x in self], key=len)) + 5
-        category_length = len(max([x.category for x in self], key=len))
-        return [f'{x.name:{article_length}}|{"":5}{x.category:{category_length}}' for x in self]
-
     def edit_category(self, article: ShoppingArticle, new_category: str):
         if new_category not in self.shopping_categories:
             self.shopping_categories.append(new_category)
