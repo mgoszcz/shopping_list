@@ -21,3 +21,5 @@ class AddArticleDialogLayout(QGridLayout):
         self.button_layout.addWidget(self.ok)
         self.button_layout.addWidget(self.cancel)
         self.addLayout(self.button_layout, 2, 1)
+        self.error = QLabel('')
+        self.addWidget(self.error, 3, 0, 1, 2)

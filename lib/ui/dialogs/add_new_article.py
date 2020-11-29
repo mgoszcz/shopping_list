@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QDialog
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
 from lib.ui.layouts.add_article_dialog_layout import AddArticleDialogLayout
 
-# TODO sie jebie doawanie ego samego arrtykulu
+
 class AddNewArticleDialog(QDialog):
 
     def __init__(self, items_list: ShoppingArticlesList):
@@ -33,7 +33,12 @@ class AddNewArticleDialog(QDialog):
 
     def disable_button(self):
         button = self.new_article.ok
-        button.setDisabled(False)
-        if self.new_article.product.text() == '' or self.new_article.product in [x.name for x in self._items_list]:
+        if self.new_article.product.text() == '':
             button.setDisabled(True)
-
+            self.new_article.error.setText('Nie można dodać artykułu bez nazwy')
+        elif self.new_article.product.text() in [x.name for x in self._items_list]:
+            button.setDisabled(True)
+            self.new_article.error.setText('Taki artykuł już istnieje')
+        else:
+            button.setDisabled(False)
+            self.new_article.error.setText('')
