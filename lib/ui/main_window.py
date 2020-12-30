@@ -8,7 +8,7 @@ from lib.ui.layouts.shopping_list_layout import ShoppingListLayout
 
 class MainWindow(QMainWindow):
 
-    def __init__(self, interface: ShoppingListInterface,*args, **kwargs):
+    def __init__(self, interface: ShoppingListInterface, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.interface = interface
         self.layout = QVBoxLayout()
@@ -20,6 +20,12 @@ class MainWindow(QMainWindow):
         self.layout.addLayout(self._shopping_list_layout)
         self.layout.addLayout(self._shop_layout)
 
+        self._add_article_layout.add_button.pressed.connect(self.add_article_to_shopping_list)
+
         widget = QWidget()
         widget.setLayout(self.layout)
         self.setCentralWidget(widget)
+
+    def add_article_to_shopping_list(self):
+        article = self._add_article_layout.add_article_to_list()
+        self._shopping_list_layout.select_item(article.name)

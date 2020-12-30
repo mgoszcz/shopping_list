@@ -21,18 +21,18 @@ class ArticleComboBox(QComboBox):
         LIST_SIGNALS.list_changed.connect(self._populate_list)
 
     def _populate_list(self):
-        self.combobox_items = []
         try:
             current_item = self.get_current_article()
         except IndexError:
             current_item = 0
+        self.combobox_items = []
         for i in reversed(range(1, self.count())):
             self.removeItem(i)
         for item in sorted(self._items, key=lambda x: x.name):
             self.combobox_items.append(item.name)
             self.addItem(f'{item.name} - {item.category}')
         if current_item in self._items and current_item != 0:
-            self.setCurrentIndex(self._items.index(current_item) + 1)
+            self.setCurrentIndex(self.combobox_items.index(current_item.name) + 1)
         else:
             self.setCurrentIndex(1)
 

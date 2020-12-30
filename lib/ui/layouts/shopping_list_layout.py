@@ -1,3 +1,4 @@
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QVBoxLayout
 
 from lib.printer.printer import Printer
@@ -6,7 +7,6 @@ from lib.ui.dialogs.articles_dialog import ArticlesDialog
 from lib.ui.layouts.shopping_list_buttons_layout import ShoppingListButtonsLayout
 from lib.ui.signals.list_signals import LIST_SIGNALS
 from lib.ui.widgets.tables.shopping_list_table import ShoppingListTable
-
 
 class ShoppingListLayout(QVBoxLayout):
 
@@ -37,6 +37,15 @@ class ShoppingListLayout(QVBoxLayout):
         dialog = ArticlesDialog(self._shopping_list)
         dialog.exec_()
         self._shopping_list_table.blockSignals(False)
+
+    def select_item(self, item_name: str):
+        items = self._shopping_list_table.findItems(item_name, Qt.MatchExactly)
+        if len(items) > 1:
+            raise RuntimeError('More than one item found')
+        if items:
+            row = self._shopping_list_table.row(items[0])
+            self._shopping_list_table.setCurrentCell(row, 2)
+            self._shopping_list_table.scrollToItem(items[0])
 
     def print_list(self):
         printer = Printer(self._shopping_list)
