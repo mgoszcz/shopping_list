@@ -41,7 +41,9 @@ class ShoppingListLayout(QVBoxLayout):
     def select_item(self, item_name: str):
         items = self._shopping_list_table.findItems(item_name, Qt.MatchExactly)
         if len(items) > 1:
-            raise RuntimeError('More than one item found')
+            columns = [item.column() for item in items]
+            if columns.count(0) > 1:
+                raise RuntimeError('More than one item found')
         if items:
             row = self._shopping_list_table.row(items[0])
             self._shopping_list_table.setCurrentCell(row, 2)
