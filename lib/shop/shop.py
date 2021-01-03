@@ -32,3 +32,7 @@ class Shop:
     @property
     def category_list(self):
         return self._category_list
+
+    @category_list.setter
+    def category_list(self, value):
+        self._category_list = value

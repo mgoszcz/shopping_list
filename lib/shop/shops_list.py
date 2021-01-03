@@ -20,8 +20,9 @@ class ShopsList(ShoppingListWithoutDuplicates):
 
     @selected_shop.setter
     def selected_shop(self, value):
-        if value not in self:
-            raise AttributeError(f'Shop {value} does not exist')
+        if value:
+            if value not in self:
+                raise AttributeError(f'Shop {value} does not exist')
         self._selected_shop = value
         SAVE_NEEDED.set()
         LIST_SIGNALS.shop_changed.emit()

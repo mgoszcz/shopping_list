@@ -13,6 +13,7 @@ class ShoppingListInterface:
         self.shopping_articles = ShoppingArticlesList(self.categories, self.shops)
         self.shopping_list = ShoppingList(self.shopping_articles, self.shops)
         self._save_load = SaveLoad(self)
-        self._save_load.load_data()
+        self._save_load.load_data_from_server()
+        # self._save_load.load_data()
         self._auto_save = AutoSave(self._save_load)
         self._auto_save.start()
