@@ -53,7 +53,7 @@ class SaveLoad:
 
     def load_data_from_server(self):
         AUTO_SAVE_PAUSED.set()
-        data_from_server = get_items()
+        data_from_server = get_items().get('shopping_list')
         self._load_articles_from_server(data_from_server)
         self._load_shopping_list_from_server(data_from_server)
         self._load_shops_from_server(data_from_server)
@@ -89,6 +89,6 @@ class AutoSave(Thread):
         while not self.stop.is_set():
             if SAVE_NEEDED.is_set():
                 print('Save needed, save data')
-                self._save_load.save_data()
+                self._save_load.save_data_to_server()
                 SAVE_NEEDED.clear()
             time.sleep(5)
