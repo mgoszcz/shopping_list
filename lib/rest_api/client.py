@@ -11,8 +11,7 @@ def add_item(name, category):
 
 def save_items(interface):
     obj = DbToJson(interface).run()
-    resp = requests.post(f'{REST_API_SERVER}/shopping_list', json=obj)
-    print(resp.text)
+    requests.post(f'{REST_API_SERVER}/shopping_list', json=obj)
 
 
 def get_items() -> dict:
