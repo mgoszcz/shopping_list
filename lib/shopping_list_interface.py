@@ -1,3 +1,4 @@
+from lib.backup_manager.backup_manager import BackupManager
 from lib.save_load.save_load import SaveLoad, AutoSave
 from lib.shop.shops_list import ShopsList
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
@@ -17,3 +18,5 @@ class ShoppingListInterface:
         # self._save_load.load_data()
         self._auto_save = AutoSave(self._save_load)
         self._auto_save.start()
+        self.backup_manager = BackupManager(self)
+        self.backup_manager.create_backup(auto=True)
