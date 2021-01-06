@@ -7,5 +7,11 @@ class ListSignals(QObject):
     shop_changed = pyqtSignal()
     shop_list_changed = pyqtSignal()
 
+    def emit_all(self):
+        self.list_changed.emit()
+        self.category_list_changed.emit()
+        self.shop_changed.emit()
+        self.shop_list_changed.emit()
+
 
 LIST_SIGNALS = ListSignals()

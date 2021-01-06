@@ -4,6 +4,7 @@ import time
 from threading import Thread, Event
 from typing import TYPE_CHECKING
 
+from lib.backup_manager.backup_manager import BackupManager
 from lib.rest_api.client import save_items, get_items
 from lib.save_load.events import AUTO_SAVE_PAUSED, SAVE_NEEDED
 from lib.shop.shop import Shop
@@ -12,13 +13,12 @@ from lib.shopping_article.shopping_article import ShoppingArticle
 if TYPE_CHECKING:
     from lib.shopping_list_interface import ShoppingListInterface
 
-MAIN_DIRECTORY = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+MAIN_DIRECTORY = os.path.join('..', os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 
 class SaveLoad:
 
-    def __init__(self, interface: 'ShoppingListInterface', file_path=f'{MAIN_DIRECTORY}/database.dat'):
-        self.file_path = file_path
+    def __init__(self, interface: 'ShoppingListInterface'):
         self._interface = interface
 
     def _load_articles_from_server(self, items: dict):
@@ -44,14 +44,9 @@ class SaveLoad:
                     new_shop.category_list.append(category)
                 self._interface.shops.append(new_shop)
 
-    def save_data(self):
-        data = {'shops': self._interface.shops, 'categories': self._interface.categories,
-                'shopping_articles': self._interface.shopping_articles, 'shopping_list': self._interface.shopping_list}
-        with open(self.file_path, 'wb') as f:
-            pickle.dump(data, f)
-
     def save_data_to_server(self):
         save_items(self._interface)
+        self._interface.backup_manager.create_backup(auto=True)
 
     def load_data_from_server(self):
         AUTO_SAVE_PAUSED.set()
@@ -64,19 +59,6 @@ class SaveLoad:
             self._interface.shops.selected_shop = shop
         else:
             self._interface.shops.selected_shop = None
-        AUTO_SAVE_PAUSED.clear()
-
-    def load_data(self):
-        if not os.path.exists(self.file_path):
-            return
-        AUTO_SAVE_PAUSED.set()
-        with open(self.file_path, 'rb') as f:
-            content = pickle.load(f)
-        self._interface.shops = content['shops']
-        self._interface.categories = content['categories']
-        self._interface.shopping_articles = content['shopping_articles']
-        self._interface.shopping_list = content['shopping_list']
-        self._interface.shopping_list.sort_by_shop()
         AUTO_SAVE_PAUSED.clear()
 
 
