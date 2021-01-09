@@ -3,7 +3,7 @@ import pickle
 import time
 from typing import List
 
-from lib.save_load.events import AUTO_SAVE_PAUSED
+from lib.save_load.events import AUTO_SAVE_PAUSED, SAVE_NEEDED
 from lib.shop.shops_list import ShopsList
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
 from lib.shopping_article_list.shopping_list import ShoppingList
@@ -66,11 +66,15 @@ class BackupManager:
         AUTO_SAVE_PAUSED.set()
         with open(os.path.join(self.file_directory, backup_name), 'rb') as f:
             content = pickle.load(f)
-        self._clear_interface()
-        self._interface.shops = content['shops']
-        self._interface.categories = content['categories']
-        self._interface.shopping_articles = content['shopping_articles']
-        self._interface.shopping_list = content['shopping_list']
+        # self._clear_interface()
+        self._interface.shops.clear()
+        self._interface.shops.extend(content['shops'])
+        self._interface.categories.clear()
+        self._interface.categories.extend(content['categories'])
+        self._interface.shopping_articles.clear()
+        self._interface.shopping_articles.extend(content['shopping_articles'])
+        self._interface.shopping_list.clear()
+        self._interface.shopping_list.extend(content['shopping_list'])
         self._interface.shopping_list.sort_by_shop()
         AUTO_SAVE_PAUSED.clear()
-        LIST_SIGNALS.emit_all()
+        SAVE_NEEDED.set()
