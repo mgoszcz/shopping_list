@@ -69,6 +69,7 @@ class BackupManager:
         # self._clear_interface()
         self._interface.shops.clear()
         self._interface.shops.extend(content['shops'])
+        self._interface.shops.selected_shop = content['shops'].selected_shop
         self._interface.categories.clear()
         self._interface.categories.extend(content['categories'])
         self._interface.shopping_articles.clear()
