@@ -23,7 +23,7 @@ class ArticleComboBox(QComboBox):
     def _populate_list(self):
         try:
             current_item = self.get_current_article()
-        except IndexError:
+        except (IndexError, AttributeError):
             current_item = 0
         self.combobox_items = []
         for i in reversed(range(1, self.count())):

@@ -33,8 +33,10 @@ class ShopLayout(QHBoxLayout):
         self._category_list_button.pressed.connect(self._categories_dialog)
 
     def _shop_changed(self):
-        if self._shops_list.selected_shop.name != self._shops_combo_box.currentText():
-            self._shops_list.selected_shop = self._shops_list.get_shop_by_name(self._shops_combo_box.currentText())
+        if self._shops_list.selected_shop:
+            if self._shops_list.selected_shop.name == self._shops_combo_box.currentText():
+                return
+        self._shops_list.selected_shop = self._shops_list.get_shop_by_name(self._shops_combo_box.currentText())
 
     def _add_shop(self):
         dialog = AddShopDialog(self._shops_list)
