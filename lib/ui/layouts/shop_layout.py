@@ -26,6 +26,7 @@ class ShopLayout(QHBoxLayout):
         self.addWidget(self._add_shop_button)
         self.addWidget(self._remove_shop_button)
         self.addWidget(self._category_list_button)
+        self._disable_buttons()
 
         self._shops_combo_box.activated.connect(self._shop_changed)
         self._add_shop_button.pressed.connect(self._add_shop)
@@ -33,6 +34,7 @@ class ShopLayout(QHBoxLayout):
         self._category_list_button.pressed.connect(self._categories_dialog)
 
     def _shop_changed(self):
+        self._disable_buttons()
         if self._shops_list.selected_shop:
             if self._shops_list.selected_shop.name == self._shops_combo_box.currentText():
                 return
@@ -41,6 +43,7 @@ class ShopLayout(QHBoxLayout):
     def _add_shop(self):
         dialog = AddShopDialog(self._shops_list)
         dialog.exec_()
+        self._disable_buttons()
 
     def _remove_shop(self):
         shop_name = self._shops_combo_box.currentText()
@@ -48,7 +51,16 @@ class ShopLayout(QHBoxLayout):
             dialog = ConfirmDialog(f'Czy jesteś pewien aby usunąć sklep {shop_name}?')
             if dialog.exec_():
                 self._shops_list.remove_shop(shop_name)
+        self._disable_buttons()
 
     def _categories_dialog(self):
         dialog = CategoriesDialog(self._shops_list)
         dialog.exec_()
+
+    def _disable_buttons(self):
+        self._remove_shop_button.setDisabled(False)
+        self._category_list_button.setDisabled(False)
+        shop_name = self._shops_combo_box.currentText()
+        if not shop_name:
+            self._remove_shop_button.setDisabled(True)
+            self._category_list_button.setDisabled(True)

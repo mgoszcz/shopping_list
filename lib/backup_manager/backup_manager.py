@@ -79,3 +79,10 @@ class BackupManager:
         self._interface.shopping_list.sort_by_shop()
         AUTO_SAVE_PAUSED.clear()
         SAVE_NEEDED.set()
+
+    def remove_backup(self, backup_name: str):
+        backup_path = os.path.join(self.file_directory, backup_name)
+        if not os.path.exists(backup_path):
+            raise AttributeError(f'Backup {backup_name} does not exist')
+        os.remove(backup_path)
+        self.backups_list.remove(backup_name)
