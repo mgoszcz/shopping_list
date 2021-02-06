@@ -32,7 +32,6 @@ class BaseTableWidget(QTableWidget):
         return [article.name, article.category, article.amount][column]
 
     def populate_table(self):
-        print('abc')
         self.blockSignals(True)
         modified_list = self._items_modifier()
         self.setRowCount(len(modified_list))

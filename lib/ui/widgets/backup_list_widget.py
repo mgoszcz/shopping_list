@@ -6,7 +6,6 @@ from lib.backup_manager.backup_manager import BackupManager
 class BackupListWidget(QListWidget):
     def __init__(self, backup_manager: BackupManager):
         super().__init__()
-        print('a')
         self._backup_manager = backup_manager
 
         self.populate_list()
