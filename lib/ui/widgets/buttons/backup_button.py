@@ -5,4 +5,11 @@ class BackupButton(QPushButton):
 
     def __init__(self):
         super().__init__()
-        self.setText('Backup')
+        self.setText('Backups')
+
+
+class CreateBackupButton(QPushButton):
+
+    def __init__(self):
+        super().__init__()
+        self.setText('Dodaj backup')

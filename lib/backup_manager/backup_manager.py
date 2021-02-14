@@ -51,11 +51,17 @@ class BackupManager:
         self._interface.shopping_articles = ShoppingArticlesList(self._interface.categories, self._interface.shops)
         self._interface.shopping_list = ShoppingList(self._interface.shopping_articles, self._interface.shops)
 
-    def create_backup(self, auto: bool = False):
+    def create_backup(self, auto: bool = False, file_name: str = None):
         data = {'shops': self._interface.shops, 'categories': self._interface.categories,
                 'shopping_articles': self._interface.shopping_articles, 'shopping_list': self._interface.shopping_list}
         if auto:
             file_path = self._get_auto_file_path()
+        else:
+            if not file_name:
+                raise AttributeError('Backup file name cannot be empty')
+            if file_name.startswith(AUTO_BACKUP_PREFIX):
+                raise AttributeError(f'Backup file name cannot start with string: {AUTO_BACKUP_PREFIX}')
+            file_path = os.path.join(self.file_directory, file_name)
         with open(file_path, 'wb') as f:
             pickle.dump(data, f)
         self.backups_list.append(file_path.split(os.sep)[-1])
