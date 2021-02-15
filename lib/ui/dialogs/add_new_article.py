@@ -14,7 +14,7 @@ class AddNewArticleDialog(QDialog):
         self.setLayout(self.new_article)
         self.disable_button()
 
-        self.new_article.ok.pressed.connect(self.accept_button)
+        self.new_article.ok_button.pressed.connect(self.accept_button)
         self.new_article.cancel.pressed.connect(self.reject)
         self.new_article.product.textChanged.connect(self.disable_button)
 
@@ -32,7 +32,7 @@ class AddNewArticleDialog(QDialog):
             self.accept()
 
     def disable_button(self):
-        button = self.new_article.ok
+        button = self.new_article.ok_button
         if self.new_article.product.text() == '':
             button.setDisabled(True)
             self.new_article.error.setText('Nie można dodać artykułu bez nazwy')
