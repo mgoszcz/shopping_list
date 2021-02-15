@@ -21,12 +21,13 @@ class BackupLayout(QHBoxLayout):
         self.addWidget(self.create_backup_button)
 
         self.backup_button.pressed.connect(self.backup)
-        self.create_backup_button.pressed.connect(self.create_backup)
+        self.create_backup_button.pressed.connect(self.create_user_backup)
 
     def backup(self):
         self._backup_dialog.layout.backup_list.populate_list()
         self._backup_dialog.exec_()
         LIST_SIGNALS.emit_all()
 
-    def create_backup(self):
+    def create_user_backup(self):
+        self._create_backup_dialog.initialize()
         self._create_backup_dialog.exec_()
