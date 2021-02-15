@@ -1,9 +1,9 @@
+
 from PyQt5.QtWidgets import QDialog, QHBoxLayout, QLabel, QLineEdit, QVBoxLayout, QPushButton
 
 from lib.backup_manager.backup_manager import BackupManager, AUTO_BACKUP_PREFIX
 from lib.ui.widgets.buttons.cancel_button import CancelButton
 
-# TODO: na starcie wyswietla sie poprzednia nazwa backupu i nie jest wyszarzony ok, user backup wyswietla sie 2 razy na liscie
 
 class _BackupNameLayout(QHBoxLayout):
     def __init__(self):
@@ -35,8 +35,11 @@ class CreateBackupDialog(QDialog):
         self._layout = QVBoxLayout()
         self._layout.addLayout(self._name_layout)
         self._layout.addLayout(self._buttons_layout)
+        self._triggered = False
 
         self.setLayout(self._layout)
+
+        self.disable_button()
 
         self._buttons_layout.ok_button.pressed.connect(self.accept_button)
         self._buttons_layout.cancel_button.pressed.connect(self.reject)
@@ -48,8 +51,17 @@ class CreateBackupDialog(QDialog):
             self._buttons_layout.ok_button.setDisabled(True)
         if self._name_layout.name.text() in self._backup_manager.backups_list:
             self._buttons_layout.ok_button.setDisabled(True)
+        if not self._name_layout.name.text():
+            self._buttons_layout.ok_button.setDisabled(True)
 
     def accept_button(self):
-        backup_name = self._name_layout.name.text()
-        self._backup_manager.create_backup(auto=False, file_name=backup_name)
-        self.accept()
+        if not self._triggered:
+            self._triggered = True
+            backup_name = self._name_layout.name.text()
+            self._backup_manager.create_backup(auto=False, file_name=backup_name)
+            self.accept()
+
+    def initialize(self):
+        self._name_layout.name.clear()
+        self.disable_button()
+        self._triggered = False
