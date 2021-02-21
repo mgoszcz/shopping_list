@@ -45,7 +45,7 @@ class SaveLoad:
                 self._interface.shops.append(new_shop)
 
     def save_data_to_server(self):
-        # save_items(self._interface)
+        save_items(self._interface)
         self._interface.backup_manager.create_backup(auto=True)
 
     def load_data_from_server(self):
