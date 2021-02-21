@@ -39,7 +39,9 @@ class SaveLoad:
         if items.get('shops'):
             for shop in items.get('shops'):
                 new_shop = Shop(name=shop.get('name'), logo=shop.get('logo'))
-                new_shop.category_list = shop.get('category_list')
+                new_shop.category_list.custom_sort = True
+                for category in shop.get('category_list'):
+                    new_shop.category_list.append(category)
                 self._interface.shops.append(new_shop)
 
     def save_data_to_server(self):
