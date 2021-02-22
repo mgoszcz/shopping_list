@@ -49,7 +49,7 @@ class CreateBackupDialog(QDialog):
         self._buttons_layout.ok_button.setDisabled(False)
         if self._name_layout.name.text().startswith(AUTO_BACKUP_PREFIX):
             self._buttons_layout.ok_button.setDisabled(True)
-        if self._name_layout.name.text() in self._backup_manager.backups_list:
+        if self._name_layout.name.text().lower() in [bkp.lower() for bkp in self._backup_manager.backups_list]:
             self._buttons_layout.ok_button.setDisabled(True)
         if not self._name_layout.name.text():
             self._buttons_layout.ok_button.setDisabled(True)

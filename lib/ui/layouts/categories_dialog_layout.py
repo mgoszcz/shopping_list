@@ -99,6 +99,7 @@ class _CategoryListLayout(QHBoxLayout):
         if selected_item:
             self._category_list.remove(selected_item.text())
 
+
 class _AddCategoryLayout(QHBoxLayout):
     def __init__(self, category_list: CategoryList):
         super().__init__()
@@ -129,10 +130,9 @@ class CategoriesDialogLayout(QVBoxLayout):
         selected_on_list = self.category_list_layout.category_list_widget.currentIndex().row()
         if selected_to_add in self._shops_list.selected_shop.category_list:
             raise RuntimeError(f'Category {selected_to_add} already in shop')
-        if selected_on_list:
-            self._shops_list.selected_shop.category_list.insert(selected_on_list + 1, selected_to_add)
-            SAVE_NEEDED.set()
-            LIST_SIGNALS.category_list_changed.emit()
+        self._shops_list.selected_shop.category_list.insert(selected_on_list + 1, selected_to_add)
+        SAVE_NEEDED.set()
+        LIST_SIGNALS.category_list_changed.emit()
 
     def disable_add_button_when_item_added(self):
         selected = self.combobox_layout.category_combobox.currentText()

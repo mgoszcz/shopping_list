@@ -52,7 +52,7 @@ class BackupManager:
         self._interface.shopping_list = ShoppingList(self._interface.shopping_articles, self._interface.shops)
 
     def _add_backup_to_list(self, backup_name: str):
-        if backup_name in self.backups_list:
+        if backup_name.lower() in [bkp.lower() for bkp in self.backups_list]:
             raise AttributeError(f'Backup {backup_name} is already on list')
         if backup_name.startswith(AUTO_BACKUP_PREFIX):
             self.backups_list.append(backup_name)
@@ -88,10 +88,9 @@ class BackupManager:
         self._interface.shops.clear()
         self._interface.shops.extend(content['shops'])
         self._interface.shops.selected_shop = content['shops'].selected_shop
-        self._interface.categories.clear()
-        self._interface.categories.extend(content['categories'])
         self._interface.shopping_articles.clear()
         self._interface.shopping_articles.extend(content['shopping_articles'])
+        self._interface.categories.extend(content['categories'])
         self._interface.shopping_list.clear()
         self._interface.shopping_list.extend(content['shopping_list'])
         self._interface.shopping_list.sort_by_shop()
