@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QDialog  # pylint: disable=no-name-in-module
 
 from lib.shop.shops_list import ShopsList
 from lib.shopping_categories.category_list import CategoryList

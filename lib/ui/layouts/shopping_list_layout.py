@@ -1,5 +1,5 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtCore import Qt  # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QVBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.printer.printer import Printer
 from lib.shopping_article_list.shopping_list import ShoppingList

@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtWidgets import QPushButton  # pylint: disable=no-name-in-module
 
 
 class RemoveButton(QPushButton):

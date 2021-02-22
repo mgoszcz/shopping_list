@@ -1,10 +1,16 @@
-from PyQt5.QtWidgets import QDialog
+"""
+class AddShopDialog
+"""
+from PyQt5.QtWidgets import QDialog  # pylint: disable=no-name-in-module
 
 from lib.shop.shops_list import ShopsList
 from lib.ui.layouts.add_shop_dialog_layout import AddShopDialogLayout
 
 
 class AddShopDialog(QDialog):
+    """
+    Implementation of add shop dialog
+    """
     def __init__(self, shops_list: ShopsList):
         super().__init__()
         self._shops_list = shops_list
@@ -15,6 +21,9 @@ class AddShopDialog(QDialog):
         self.new_shop.buttonbox.accepted.connect(self.accept_button)
 
     def accept_button(self):
+        """
+        Action on pressing OK button - add shop to list
+        """
         shop_name = self.new_shop.name.text()
         self._shops_list.add_shop(shop_name)
         self.accept()

@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QListWidget
+from PyQt5.QtWidgets import QListWidget  # pylint: disable=no-name-in-module
 
 from lib.shopping_categories.category_list import CategoryList
 from lib.ui.signals.list_signals import LIST_SIGNALS

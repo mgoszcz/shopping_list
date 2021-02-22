@@ -1,5 +1,5 @@
 
-from PyQt5.QtWidgets import QComboBox
+from PyQt5.QtWidgets import QComboBox  # pylint: disable=no-name-in-module
 
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
 from lib.ui.dialogs.add_new_article import AddNewArticleDialog

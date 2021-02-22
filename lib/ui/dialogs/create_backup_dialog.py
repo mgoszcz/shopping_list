@@ -1,5 +1,5 @@
 
-from PyQt5.QtWidgets import QDialog, QHBoxLayout, QLabel, QLineEdit, QVBoxLayout, QPushButton
+from PyQt5.QtWidgets import QDialog, QHBoxLayout, QLabel, QLineEdit, QVBoxLayout, QPushButton  # pylint: disable=no-name-in-module
 
 from lib.backup_manager.backup_manager import BackupManager, AUTO_BACKUP_PREFIX
 from lib.ui.widgets.buttons.cancel_button import CancelButton

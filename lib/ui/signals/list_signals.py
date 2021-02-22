@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QObject, pyqtSignal
+from PyQt5.QtCore import QObject, pyqtSignal  # pylint: disable=no-name-in-module
 
 
 class ListSignals(QObject):

@@ -1,13 +1,18 @@
-from PyQt5.QtWidgets import QDialog
+"""
+AddNewArticleDialog class
+"""
+from PyQt5.QtWidgets import QDialog  # pylint: disable=no-name-in-module
 
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
 from lib.ui.layouts.add_article_dialog_layout import AddArticleDialogLayout
 
 
 class AddNewArticleDialog(QDialog):
-
+    """
+    Implementation for add new article dialog
+    """
     def __init__(self, items_list: ShoppingArticlesList):
-        super(AddNewArticleDialog, self).__init__()
+        super().__init__()
         self._items_list = items_list
         self.new_article = AddArticleDialogLayout(self._items_list)
         self.article_name = None
@@ -19,6 +24,9 @@ class AddNewArticleDialog(QDialog):
         self.new_article.product.textChanged.connect(self.disable_button)
 
     def accept_button(self):
+        """
+        Action on pressing accept button: add article if not present on list
+        """
         article = self.new_article.product.text()
         if not article:
             raise RuntimeError('Nie można dodać artykułu bez nazwy')
@@ -32,6 +40,9 @@ class AddNewArticleDialog(QDialog):
             self.accept()
 
     def disable_button(self):
+        """
+        Disable OK button if text is empty or artivle exists, display proper tooltip
+        """
         button = self.new_article.ok_button
         if self.new_article.product.text() == '':
             button.setDisabled(True)

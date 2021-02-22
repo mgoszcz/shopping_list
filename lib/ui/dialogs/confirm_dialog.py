@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDialogButtonBox, QLabel
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDialogButtonBox, QLabel  # pylint: disable=no-name-in-module
 
 
 class ConfirmDialog(QDialog):

@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QHBoxLayout
+from PyQt5.QtWidgets import QHBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.ui.widgets.buttons.article_list_button import ArticleListButton
 from lib.ui.widgets.buttons.clear_list_button import ClearListButton

@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QHBoxLayout
+from PyQt5.QtWidgets import QHBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.backup_manager.backup_manager import BackupManager
 from lib.ui.dialogs.backup_dialog import BackupDialog

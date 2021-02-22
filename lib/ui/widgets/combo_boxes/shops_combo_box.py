@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QComboBox
+from PyQt5.QtWidgets import QComboBox  # pylint: disable=no-name-in-module
 
 from lib.shop.shops_list import ShopsList
 from lib.ui.signals.list_signals import LIST_SIGNALS

@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QDialog, QVBoxLayout
+from PyQt5.QtWidgets import QDialog  # pylint: disable=no-name-in-module
 
 from lib.shopping_article_list.shopping_list import ShoppingList
 from lib.ui.dialogs.add_new_article import AddNewArticleDialog
