@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QHBoxLayout, QLabel
+from PyQt5.QtWidgets import QHBoxLayout, QLabel  # pylint: disable=no-name-in-module
 
 from lib.shop.shops_list import ShopsList
 from lib.ui.dialogs.add_shop_dialog import AddShopDialog

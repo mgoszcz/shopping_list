@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QGridLayout, QLineEdit, QLabel, QDialogButtonBox
+from PyQt5.QtWidgets import QGridLayout, QLineEdit, QLabel, QDialogButtonBox  # pylint: disable=no-name-in-module
 
 
 class AddShopDialogLayout(QGridLayout):

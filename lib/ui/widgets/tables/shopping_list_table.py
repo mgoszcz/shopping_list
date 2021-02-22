@@ -1,6 +1,6 @@
 from typing import Union
 
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor  # pylint: disable=no-name-in-module
 
 from lib.save_load.events import AUTO_SAVE_PAUSED
 from lib.shopping_article.shopping_article import ShoppingArticle

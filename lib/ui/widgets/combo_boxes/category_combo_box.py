@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QComboBox
+from PyQt5.QtWidgets import QComboBox  # pylint: disable=no-name-in-module
 
 from lib.shopping_categories.category_list import CategoryList
 

@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QListWidget
+from PyQt5.QtWidgets import QListWidget  # pylint: disable=no-name-in-module
 
 from lib.backup_manager.backup_manager import BackupManager
 

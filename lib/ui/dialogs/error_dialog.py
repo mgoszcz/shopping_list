@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QDialogButtonBox
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QDialogButtonBox  # pylint: disable=no-name-in-module
 
 
 class ErrorDialog(QDialog):

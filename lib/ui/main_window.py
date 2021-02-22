@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QWidget  # pylint: disable=no-name-in-module
 
 from lib.shopping_list_interface import ShoppingListInterface
 from lib.ui.layouts.add_article_layout import AddArticleLayout

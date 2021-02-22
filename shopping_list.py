@@ -1,11 +1,11 @@
-# Zmiana kategori w oknie artykulow nie zmioenia kolejnosci listy zakupow
+
 
 
 import sys
 
 
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtCore import pyqtRemoveInputHook, QTimer
+from PyQt5.QtWidgets import QApplication  # pylint: disable=no-name-in-module
+from PyQt5.QtCore import QTimer  # pylint: disable=no-name-in-module
 
 from lib.shopping_list_interface import ShoppingListInterface
 from lib.ui.main_window import MainWindow
