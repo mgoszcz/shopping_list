@@ -1,3 +1,6 @@
+"""
+Contains BackupLayout class
+"""
 from PyQt5.QtWidgets import QHBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.backup_manager.backup_manager import BackupManager
@@ -8,7 +11,9 @@ from lib.ui.widgets.buttons.backup_button import BackupButton, CreateBackupButto
 
 
 class BackupLayout(QHBoxLayout):
-
+    """
+    Implements backup layout on main window
+    """
     def __init__(self, backup_manager: BackupManager):
         super().__init__()
         self.backup_button = BackupButton()
@@ -24,10 +29,16 @@ class BackupLayout(QHBoxLayout):
         self.create_backup_button.pressed.connect(self.create_user_backup)
 
     def backup(self):
+        """
+        Action when pressing backups button - will open dialog with backups
+        """
         self._backup_dialog.layout.backup_list.populate_list()
         self._backup_dialog.exec_()
         LIST_SIGNALS.emit_all()
 
     def create_user_backup(self):
+        """
+        Action when pressing create backup button - will open dialog to create user backup
+        """
         self._create_backup_dialog.initialize()
         self._create_backup_dialog.exec_()

@@ -1,3 +1,6 @@
+"""
+Module contains BaseTableWidget class
+"""
 from typing import Union
 
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem  # pylint: disable=no-name-in-module
@@ -10,6 +13,9 @@ from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
 class BaseTableWidget(QTableWidget):
+    """
+    Implementation of base table widget - all common properties and actions, interface implementation
+    """
     def __init__(self, items_list: Union[ShoppingList, ShoppingArticlesList], columns_count: int):
         super().__init__()
         self._items_list = items_list
@@ -32,6 +38,9 @@ class BaseTableWidget(QTableWidget):
         return [article.name, article.category, article.amount][column]
 
     def populate_table(self):
+        """
+        Populate items with table, if needed modify items and color cells
+        """
         self.blockSignals(True)
         modified_list = self._items_modifier()
         self.setRowCount(len(modified_list))

@@ -1,3 +1,6 @@
+"""
+Module contains classes _CategoryButtonsLayout, _CategoryListLayout, _AddCategoryLayout and CategoriesDialogLayout
+"""
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.save_load.events import SAVE_NEEDED
@@ -12,6 +15,9 @@ from lib.ui.widgets.combo_boxes.category_combo_box import CategoryComboBox
 
 
 class _CategoryButtonsLayout(QVBoxLayout):
+    """
+    Implements category dialog buttons field
+    """
     def __init__(self):
         super().__init__()
         self.move_up_button = MoveUpButton()
@@ -27,6 +33,9 @@ class _CategoryButtonsLayout(QVBoxLayout):
 
 
 class _CategoryListLayout(QHBoxLayout):
+    """
+    Implements category list layout
+    """
     def __init__(self, category_list: CategoryList):
         super().__init__()
         self._category_list = category_list
@@ -45,6 +54,9 @@ class _CategoryListLayout(QHBoxLayout):
         self.buttons.move_bottom_button.pressed.connect(self._move_bottom_category)
 
     def _disable_up_down_buttons_when_needed(self):
+        """
+        Disable moving buttons when needed
+        """
         self.buttons.move_up_button.setDisabled(False)
         self.buttons.move_down_button.setDisabled(False)
         self.buttons.move_bottom_button.setDisabled(False)
@@ -101,6 +113,9 @@ class _CategoryListLayout(QHBoxLayout):
 
 
 class _AddCategoryLayout(QHBoxLayout):
+    """
+    Implements add category field layout
+    """
     def __init__(self, category_list: CategoryList):
         super().__init__()
         self._category_list = category_list
@@ -111,6 +126,9 @@ class _AddCategoryLayout(QHBoxLayout):
 
 
 class CategoriesDialogLayout(QVBoxLayout):
+    """
+    Implements categories dialog layout
+    """
     def __init__(self, shops_list: ShopsList):
         super().__init__()
         self._shops_list = shops_list
@@ -126,6 +144,9 @@ class CategoriesDialogLayout(QVBoxLayout):
         self.combobox_layout.add_button.pressed.connect(self.add_button_pressed)
 
     def add_button_pressed(self):
+        """
+        Action when add category button is pressed - add category to shop
+        """
         selected_to_add = self.combobox_layout.category_combobox.currentText()
         selected_on_list = self.category_list_layout.category_list_widget.currentIndex().row()
         if selected_to_add in self._shops_list.selected_shop.category_list:
@@ -135,6 +156,9 @@ class CategoriesDialogLayout(QVBoxLayout):
         LIST_SIGNALS.category_list_changed.emit()
 
     def disable_add_button_when_item_added(self):
+        """
+        Disable button if selected category is already on the list
+        """
         selected = self.combobox_layout.category_combobox.currentText()
         if selected in self._shops_list.selected_shop.category_list:
             self.combobox_layout.add_button.setDisabled(True)

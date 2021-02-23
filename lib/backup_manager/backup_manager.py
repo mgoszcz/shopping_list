@@ -1,3 +1,6 @@
+"""
+Module contains class BackupManager
+"""
 import os
 import pickle
 import time
@@ -13,8 +16,12 @@ AUTO_BACKUP_PREFIX = '_auto_backup_'
 
 
 class BackupManager:
-
-    def __init__(self, interface: 'ShoppingListInterface', file_directory=f'backups'):
+    """
+    Implementation of backupo manager responsible for creating, restoring and removing backups
+    It creates automatic and on demand backups, all backups are kept in backups_list
+    It populates backups list on initialization basing on backup files
+    """
+    def __init__(self, interface: 'ShoppingListInterface', file_directory='backups'):
         self._interface = interface
         self.file_directory = file_directory
         self.backups_list = []
@@ -64,6 +71,11 @@ class BackupManager:
                 self.backups_list.append(backup_name)
 
     def create_backup(self, auto: bool = False, file_name: str = None):
+        """
+        Create backup - automatic or on demand depends on parameters
+        :param auto: determine if creating auto backup or user backup
+        :param file_name: name of backup file (for user backups only)
+        """
         data = {'shops': self._interface.shops, 'categories': self._interface.categories,
                 'shopping_articles': self._interface.shopping_articles, 'shopping_list': self._interface.shopping_list}
         if auto:
@@ -74,17 +86,20 @@ class BackupManager:
             if file_name.startswith(AUTO_BACKUP_PREFIX):
                 raise AttributeError(f'Backup file name cannot start with string: {AUTO_BACKUP_PREFIX}')
             file_path = os.path.join(self.file_directory, file_name)
-        with open(file_path, 'wb') as f:
-            pickle.dump(data, f)
+        with open(file_path, 'wb') as backup_file:
+            pickle.dump(data, backup_file)
         self._add_backup_to_list(file_path.split(os.sep)[-1])
 
     def restore_backup(self, backup_name: str):
+        """
+        Restore backup from backup file
+        :param backup_name: name of backup file to be restored
+        """
         if not os.path.exists(os.path.join(self.file_directory, backup_name)):
             raise AttributeError(f'Backup {backup_name} does not exist')
         AUTO_SAVE_PAUSED.set()
-        with open(os.path.join(self.file_directory, backup_name), 'rb') as f:
-            content = pickle.load(f)
-        # self._clear_interface()
+        with open(os.path.join(self.file_directory, backup_name), 'rb') as backup_file:
+            content = pickle.load(backup_file)
         self._interface.shops.clear()
         self._interface.shops.extend(content['shops'])
         self._interface.shops.selected_shop = content['shops'].selected_shop
@@ -98,6 +113,10 @@ class BackupManager:
         SAVE_NEEDED.set()
 
     def remove_backup(self, backup_name: str):
+        """
+        Remove backup - removes file and list item
+        :param backup_name: name of file to be removed
+        """
         backup_path = os.path.join(self.file_directory, backup_name)
         if not os.path.exists(backup_path):
             raise AttributeError(f'Backup {backup_name} does not exist')

@@ -1,3 +1,6 @@
+"""
+Module contains  BackupDialog class
+"""
 from PyQt5.QtWidgets import QDialog  # pylint: disable=no-name-in-module
 
 from lib.backup_manager.backup_manager import BackupManager
@@ -7,7 +10,9 @@ from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
 class BackupDialog(QDialog):
-
+    """
+    Implementation of Backup Dialog
+    """
     def __init__(self, backup_manager: BackupManager):
         super().__init__()
         self._backup_manager = backup_manager
@@ -19,14 +24,19 @@ class BackupDialog(QDialog):
         self.layout.buttons.remove_button.pressed.connect(self.remove_backup)
 
     def revert_backup(self):
+        """
+        Action when pressing revert button - reverts database from specific backup file
+        """
         backup_name = self.layout.backup_list.currentItem().text()
-        print(f'aaa {backup_name}')
         LIST_SIGNALS.blockSignals(True)
         self._backup_manager.restore_backup(backup_name)
         LIST_SIGNALS.blockSignals(False)
         self.accept()
 
     def remove_backup(self):
+        """
+        Action when pressing remove backup - removes backup file
+        """
         backup_name = self.layout.backup_list.currentItem().text()
         if ConfirmDialog(f'Czy na pewno chcesz usunąć backup {backup_name}?').exec_():
             self._backup_manager.remove_backup(backup_name)

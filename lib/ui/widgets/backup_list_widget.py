@@ -1,9 +1,15 @@
+"""
+Module contains BackupListWidget class
+"""
 from PyQt5.QtWidgets import QListWidget  # pylint: disable=no-name-in-module
 
 from lib.backup_manager.backup_manager import BackupManager
 
 
 class BackupListWidget(QListWidget):
+    """
+    Implements backups list widget
+    """
     def __init__(self, backup_manager: BackupManager):
         super().__init__()
         self._backup_manager = backup_manager
@@ -11,5 +17,8 @@ class BackupListWidget(QListWidget):
         self.populate_list()
 
     def populate_list(self):
+        """
+        Populate backups list widget
+        """
         self.clear()
-        self.addItems([x for x in self._backup_manager.backups_list])
+        self.addItems(self._backup_manager.backups_list)

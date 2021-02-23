@@ -1,3 +1,6 @@
+"""
+Module contains ArticlesDialogLayout class
+"""
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
@@ -8,6 +11,9 @@ from lib.ui.widgets.tables.articles_list_table import ArticlesListTableAlphabeti
 
 
 class ArticlesDialogLayout(QVBoxLayout):
+    """
+    Layout for articles dialog
+    """
     def __init__(self, items_list: ShoppingArticlesList):
         super().__init__()
         self._items_list = items_list
