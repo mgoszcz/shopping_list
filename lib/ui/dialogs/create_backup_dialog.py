@@ -1,4 +1,6 @@
-
+"""
+Module contains classes _BackupNameLayout, _CreateBackupButtonsLayout, CreateBackupDialog
+"""
 from PyQt5.QtWidgets import QDialog, QHBoxLayout, QLabel, QLineEdit, QVBoxLayout, QPushButton  # pylint: disable=no-name-in-module
 
 from lib.backup_manager.backup_manager import BackupManager, AUTO_BACKUP_PREFIX
@@ -6,6 +8,9 @@ from lib.ui.widgets.buttons.cancel_button import CancelButton
 
 
 class _BackupNameLayout(QHBoxLayout):
+    """
+    Layout of backup name field
+    """
     def __init__(self):
         super().__init__()
         self._label = QLabel('Nazwa: ')
@@ -16,7 +21,9 @@ class _BackupNameLayout(QHBoxLayout):
 
 
 class _CreateBackupButtonsLayout(QHBoxLayout):
-
+    """
+    Buttons layout
+    """
     def __init__(self):
         super().__init__()
         self.ok_button = QPushButton('Ok')
@@ -26,7 +33,9 @@ class _CreateBackupButtonsLayout(QHBoxLayout):
 
 
 class CreateBackupDialog(QDialog):
-
+    """
+    Implementation of create backup dialog - for user backups
+    """
     def __init__(self, backup_manager: BackupManager):
         super().__init__()
         self._backup_manager = backup_manager
@@ -46,6 +55,9 @@ class CreateBackupDialog(QDialog):
         self._name_layout.name.textChanged.connect(self.disable_button)
 
     def disable_button(self):
+        """
+        Disable ok button when backup name is not provided, backup exists or incorrect name is provided
+        """
         self._buttons_layout.ok_button.setDisabled(False)
         if self._name_layout.name.text().startswith(AUTO_BACKUP_PREFIX):
             self._buttons_layout.ok_button.setDisabled(True)
@@ -55,6 +67,11 @@ class CreateBackupDialog(QDialog):
             self._buttons_layout.ok_button.setDisabled(True)
 
     def accept_button(self):
+        """
+        Action when pressing ok button - add new user backup
+        For some reason when pressing ok then create backup is triggered twice - that is why _triggered
+        attribute is used here
+        """
         if not self._triggered:
             self._triggered = True
             backup_name = self._name_layout.name.text()
@@ -62,6 +79,9 @@ class CreateBackupDialog(QDialog):
             self.accept()
 
     def initialize(self):
+        """
+        Initialize dialog - clean up name field and buttons
+        """
         self._name_layout.name.clear()
         self.disable_button()
         self._triggered = False

@@ -1,13 +1,18 @@
-
+"""
+Module contains class ArticleComboBox
+"""
 from PyQt5.QtWidgets import QComboBox  # pylint: disable=no-name-in-module
 
+from lib.shopping_article.shopping_article import ShoppingArticle
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
 from lib.ui.dialogs.add_new_article import AddNewArticleDialog
 from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
 class ArticleComboBox(QComboBox):
-
+    """
+    Implementation of combo box with articles from articles list
+    """
     def __init__(self, items_list: ShoppingArticlesList):
         super().__init__()
         self._items = items_list
@@ -37,6 +42,10 @@ class ArticleComboBox(QComboBox):
             self.setCurrentIndex(1)
 
     def add_article(self):
+        """
+        Method invoked when selected item changed, if current index is 0 then add article dialog will be opened,
+        otherwise it will do nothing
+        """
         if self.currentIndex() == 0:
             dialog = AddNewArticleDialog(self._items)
             if dialog.exec_():
@@ -46,7 +55,10 @@ class ArticleComboBox(QComboBox):
             else:
                 self.setCurrentIndex(1)
 
-    def get_current_article(self):
+    def get_current_article(self) -> ShoppingArticle:
+        """
+        Get article object for selected article name
+        """
         if self.currentIndex() == 0:
             raise IndexError('Current index is 0')
         if self.currentIndex() < 0:

@@ -1,10 +1,15 @@
+"""
+Module contains class DbToJson
+"""
 from typing import List, Union
 
 from lib.shop.shop import Shop
 
 
 class DbToJson:
-
+    """
+    Implementation of translator from DB format to Json format
+    """
     def __init__(self, interface: 'ShoppingListInterface'):
         self.interface = interface
 
@@ -36,10 +41,13 @@ class DbToJson:
     def _get_current_shop(self) -> Union[Shop, None]:
         if self.interface.shops.selected_shop:
             return self.interface.shops.selected_shop.name
-        else:
-            return None
+        return None
 
     def run(self) -> dict:
+        """
+        Convert db to dictionary - used for json
+        :return: dictionary with all data
+        """
         json_dict = dict()
         json_dict['shopping_articles_list'] = self._get_articles_list()
         json_dict['shopping_list'] = self._get_shopping_list()
