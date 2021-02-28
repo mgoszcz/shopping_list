@@ -1,8 +1,13 @@
+"""
+Module contains class Dumper
+"""
 from lib.shopping_list_interface import ShoppingListInterface
 
 
 class Dumper:
-
+    """
+    Implementation of dumper writing all data into text file - can be used for tests
+    """
     def __init__(self, interface: ShoppingListInterface):
         self._interface = interface
 
@@ -38,6 +43,9 @@ class Dumper:
         return results_list
 
     def run(self):
+        """
+        Dump all data to text file
+        """
         with open('dump.txt', 'w') as file:
             file.write('ARTICLES: \n')
             for article in self._get_articles():
