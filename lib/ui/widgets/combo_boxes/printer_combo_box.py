@@ -1,7 +1,7 @@
 """
 Module contains class PrinterComboBox
 """
-from PyQt5.QtWidgets import QComboBox
+from PyQt5.QtWidgets import QComboBox  # pylint: disable=no-name-in-module
 
 from lib.printer.printer import Printer
 
@@ -31,7 +31,7 @@ class PrinterComboBox(QComboBox):
     def _set_printer(self):
         self._printer.printer_name = self.currentText()
 
-    def showPopup(self) -> None:
+    def showPopup(self) -> None:  # pylint: disable=invalid-name
         """
         Overload showPopup method to invoke list refresh when opening popup
         """

@@ -6,9 +6,9 @@ from typing import List, Tuple
 import win32gui
 import win32print
 import win32ui
-from win32con import DMPAPER_A5, DMORIENT_PORTRAIT
 
 from lib.shopping_article_list.shopping_list import ShoppingList
+from lib.printer.printer_statics import PrinterStatics
 
 
 class Printer:
@@ -19,22 +19,16 @@ class Printer:
         self._shopping_list = shopping_list
         self.printer_name = win32print.GetDefaultPrinter()
         self._printers = None
-        self.dpi = 300
-        self.format = DMPAPER_A5
-        self.orientation = DMORIENT_PORTRAIT
-        self.items_per_column = 46
         self.file_path = None
-        self.margin = 100
         self._devmode = None
-        self._text_format = '{} {}'
         print(self.printer_name)
 
     def _printer_initialize(self):
         hprinter = win32print.OpenPrinter(self.printer_name)
         self._devmode = win32print.GetPrinter(hprinter, 2)["pDevMode"]
-        self._devmode.PaperSize = self.format
-        self._devmode.PrintQuality = self.dpi
-        self._devmode.Orientation = self.orientation
+        self._devmode.PaperSize = PrinterStatics.FORMAT
+        self._devmode.PrintQuality = PrinterStatics.DPI
+        self._devmode.Orientation = PrinterStatics.ORIENTATION
 
     def _get_max_text_size(self, document) -> Tuple[int, int]:
         max_length = 0
@@ -57,12 +51,12 @@ class Printer:
             document.StartDoc('ShoppingList')
         document.StartPage()
         i = 1
-        x = self.margin
+        x_pos = PrinterStatics.MARGIN
         for value in self._shopping_list:
-            if i == self.items_per_column + 1:
-                x += length
+            if i == PrinterStatics.ITEMS_PER_COLUMN + 1:
+                x_pos += length
                 i = 1
-            document.TextOut(x, i * height, f'{value.name} {value.amount}')
+            document.TextOut(x_pos, i * height, f'{value.name} {value.amount}')
             i += 1
         document.EndPage()
         document.EndDoc()
