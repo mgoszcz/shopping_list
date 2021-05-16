@@ -1,3 +1,8 @@
+"""
+Module contains Printer class
+"""
+from typing import List, Tuple
+
 import win32gui
 import win32print
 import win32ui
@@ -7,9 +12,13 @@ from lib.shopping_article_list.shopping_list import ShoppingList
 
 
 class Printer:
+    """
+    Class handling printing
+    """
     def __init__(self, shopping_list: ShoppingList):
         self._shopping_list = shopping_list
         self.printer_name = win32print.GetDefaultPrinter()
+        self._printers = None
         self.dpi = 300
         self.format = DMPAPER_A5
         self.orientation = DMORIENT_PORTRAIT
@@ -27,7 +36,7 @@ class Printer:
         self._devmode.PrintQuality = self.dpi
         self._devmode.Orientation = self.orientation
 
-    def _get_max_text_size(self, document):
+    def _get_max_text_size(self, document) -> Tuple[int, int]:
         max_length = 0
         max_height = 0
         for item in self._shopping_list:
@@ -59,7 +68,19 @@ class Printer:
         document.EndDoc()
 
     def print(self):
+        """
+        Print current shopping list
+        """
         if not self._shopping_list:
             raise RuntimeError('Shopping List is empty')
         self._printer_initialize()
         self._prepare_document()
+
+    @property
+    def printers(self) -> List[str]:
+        """
+        Get system printers
+        :return: list of printers names
+        """
+        self._printers = [printer[2] for printer in win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL)]
+        return self._printers
