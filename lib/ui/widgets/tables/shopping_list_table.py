@@ -1,8 +1,8 @@
+"""Module contains class ShoppingListTable"""
 from typing import Union
 
 from PyQt5.QtGui import QColor  # pylint: disable=no-name-in-module
 
-from lib.save_load.events import AUTO_SAVE_PAUSED
 from lib.shopping_article.shopping_article import ShoppingArticle
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
 from lib.shopping_article_list.shopping_list import ShoppingList
@@ -11,8 +11,9 @@ from lib.ui.widgets.tables.base_table_widget import BaseTableWidget
 
 UNORDERED_COLOR = QColor(255, 150, 150)
 
-class ShoppingListTable(BaseTableWidget):
 
+class ShoppingListTable(BaseTableWidget):
+    """Implementation of shopping list table"""
     def __init__(self, items_list: Union[ShoppingList, ShoppingArticlesList], columns_count: int):
         super().__init__(items_list, columns_count)
         LIST_SIGNALS.shop_changed.connect(self._shop_changed)
