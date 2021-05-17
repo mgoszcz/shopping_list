@@ -1,10 +1,9 @@
+"""Module contains SaveLoad and AutoSave class"""
 import os
-import pickle
 import time
 from threading import Thread, Event
 from typing import TYPE_CHECKING
 
-from lib.backup_manager.backup_manager import BackupManager
 from lib.rest_api.client import save_items, get_items
 from lib.save_load.events import AUTO_SAVE_PAUSED, SAVE_NEEDED
 from lib.shop.shop import Shop
@@ -17,7 +16,7 @@ MAIN_DIRECTORY = os.path.join('..', os.path.dirname(os.path.dirname(os.path.real
 
 
 class SaveLoad:
-
+    """Class responsible for save and load handling"""
     def __init__(self, interface: 'ShoppingListInterface'):
         self._interface = interface
 
@@ -45,10 +44,12 @@ class SaveLoad:
                 self._interface.shops.append(new_shop)
 
     def save_data_to_server(self):
+        """Save data to rest api server"""
         save_items(self._interface)
         self._interface.backup_manager.create_backup(auto=True)
 
     def load_data_from_server(self):
+        """Load data from REST API server"""
         AUTO_SAVE_PAUSED.set()
         data_from_server = get_items().get('shopping_list')
         self._load_articles_from_server(data_from_server)
@@ -63,13 +64,14 @@ class SaveLoad:
 
 
 class AutoSave(Thread):
-
+    """Class responsible for auto save running in separate thread"""
     def __init__(self, save_load: SaveLoad):
-        super(AutoSave, self).__init__()
+        super().__init__()
         self._save_load = save_load
         self.stop = Event()
 
     def run(self):
+        """Run thread with auto save"""
         while not self.stop.is_set():
             if SAVE_NEEDED.is_set():
                 print('Save needed, save data')
