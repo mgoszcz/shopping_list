@@ -1,3 +1,4 @@
+"""Module contains ShoppingList class"""
 from lib.save_load.events import SAVE_NEEDED
 from lib.shop.shops_list import ShopsList
 from lib.shopping_article.shopping_article import ShoppingArticle
@@ -7,7 +8,7 @@ from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
 class ShoppingList(ShoppingListBase):
-
+    """Implementation of shopping list"""
     def __init__(self, shopping_articles_list: ShoppingArticlesList, shops_list: ShopsList):
         super().__init__()
         self.shopping_articles_list = shopping_articles_list
@@ -15,6 +16,7 @@ class ShoppingList(ShoppingListBase):
         self.unordered_items = []
 
     def sort_by_shop(self):
+        """Sort items on shopping list by categories in category list for current shop"""
         ordered_items = []
         sorted_list = sorted(self, key=lambda x: x.name)
         if self._shops_list.selected_shop:
@@ -30,6 +32,7 @@ class ShoppingList(ShoppingListBase):
             self.append_silent(item)
 
     def add_existing_article(self, element: ShoppingArticle):
+        """Add article from articles list to shopping list (save and refresh GUI)"""
         self.append_silent(element)
         element.selection += 1
         self.sort_by_shop()
@@ -37,6 +40,10 @@ class ShoppingList(ShoppingListBase):
         LIST_SIGNALS.list_changed.emit()
 
     def add_new_article(self, name: str, category: str) -> ShoppingArticle:
+        """
+        Add new article with article object creation, adding new article to articles list and shopping list
+        (save and refresh GUI)
+        """
         article = ShoppingArticle(name, category)
         self.append_silent(article)
         self.shopping_articles_list.append(article)
@@ -47,6 +54,7 @@ class ShoppingList(ShoppingListBase):
         return article
 
     def remove_article(self, name: str):
+        """Remove article from shopping list (save and refresh GUI)"""
         self.remove_silent(self.get_article_by_name(name))
         self.sort_by_shop()
         SAVE_NEEDED.set()

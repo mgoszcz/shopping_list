@@ -1,4 +1,8 @@
+"""
+Main module to start shopping list application
 
+For debugging purposes there is timer added to have a possibility to pause application and interact with console
+"""
 
 
 import sys
@@ -21,4 +25,3 @@ timer.timeout.connect(lambda: None)
 timer.start(100)
 
 app.exec_()
-pass

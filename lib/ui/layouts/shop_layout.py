@@ -1,10 +1,10 @@
+"""Module contains ShopLayout class"""
 from PyQt5.QtWidgets import QHBoxLayout, QLabel  # pylint: disable=no-name-in-module
 
 from lib.shop.shops_list import ShopsList
 from lib.ui.dialogs.add_shop_dialog import AddShopDialog
 from lib.ui.dialogs.categories_dialog import CategoriesDialog
 from lib.ui.dialogs.confirm_dialog import ConfirmDialog
-from lib.ui.signals.list_signals import LIST_SIGNALS
 from lib.ui.widgets.buttons.add_button import AddButton
 from lib.ui.widgets.buttons.category_list_button import CategoryListButton
 from lib.ui.widgets.buttons.remove_button import RemoveButton
@@ -12,7 +12,7 @@ from lib.ui.widgets.combo_boxes.shops_combo_box import ShopsComboBox
 
 
 class ShopLayout(QHBoxLayout):
-
+    """Implementation of shop field layout"""
     def __init__(self, shops_list: ShopsList):
         super().__init__()
         self._shops_list = shops_list
