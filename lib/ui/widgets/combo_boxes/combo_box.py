@@ -1,6 +1,8 @@
 """
 Module contains class ArticleComboBox
 """
+from typing import Optional
+
 from PyQt5.QtWidgets import QComboBox  # pylint: disable=no-name-in-module
 
 from lib.shopping_article.shopping_article import ShoppingArticle
@@ -55,7 +57,7 @@ class ArticleComboBox(QComboBox):
             else:
                 self.setCurrentIndex(1)
 
-    def get_current_article(self) -> ShoppingArticle:
+    def get_current_article(self) -> Optional[ShoppingArticle]:
         """
         Get article object for selected article name
         """
@@ -63,4 +65,6 @@ class ArticleComboBox(QComboBox):
             raise IndexError('Current index is 0')
         if self.currentIndex() < 0:
             raise IndexError('Current index is below 0')
-        return self._items.get_article_by_name(self.combobox_items[self.currentIndex() - 1])
+        if not self.currentIndex() > len(self.combobox_items):
+            return self._items.get_article_by_name(self.combobox_items[self.currentIndex() - 1])
+        return None

@@ -48,5 +48,7 @@ class AddArticleLayout(QHBoxLayout):
         else:
             if self._article_combo_box.get_current_article() in self._shopping_list:
                 self.add_button.setDisabled(True)
+            elif not self._article_combo_box.get_current_article():
+                self.add_button.setDisabled(True)
             else:
                 self.add_button.setDisabled(False)
