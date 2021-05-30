@@ -1,23 +1,26 @@
+"""
+Module with functions to handle rest api on client side
+"""
 import requests
 
 from lib.rest_api.db_to_json import DbToJson
-from lib.rest_api.server_addr import REST_API_SERVER
-
-def add_item(name, category):
-    obj = {'name': name, 'category': category}
-    resp = requests.post(f'{REST_API_SERVER}/items', json=obj)
-    print(resp.text)
+from lib.rest_api.server_addr import REST_API_SERVER, SHOPPING_LIST_NAME
 
 
-def save_items(interface):
-    obj = DbToJson(interface).run()
-    requests.post(f'{REST_API_SERVER}/shopping_list', json=obj)
+def save_items(interface: 'ShoppingListInterface'):
+    """
+    Save items to server
+    :param interface: shopping list interface instance
+    """
+    object_to_save = DbToJson(interface).run()
+    server_response = requests.post(f'{REST_API_SERVER}/{SHOPPING_LIST_NAME}', json=object_to_save)
+    print(server_response)
 
 
 def get_items() -> dict:
-    objects = requests.get(f'{REST_API_SERVER}/shopping_list')
+    """
+    Get items from server
+    :return: dictionary with all items
+    """
+    objects = requests.get(f'{REST_API_SERVER}/{SHOPPING_LIST_NAME}')
     return objects.json()
-
-
-
-pass

@@ -1,11 +1,12 @@
-from PyQt5.QtWidgets import QComboBox
+"""Implementation of ShopsComboBox class"""
+from PyQt5.QtWidgets import QComboBox  # pylint: disable=no-name-in-module
 
 from lib.shop.shops_list import ShopsList
 from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
 class ShopsComboBox(QComboBox):
-
+    """Implementation of combobox to select current shop"""
     def __init__(self, shops_list: ShopsList):
         super().__init__()
         self.items = shops_list
@@ -16,6 +17,7 @@ class ShopsComboBox(QComboBox):
         LIST_SIGNALS.shop_list_changed.connect(self._populate_list)
 
     def select_current_shop(self):
+        """Select currently selected shop on initialization or when removing shop"""
         if self.items.selected_shop:
             self.setCurrentIndex(self.items.index(self.items.selected_shop))
         else:

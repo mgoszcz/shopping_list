@@ -1,13 +1,13 @@
 """
-Add Button implementation
+Module contains RevertButton class
 """
 from PyQt5.QtWidgets import QPushButton  # pylint: disable=no-name-in-module
 
 
-class AddButton(QPushButton):
+class RevertButton(QPushButton):
     """
-    Add Button implementation
+    Implementation of revert button
     """
     def __init__(self):
         super().__init__()
-        self.setText('Dodaj')
+        self.setText('Przywróć')

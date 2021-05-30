@@ -1,8 +1,13 @@
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDialogButtonBox, QLabel
+"""
+Module contains class ConfirmDialog
+"""
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDialogButtonBox, QLabel  # pylint: disable=no-name-in-module
 
 
 class ConfirmDialog(QDialog):
-
+    """
+    Implementation of confirm dialog (Yes/No)
+    """
     def __init__(self, text: str):
         super().__init__()
         layout = QVBoxLayout()
