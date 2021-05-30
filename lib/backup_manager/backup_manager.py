@@ -17,7 +17,7 @@ AUTO_BACKUP_PREFIX = '_auto_backup_'
 
 class BackupManager:
     """
-    Implementation of backupo manager responsible for creating, restoring and removing backups
+    Implementation of backup manager responsible for creating, restoring and removing backups
     It creates automatic and on demand backups, all backups are kept in backups_list
     It populates backups list on initialization basing on backup files
     """

@@ -12,9 +12,9 @@ def save_items(interface: 'ShoppingListInterface'):
     Save items to server
     :param interface: shopping list interface instance
     """
-    obj = DbToJson(interface).run()
-    ret = requests.post(f'{REST_API_SERVER}/{SHOPPING_LIST_NAME}', json=obj)
-    print(ret)
+    object_to_save = DbToJson(interface).run()
+    server_response = requests.post(f'{REST_API_SERVER}/{SHOPPING_LIST_NAME}', json=object_to_save)
+    print(server_response)
 
 
 def get_items() -> dict:
