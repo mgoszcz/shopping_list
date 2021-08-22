@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QDialog  # pylint: disable=no-name-in-module
 from lib.shopping_article_list.shopping_list import ShoppingList
 from lib.ui.dialogs.add_new_article import AddNewArticleDialog
 from lib.ui.dialogs.confirm_dialog import ConfirmDialog
+from lib.ui.dialogs.error_dialog import ErrorDialog
 from lib.ui.layouts.articles_dialog_layout import ArticlesDialogLayout
 
 
@@ -16,10 +17,11 @@ class ArticlesDialog(QDialog):
     def __init__(self, items_list: ShoppingList):
         super().__init__()
         self._items_list = items_list
-        self.layout = ArticlesDialogLayout(self._items_list.shopping_articles_list)
+        self.layout = ArticlesDialogLayout(self._items_list)
         self.setLayout(self.layout)
 
         self.layout.add_button.pressed.connect(self.add_article)
+        self.layout.add_to_shopping_list_button.pressed.connect(self.add_article_to_list)
         self.layout.remove_button.pressed.connect(self.remove_article)
         self.layout.clear_list_button.pressed.connect(self.clear_article_list)
 
@@ -57,3 +59,20 @@ class ArticlesDialog(QDialog):
         if dialog.exec_():
             self._items_list.shopping_articles_list.clear()
             self._items_list.clear()
+
+    def add_article_to_list(self):
+        """Method handles adding article to shopping list when pressing button"""
+        if not self.layout.articles_table.item(self.layout.articles_table.currentRow(), 0):
+            dialog = ErrorDialog('Wybierz artykuł!')
+            dialog.exec_()
+            return
+        article_name = self.layout.articles_table.item(self.layout.articles_table.currentRow(), 0).text()
+        article = self.layout.articles_table.items_list.get_article_by_name(article_name)
+        if article in self._items_list:
+            dialog = ErrorDialog('Artykuł już jest na liscie')
+            dialog.exec_()
+            return
+        if article:
+            self._items_list.append(article)
+        else:
+            raise Exception('Undefined state when adding article to list')
