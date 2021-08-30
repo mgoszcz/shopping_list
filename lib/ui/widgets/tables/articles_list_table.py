@@ -1,6 +1,8 @@
 """
 Module contains class ArticlesListTableAlphabetical
 """
+from typing import List, Union
+
 from lib.shopping_article.shopping_article import ShoppingArticle
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
 from lib.shopping_article_list.shopping_list import ShoppingList
@@ -29,7 +31,7 @@ class ArticlesListTableAlphabetical(BaseTableWidget):
     def _amount_changed(self, article: ShoppingArticle, new_value: str):
         raise NotImplementedError
 
-    def filter_articles(self, articles: ShoppingArticlesList):
+    def filter_articles(self, articles: Union[ShoppingArticlesList, List[ShoppingArticle]]):
         """Update table content"""
         self.items_list = articles
         self.populate_table()
