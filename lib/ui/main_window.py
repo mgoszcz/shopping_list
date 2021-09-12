@@ -1,6 +1,7 @@
 """
 Module contains MainWindow class
 """
+from PyQt5 import QtGui
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QWidget  # pylint: disable=no-name-in-module
 
 from lib.shopping_list_interface import ShoppingListInterface
@@ -8,6 +9,7 @@ from lib.ui.layouts.add_article_layout import AddArticleLayout
 from lib.ui.layouts.backup_layout import BackupLayout
 from lib.ui.layouts.shop_layout import ShopLayout
 from lib.ui.layouts.shopping_list_layout import ShoppingListLayout
+from lib.ui.signals.main_window_signals import MAIN_WINDOW_SIGNALS
 
 
 class MainWindow(QMainWindow):
@@ -33,6 +35,12 @@ class MainWindow(QMainWindow):
         widget = QWidget()
         widget.setLayout(self.layout)
         self.setCentralWidget(widget)
+
+    def moveEvent(self, a0: QtGui.QMoveEvent) -> None:
+        MAIN_WINDOW_SIGNALS.window_moved.emit()
+
+    def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:
+        MAIN_WINDOW_SIGNALS.window_moved.emit()
 
     def add_article_to_shopping_list(self):
         """
