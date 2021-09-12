@@ -3,16 +3,20 @@ from PyQt5.QtCore import QObject, pyqtSignal, Qt, QPoint
 from PyQt5.QtWidgets import QLineEdit, QDialog, QListWidget, QHBoxLayout
 
 from lib.search.article_search import ArticleSearch
-
+from lib.ui.dialogs.add_new_article import AddNewArticleDialog
+from lib.ui.signals.main_window_signals import MAIN_WINDOW_SIGNALS
 
 """
-Filtrowanie wrzucic w list widget
-poprawcowac nad focusem - po kliknieciu w text edit focus powinien pozostac w text edit
-dopracowac resize
+Filtrowanie wrzucic w list widget ZROBIONE
+poprawcowac nad focusem - po kliknieciu w text edit focus powinien pozostac w text edit ZROBIONE
+gdy focus jest w text edit to strzalki gora dol powinny przelaczyc na dialog, nastepnie nacisniecie innego przycisku niz
+ enter lub gora dol powinien spowodowac pisanie dalej
+dopracowac resize i move ZROBIONE
 pomyslec nad rozmiarem
 pomyslec nad sorrtowaniem w dropdown
-obsluzyc selekcje
-ogarnac 'Dodaj...' - powiniene zawsze sei wsywietlac na gorze
+obsluzyc selekcje ZROBIONE
+    na pozniej - selekcja powinna zamknac dropdown mimo focusa na entry
+ogarnac 'Dodaj...' - powiniene zawsze sei wsywietlac na gorze ZROBIONE
 """
 
 
@@ -35,19 +39,29 @@ class TextEdit(QLineEdit):
         print('out')
         FOCUS_SIGNAL.text_edit_focus_out.emit()
 
+
 class MyListWidget(QListWidget):
 
     def __init__(self, items_list):
         super().__init__()
-        self.items_list = items_list
-        self.displayed_items = items_list
+        self._items_list = items_list
+        self._displayed_items = items_list
 
-        self.populate_list()
+        self._populate_list()
 
-    def populate_list(self):
+    def _populate_list(self):
         self.clear()
-        for item in self.displayed_items:
+        self.addItem('Dodaj...')
+        for item in self._displayed_items:
             self.addItem(item.name)
+
+    def filter_article(self, current_text):
+        if not current_text:
+            self._displayed_items = self._items_list
+        else:
+            print('a')
+            self._displayed_items = ArticleSearch(self._items_list).search_by_name(current_text)
+        self._populate_list()
 
     def focusOutEvent(self, e: QtGui.QFocusEvent) -> None:
         print('listwidget out')
@@ -68,23 +82,22 @@ class MyDropDown(QDialog):
         self.layout.addWidget(self.list_widget)
         self.setLayout(self.layout)
 
-        print(self.parent())
-        print(self.parent().x(), self.parent().y(), self.parent().width(), self.parent().height())
-        geometry = self.parent().mapToGlobal(QPoint(0, self.parent().y()))
-        # globa = self.test_entry.mapToGlobal(QPoint(0, y))
+        self.set_position_and_geometry()
 
-        # self.setModal(False)
-        # self.setWindowModality(Qt.NonModal)
+        MAIN_WINDOW_SIGNALS.window_moved.connect(self.set_position_and_geometry)
 
+    def set_position_and_geometry(self):
+        geometry = self.parent().mapToGlobal(QPoint(0, self.parent().height()))
         self.setGeometry(geometry.x(), geometry.y(), self.parent().width(), 100)
-
 
 class MyCombo(QHBoxLayout):
 
     def __init__(self, items_list):
         super().__init__()
         self.test_entry = TextEdit()
+        self._items = items_list
         self.dropdown = MyDropDown(parent=self.test_entry, items_list=items_list)
+        # self.dropdown.setFocusProxy(self.test_entry)
         # self.widget = QDialog(parent=self.test_entry, flags=Qt.FramelessWindowHint)
 
         self.addWidget(self.test_entry)
@@ -93,6 +106,7 @@ class MyCombo(QHBoxLayout):
         FOCUS_SIGNAL.text_edit_focus_out.connect(self.close_widget)
         FOCUS_SIGNAL.list_view_focus_out.connect(self.close_widget)
         self.test_entry.textChanged.connect(self.filter_article)
+        self.dropdown.list_widget.itemClicked.connect(self.select_article_from_dropdown)
 
     def close_widget(self):
         if self.dropdown.list_widget.hasFocus():
@@ -106,17 +120,17 @@ class MyCombo(QHBoxLayout):
 
         if self.dropdown.isVisible():
             return
-        y = self.test_entry.height()
-        geometry = self.dropdown.parent().mapToGlobal(QPoint(0, y))
-        self.dropdown.setGeometry(geometry.x(), geometry.y(), self.dropdown.parent().width(), 200)
+        self.dropdown.set_position_and_geometry()
         self.dropdown.show()
-        # self.widget.setFocus()
+        self.test_entry.activateWindow()
 
     def filter_article(self):
-        current_text = self.test_entry.text()
-        if not current_text:
-            self.dropdown.list_widget.displayed_items = self.dropdown.list_widget.items_list
-        else:
-            print('a')
-            self.dropdown.list_widget.displayed_items = ArticleSearch(self.dropdown.list_widget.items_list).search_by_name(current_text)
-        self.dropdown.list_widget.populate_list()
+        self.dropdown.list_widget.filter_article(self.test_entry.text())
+
+    def select_article_from_dropdown(self):
+        article_name = self.dropdown.list_widget.currentItem().text()
+        if article_name and article_name != 'Dodaj...':
+            self.test_entry.setText(article_name)
+        elif article_name == 'Dodaj...':
+            dialog = AddNewArticleDialog(self._items)
+            dialog.exec_()
