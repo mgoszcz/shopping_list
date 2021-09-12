@@ -196,3 +196,12 @@ class MyCombo(QHBoxLayout):
     def set_focus_on_dropdown(self):
         self.dropdown.list_widget.setCurrentRow(0)
         self.dropdown.activateWindow()
+
+    def filter_article(self):
+        current_text = self.test_entry.text()
+        if not current_text:
+            self.dropdown.list_widget.displayed_items = self.dropdown.list_widget.items_list
+        else:
+            print('a')
+            self.dropdown.list_widget.displayed_items = ArticleSearch(self.dropdown.list_widget.items_list).search_by_name(current_text)
+        self.dropdown.list_widget.populate_list()
