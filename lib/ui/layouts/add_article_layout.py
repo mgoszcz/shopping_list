@@ -21,7 +21,7 @@ class AddArticleLayout(QHBoxLayout):
         self._shopping_list = shopping_list
         self._article_combo_box = ArticleComboBox(self._shopping_list.shopping_articles_list)
         self.add_button = AddButton()
-        self.my_combo = MyCombo()
+        self.my_combo = MyCombo(self._shopping_list.shopping_articles_list)
         self.addWidget(self._article_combo_box)
         self.addWidget(self.add_button)
         self.addLayout(self.my_combo)
