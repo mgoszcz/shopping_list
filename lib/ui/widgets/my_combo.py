@@ -137,7 +137,6 @@ class MyDropDown(QDialog):
         geometry = self.parent().mapToGlobal(QPoint(0, self.parent().height()))
         self.setGeometry(geometry.x(), geometry.y(), self.parent().width(), 100)
 
-
 class MyCombo(QHBoxLayout):
 
     def __init__(self, items_list):
@@ -198,10 +197,12 @@ class MyCombo(QHBoxLayout):
         self.dropdown.activateWindow()
 
     def filter_article(self):
-        current_text = self.test_entry.text()
-        if not current_text:
-            self.dropdown.list_widget.displayed_items = self.dropdown.list_widget.items_list
-        else:
-            print('a')
-            self.dropdown.list_widget.displayed_items = ArticleSearch(self.dropdown.list_widget.items_list).search_by_name(current_text)
-        self.dropdown.list_widget.populate_list()
+        self.dropdown.list_widget.filter_article(self.test_entry.text())
+
+    def select_article_from_dropdown(self):
+        article_name = self.dropdown.list_widget.currentItem().text()
+        if article_name and article_name != 'Dodaj...':
+            self.test_entry.setText(article_name)
+        elif article_name == 'Dodaj...':
+            dialog = AddNewArticleDialog(self._items)
+            dialog.exec_()
