@@ -1,7 +1,6 @@
 """
 Contains class AddArticleLayout
 """
-
 from PyQt5.QtWidgets import QHBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.shopping_article.shopping_article import ShoppingArticle
@@ -10,6 +9,7 @@ from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS
 from lib.ui.widgets.buttons.add_button import AddButton
 from lib.ui.widgets.combo_boxes.combo_box import ArticleComboBox
+from lib.ui.widgets.my_combo import MyCombo
 
 
 class AddArticleLayout(QHBoxLayout):
@@ -23,8 +23,10 @@ class AddArticleLayout(QHBoxLayout):
         self._shopping_list = shopping_list
         self._article_combo_box = ArticleComboBox(self._shopping_list.shopping_articles_list)
         self.add_button = AddButton()
+        self.my_combo = MyCombo()
         self.addWidget(self._article_combo_box)
         self.addWidget(self.add_button)
+        self.addLayout(self.my_combo)
 
         self.disable_button_when_item_added()
 
