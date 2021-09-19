@@ -137,6 +137,7 @@ class MyDropDown(QDialog):
         geometry = self.parent().mapToGlobal(QPoint(0, self.parent().height()))
         self.setGeometry(geometry.x(), geometry.y(), self.parent().width(), 100)
 
+
 class MyCombo(QHBoxLayout):
 
     def __init__(self, items_list):
@@ -206,3 +207,7 @@ class MyCombo(QHBoxLayout):
         elif article_name == 'Dodaj...':
             dialog = AddNewArticleDialog(self._items)
             dialog.exec_()
+
+    def set_focus_on_dropdown(self):
+        self.dropdown.list_widget.setCurrentRow(0)
+        self.dropdown.activateWindow()
