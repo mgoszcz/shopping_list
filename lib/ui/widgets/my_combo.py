@@ -19,14 +19,24 @@ obsluzyc selekcje ZROBIONE
 ogarnac 'Dodaj...' - powiniene zawsze sei wsywietlac na gorze ZROBIONE
 """
 
+DROPDOWN_KEYS_CHANGE_FOCUS = (Qt.Key_1, Qt.Key_2, Qt.Key_3, Qt.Key_4, Qt.Key_5, Qt.Key_6, Qt.Key_7, Qt.Key_8, Qt.Key_9,
+                              Qt.Key_0, Qt.Key_A, Qt.Key_B, Qt.Key_C, Qt.Key_D, Qt.Key_E, Qt.Key_F, Qt.Key_G, Qt.Key_H,
+                              Qt.Key_I, Qt.Key_J, Qt.Key_K, Qt.Key_L, Qt.Key_M, Qt.Key_N, Qt.Key_O, Qt.Key_P, Qt.Key_Q,
+                              Qt.Key_R, Qt.Key_S, Qt.Key_T, Qt.Key_U, Qt.Key_V, Qt.Key_W, Qt.Key_X, Qt.Key_Y, Qt.Key_Z,
+                              Qt.Key_Space, Qt.Key_Backspace)
+
 
 class FocusSignal(QObject):
     text_edit_focus_in = pyqtSignal()
     text_edit_focus_out = pyqtSignal()
     list_view_focus_in = pyqtSignal()
     list_view_focus_out = pyqtSignal()
+    list_view_key_pressed = pyqtSignal()
+    text_edit_key_down = pyqtSignal()
+
 
 FOCUS_SIGNAL = FocusSignal()
+
 
 class TextEdit(QLineEdit):
     def focusInEvent(self, QFocusEvent):
@@ -38,6 +48,12 @@ class TextEdit(QLineEdit):
         super().focusOutEvent(QFocusEvent)
         print('out')
         FOCUS_SIGNAL.text_edit_focus_out.emit()
+
+    def keyReleaseEvent(self, a0: QtGui.QKeyEvent) -> None:
+        super().keyReleaseEvent(a0)
+        if a0.key() == Qt.Key_Down:
+            FOCUS_SIGNAL.text_edit_key_down.emit()
+        # print(a0.key() == Qt.Key_Down)
 
 
 class MyListWidget(QListWidget):
@@ -71,6 +87,24 @@ class MyListWidget(QListWidget):
         print('listwidget in')
         FOCUS_SIGNAL.list_view_focus_in.emit()
 
+    def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:
+        """
+        musi dzialac
+        Escape, Home, End, Up, Down, pageup, pagedown,
+        musi dzialac altgr + key
+        """
+        print(a0.key())
+        print(a0.nativeModifiers())
+        if a0.key() == Qt.Key_Return:
+            print('obsluz enter')
+        elif a0.key() in DROPDOWN_KEYS_CHANGE_FOCUS:
+            print('guzik')
+        elif a0.modifiers() == Qt.AltModifier:
+            print('altgr')
+        else:
+            super().keyPressEvent(a0)
+
+
 class MyDropDown(QDialog):
 
     def __init__(self, parent, items_list):
@@ -90,6 +124,7 @@ class MyDropDown(QDialog):
         geometry = self.parent().mapToGlobal(QPoint(0, self.parent().height()))
         self.setGeometry(geometry.x(), geometry.y(), self.parent().width(), 100)
 
+
 class MyCombo(QHBoxLayout):
 
     def __init__(self, items_list):
@@ -105,6 +140,7 @@ class MyCombo(QHBoxLayout):
         FOCUS_SIGNAL.text_edit_focus_in.connect(self.new_widget)
         FOCUS_SIGNAL.text_edit_focus_out.connect(self.close_widget)
         FOCUS_SIGNAL.list_view_focus_out.connect(self.close_widget)
+        FOCUS_SIGNAL.text_edit_key_down.connect(self.set_focus_on_dropdown)
         self.test_entry.textChanged.connect(self.filter_article)
         self.dropdown.list_widget.itemClicked.connect(self.select_article_from_dropdown)
 
@@ -134,3 +170,7 @@ class MyCombo(QHBoxLayout):
         elif article_name == 'Dodaj...':
             dialog = AddNewArticleDialog(self._items)
             dialog.exec_()
+
+    def set_focus_on_dropdown(self):
+        self.dropdown.list_widget.setCurrentRow(0)
+        self.dropdown.activateWindow()
