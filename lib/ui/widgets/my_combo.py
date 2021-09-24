@@ -23,7 +23,7 @@ DROPDOWN_KEYS_CHANGE_FOCUS = (Qt.Key_1, Qt.Key_2, Qt.Key_3, Qt.Key_4, Qt.Key_5, 
                               Qt.Key_0, Qt.Key_A, Qt.Key_B, Qt.Key_C, Qt.Key_D, Qt.Key_E, Qt.Key_F, Qt.Key_G, Qt.Key_H,
                               Qt.Key_I, Qt.Key_J, Qt.Key_K, Qt.Key_L, Qt.Key_M, Qt.Key_N, Qt.Key_O, Qt.Key_P, Qt.Key_Q,
                               Qt.Key_R, Qt.Key_S, Qt.Key_T, Qt.Key_U, Qt.Key_V, Qt.Key_W, Qt.Key_X, Qt.Key_Y, Qt.Key_Z,
-                              Qt.Key_Space, Qt.Key_Backspace)
+                              Qt.Key_Space, Qt.Key_Backspace, Qt.Key_Alt)
 
 
 class FocusSignal(QObject):
@@ -93,16 +93,17 @@ class MyListWidget(QListWidget):
         Escape, Home, End, Up, Down, pageup, pagedown,
         musi dzialac altgr + key
         """
-        print(a0.key())
-        print(a0.nativeModifiers())
+        print('klawisz: ' + str(a0.key()))
+        # print(a0.nativeModifiers())
         if a0.key() == Qt.Key_Return:
             print('obsluz enter')
         elif a0.key() in DROPDOWN_KEYS_CHANGE_FOCUS:
             print('guzik')
-        elif a0.modifiers() == Qt.AltModifier:
+        elif a0.key() == Qt.Key_AltGr:
             print('altgr')
         else:
             super().keyPressEvent(a0)
+        print('-----')
 
 
 class MyDropDown(QDialog):
