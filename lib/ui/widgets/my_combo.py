@@ -31,7 +31,8 @@ class FocusSignal(QObject):
     text_edit_focus_out = pyqtSignal()
     list_view_focus_in = pyqtSignal()
     list_view_focus_out = pyqtSignal()
-    list_view_key_pressed = pyqtSignal()
+    list_view_key_pressed = pyqtSignal(int)
+    list_view_return_pressed = pyqtSignal()
     text_edit_key_down = pyqtSignal()
 
 
@@ -39,6 +40,12 @@ FOCUS_SIGNAL = FocusSignal()
 
 
 class TextEdit(QLineEdit):
+
+    def __init__(self):
+        super().__init__()
+
+        FOCUS_SIGNAL.list_view_key_pressed.connect(self.setFocus)
+
     def focusInEvent(self, QFocusEvent):
         super().focusInEvent(QFocusEvent)
         print('in')
@@ -55,6 +62,9 @@ class TextEdit(QLineEdit):
             FOCUS_SIGNAL.text_edit_key_down.emit()
         # print(a0.key() == Qt.Key_Down)
 
+    def set_focus(self):
+        print('abc')
+        self.setFocus()
 
 class MyListWidget(QListWidget):
 
@@ -95,10 +105,12 @@ class MyListWidget(QListWidget):
         """
         print('klawisz: ' + str(a0.key()))
         # print(a0.nativeModifiers())
-        if a0.key() == Qt.Key_Return:
+        if a0.key() in (Qt.Key_Return, Qt.Key_Enter):
             print('obsluz enter')
+            FOCUS_SIGNAL.list_view_return_pressed.emit()
         elif a0.key() in DROPDOWN_KEYS_CHANGE_FOCUS:
             print('guzik')
+            FOCUS_SIGNAL.list_view_key_pressed.emit(a0.key())
         elif a0.key() == Qt.Key_AltGr:
             print('altgr')
         else:
@@ -142,8 +154,16 @@ class MyCombo(QHBoxLayout):
         FOCUS_SIGNAL.text_edit_focus_out.connect(self.close_widget)
         FOCUS_SIGNAL.list_view_focus_out.connect(self.close_widget)
         FOCUS_SIGNAL.text_edit_key_down.connect(self.set_focus_on_dropdown)
+        FOCUS_SIGNAL.list_view_key_pressed.connect(self.aaa)
         self.test_entry.textChanged.connect(self.filter_article)
         self.dropdown.list_widget.itemClicked.connect(self.select_article_from_dropdown)
+        FOCUS_SIGNAL.list_view_return_pressed.connect(self.select_article_from_dropdown)
+
+    def aaa(self, key):
+        print(f'aaa {key}')
+        self.test_entry.activateWindow()
+        if key not in (Qt.Key_Backspace, Qt.Key_Alt):
+            self.test_entry.insert(chr(key).lower())
 
     def close_widget(self):
         if self.dropdown.list_widget.hasFocus():
@@ -163,6 +183,7 @@ class MyCombo(QHBoxLayout):
 
     def filter_article(self):
         self.dropdown.list_widget.filter_article(self.test_entry.text())
+        print('jestem')
 
     def select_article_from_dropdown(self):
         article_name = self.dropdown.list_widget.currentItem().text()
