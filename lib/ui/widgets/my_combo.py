@@ -199,6 +199,7 @@ class MyCombo(QHBoxLayout):
 
     def filter_article(self):
         self.dropdown.list_widget.filter_article(self.test_entry.text())
+        print('jestem')
 
     def select_article_from_dropdown(self):
         article_name = self.dropdown.list_widget.currentItem().text()
