@@ -21,25 +21,25 @@ class ShoppingListTable(BaseTableWidget):
 
     def _color_unordered_rows(self):
         for i in range(self.rowCount()):
-            if self.item(i, 0).text() in [x.name for x in self._items_list.unordered_items]:
+            if self.item(i, 0).text() in [x.name for x in self.items_list.unordered_items]:
                 for j in range(3):
                     self.item(i, j).setBackground(UNORDERED_COLOR)
 
     def _shop_changed(self):
-        self._items_list.sort_by_shop()
+        self.items_list.sort_by_shop()
         LIST_SIGNALS.list_changed.emit()
 
     def _items_modifier(self):
-        self._items_list.sort_by_shop()
-        return self._items_list
+        self.items_list.sort_by_shop()
+        return self.items_list
 
     def _amount_changed(self, article: ShoppingArticle, new_value: str) -> bool:
         article.amount = new_value
         return True
 
     def _category_change(self, article: ShoppingArticle, new_value: str) -> bool:
-        self._items_list.shopping_articles_list.edit_category(article, new_value)
-        self._items_list.sort_by_shop()
+        self.items_list.shopping_articles_list.edit_category(article, new_value)
+        self.items_list.sort_by_shop()
         return True
 
     def _action_if_existing_article(self, article: ShoppingArticle, shopping_list: ShoppingList,
@@ -60,5 +60,5 @@ class ShoppingListTable(BaseTableWidget):
         return True
 
     def _category_list_changed(self):
-        self._items_list.sort_by_shop()
+        self.items_list.sort_by_shop()
         LIST_SIGNALS.list_changed.emit()

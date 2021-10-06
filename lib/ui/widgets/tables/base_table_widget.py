@@ -18,7 +18,7 @@ class BaseTableWidget(QTableWidget):
     """
     def __init__(self, items_list: Union[ShoppingList, ShoppingArticlesList], columns_count: int):
         super().__init__()
-        self._items_list = items_list
+        self.items_list = items_list
         self._columns_count = columns_count
         self.setColumnCount(self._columns_count)
         self.setHorizontalHeaderLabels(['Artykuł', 'Kategoria', 'Ilość'][:self._columns_count])
@@ -28,7 +28,7 @@ class BaseTableWidget(QTableWidget):
         LIST_SIGNALS.list_changed.connect(self.populate_table)
 
     def _items_modifier(self):
-        return self._items_list
+        return self.items_list
 
     def _color_unordered_rows(self):
         pass
@@ -61,14 +61,14 @@ class BaseTableWidget(QTableWidget):
 
     def _name_change(self, article: ShoppingArticle, new_value: str):
         try:
-            self._items_list.get_article_by_name(new_value)
+            self.items_list.get_article_by_name(new_value)
             ErrorDialog(f'Artykuł {new_value} juz jest na liscie').exec_()
             return False
         except AttributeError:
-            if isinstance(self._items_list, ShoppingList):
-                if self._action_if_existing_article(article, self._items_list, new_value):
+            if isinstance(self.items_list, ShoppingList):
+                if self._action_if_existing_article(article, self.items_list, new_value):
                     return True
-            if self._action_if_non_existing_article(article, self._items_list, new_value):
+            if self._action_if_non_existing_article(article, self.items_list, new_value):
                 return True
             return False
 
