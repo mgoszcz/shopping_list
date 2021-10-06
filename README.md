@@ -1,6 +1,7 @@
 Version V1
 
-First version of application:
+First version of application:  
+
     - Possibility of adding shopping articles to global list, all articles have category associated
     - Possibility of adding shops with name and category list
     - Categories are sorted in category list for each shop
