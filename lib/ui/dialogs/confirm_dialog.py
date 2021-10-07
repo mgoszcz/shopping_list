@@ -3,6 +3,8 @@ Module contains class ConfirmDialog
 """
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDialogButtonBox, QLabel  # pylint: disable=no-name-in-module
 
+from lib.ui.icons.icons import QuestionIcon
+
 
 class ConfirmDialog(QDialog):
     """
@@ -10,6 +12,8 @@ class ConfirmDialog(QDialog):
     """
     def __init__(self, text: str):
         super().__init__()
+        self.setWindowTitle('Potwierdź...')
+        self.setWindowIcon(QuestionIcon.q_icon())
         layout = QVBoxLayout()
         btn = QDialogButtonBox.Yes | QDialogButtonBox.No
         self.buttonbox = QDialogButtonBox(btn)
