@@ -3,6 +3,8 @@ Module contains class ErrorDialog
 """
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QDialogButtonBox  # pylint: disable=no-name-in-module
 
+from lib.ui.icons.icons import ErrorIcon
+
 
 class ErrorDialog(QDialog):
     """
@@ -10,6 +12,8 @@ class ErrorDialog(QDialog):
     """
     def __init__(self, text: str):
         super().__init__()
+        self.setWindowTitle('Błąd!')
+        self.setWindowIcon(ErrorIcon.q_icon())
         layout = QVBoxLayout()
         layout.addWidget(QLabel(text))
         button = QDialogButtonBox.Ok

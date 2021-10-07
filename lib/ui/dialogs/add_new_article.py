@@ -4,6 +4,7 @@ AddNewArticleDialog class
 from PyQt5.QtWidgets import QDialog  # pylint: disable=no-name-in-module
 
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
+from lib.ui.icons.icons import ShoppingListIcon
 from lib.ui.layouts.add_article_dialog_layout import AddArticleDialogLayout
 
 
@@ -14,6 +15,8 @@ class AddNewArticleDialog(QDialog):
     def __init__(self, items_list: ShoppingArticlesList):
         super().__init__()
         self._items_list = items_list
+        self.setWindowTitle('Dodaj artykuł...')
+        self.setWindowIcon(ShoppingListIcon.q_icon())
         self.new_article = AddArticleDialogLayout(self._items_list)
         self.article_name = None
         self.setLayout(self.new_article)
