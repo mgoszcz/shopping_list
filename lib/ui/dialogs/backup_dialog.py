@@ -5,7 +5,6 @@ from PyQt5.QtWidgets import QDialog  # pylint: disable=no-name-in-module
 
 from lib.backup_manager.backup_manager import BackupManager
 from lib.ui.dialogs.confirm_dialog import ConfirmDialog
-from lib.ui.icons.icons import ShoppingListIcon
 from lib.ui.layouts.backup_dialog_layout import BackupDialogLayout
 from lib.ui.signals.list_signals import LIST_SIGNALS
 
@@ -17,8 +16,6 @@ class BackupDialog(QDialog):
     def __init__(self, backup_manager: BackupManager):
         super().__init__()
         self._backup_manager = backup_manager
-        self.setWindowTitle('Punkty przywracania')
-        self.setWindowIcon(ShoppingListIcon.q_icon())
         self.layout = BackupDialogLayout(self._backup_manager)
         self.setLayout(self.layout)
 

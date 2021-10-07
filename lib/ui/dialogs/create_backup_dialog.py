@@ -4,7 +4,6 @@ Module contains classes _BackupNameLayout, _CreateBackupButtonsLayout, CreateBac
 from PyQt5.QtWidgets import QDialog, QHBoxLayout, QLabel, QLineEdit, QVBoxLayout, QPushButton  # pylint: disable=no-name-in-module
 
 from lib.backup_manager.backup_manager import BackupManager, AUTO_BACKUP_PREFIX
-from lib.ui.icons.icons import ShoppingListIcon
 from lib.ui.widgets.buttons.cancel_button import CancelButton
 
 
@@ -40,8 +39,6 @@ class CreateBackupDialog(QDialog):
     def __init__(self, backup_manager: BackupManager):
         super().__init__()
         self._backup_manager = backup_manager
-        self.setWindowTitle('Utwórz punkt przywracania...')
-        self.setWindowIcon(ShoppingListIcon.q_icon())
         self._name_layout = _BackupNameLayout()
         self._buttons_layout = _CreateBackupButtonsLayout()
         self._layout = QVBoxLayout()

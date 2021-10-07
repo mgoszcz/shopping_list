@@ -8,7 +8,6 @@ from lib.ui.layouts.add_article_layout import AddArticleLayout
 from lib.ui.layouts.backup_layout import BackupLayout
 from lib.ui.layouts.shop_layout import ShopLayout
 from lib.ui.layouts.shopping_list_layout import ShoppingListLayout
-from lib.ui.icons.icons import ShoppingListIcon
 
 
 class MainWindow(QMainWindow):
@@ -17,8 +16,6 @@ class MainWindow(QMainWindow):
     """
     def __init__(self, interface: ShoppingListInterface, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.setWindowTitle('Shopping List')
-        self.setWindowIcon(ShoppingListIcon.q_icon())
         self.interface = interface
         self.layout = QVBoxLayout()
         self._add_article_layout = AddArticleLayout(self.interface.shopping_list)

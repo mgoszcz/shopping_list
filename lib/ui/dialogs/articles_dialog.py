@@ -7,7 +7,6 @@ from lib.shopping_article_list.shopping_list import ShoppingList
 from lib.ui.dialogs.add_new_article import AddNewArticleDialog
 from lib.ui.dialogs.confirm_dialog import ConfirmDialog
 from lib.ui.dialogs.error_dialog import ErrorDialog
-from lib.ui.icons.icons import ShoppingListIcon
 from lib.ui.layouts.articles_dialog_layout import ArticlesDialogLayout
 
 
@@ -18,8 +17,6 @@ class ArticlesDialog(QDialog):
     def __init__(self, items_list: ShoppingList):
         super().__init__()
         self._items_list = items_list
-        self.setWindowTitle('Baza artykułów')
-        self.setWindowIcon(ShoppingListIcon.q_icon())
         self.layout = ArticlesDialogLayout(self._items_list)
         self.setLayout(self.layout)
 
