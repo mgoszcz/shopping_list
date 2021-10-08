@@ -4,6 +4,7 @@ Module contains classes _BackupDialogButtonsLayout and BackupDialogLayout
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.backup_manager.backup_manager import BackupManager
+from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.widgets.backup_list_widget import BackupListWidget
 from lib.ui.widgets.buttons.cancel_button import CancelButton
 from lib.ui.widgets.buttons.remove_button import RemoveButton
@@ -30,6 +31,7 @@ class BackupDialogLayout(QVBoxLayout):
     """
     def __init__(self, backup_manager: BackupManager, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.BACKUP_DIALOG_LAYOUT)
         self.backup_list = BackupListWidget(backup_manager)
         self.buttons = _BackupDialogButtonsLayout()
         self.addWidget(self.backup_list)

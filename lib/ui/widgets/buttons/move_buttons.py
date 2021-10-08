@@ -3,6 +3,8 @@ Module contains buttons to move categories
 """
 from PyQt5.QtWidgets import QPushButton  # pylint: disable=no-name-in-module
 
+from lib.ui.object_names.object_names import ObjectNames
+
 
 class MoveUpButton(QPushButton):
     """
@@ -10,6 +12,7 @@ class MoveUpButton(QPushButton):
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.MOVE_UP_BUTTON)
         self.setText('\u2191')
 
 
@@ -19,6 +22,7 @@ class MoveDownButton(QPushButton):
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.MOVE_DOWN_BUTTON)
         self.setText('\u2193')
 
 
@@ -28,6 +32,7 @@ class MoveToTopButton(QPushButton):
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.MOVE_TOP_BUTTON)
         self.setText('\u219f')
 
 
@@ -37,4 +42,5 @@ class MoveToBottomButton(QPushButton):
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.MOVE_BOTTOM_BUTTON)
         self.setText('\u21a1')

@@ -2,6 +2,7 @@
 from PyQt5.QtWidgets import QComboBox  # pylint: disable=no-name-in-module
 
 from lib.shop.shops_list import ShopsList
+from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
@@ -9,6 +10,7 @@ class ShopsComboBox(QComboBox):
     """Implementation of combobox to select current shop"""
     def __init__(self, shops_list: ShopsList, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.SHOPS_COMBO_BOX)
         self.items = shops_list
 
         self._populate_list()

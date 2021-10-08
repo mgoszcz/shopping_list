@@ -9,6 +9,7 @@ from lib.shopping_article.shopping_article import ShoppingArticle
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
 from lib.shopping_article_list.shopping_list import ShoppingList
 from lib.ui.dialogs.error_dialog import ErrorDialog
+from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
@@ -18,6 +19,7 @@ class BaseTableWidget(QTableWidget):
     """
     def __init__(self, items_list: Union[ShoppingList, ShoppingArticlesList], columns_count: int, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.BASE_TABLE_WIDGET)
         self.items_list = items_list
         self._columns_count = columns_count
         self.setColumnCount(self._columns_count)

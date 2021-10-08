@@ -4,6 +4,7 @@ Module contains class PrinterComboBox
 from PyQt5.QtWidgets import QComboBox  # pylint: disable=no-name-in-module
 
 from lib.printer.printer import Printer
+from lib.ui.object_names.object_names import ObjectNames
 
 
 class PrinterComboBox(QComboBox):
@@ -12,6 +13,7 @@ class PrinterComboBox(QComboBox):
     """
     def __init__(self, printer: Printer, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.PRINTER_COMBO_BOX)
         self._printer = printer
 
         self._populate_list()

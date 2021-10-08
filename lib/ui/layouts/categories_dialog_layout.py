@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout  # pylint: disable=no-name-
 from lib.save_load.events import SAVE_NEEDED
 from lib.shop.shops_list import ShopsList
 from lib.shopping_categories.category_list import CategoryList
+from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS
 from lib.ui.widgets.buttons.add_button import AddButton
 from lib.ui.widgets.buttons.move_buttons import MoveUpButton, MoveDownButton, MoveToTopButton, MoveToBottomButton
@@ -131,6 +132,7 @@ class CategoriesDialogLayout(QVBoxLayout):
     """
     def __init__(self, shops_list: ShopsList, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.CATEGORIES_DIALOG_LAYOUT)
         self._shops_list = shops_list
         self.combobox_layout = _AddCategoryLayout(self._shops_list.categories)
         self.category_list_layout = _CategoryListLayout(self._shops_list.selected_shop.category_list)

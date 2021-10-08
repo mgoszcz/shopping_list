@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QHBoxLayout  # pylint: disable=no-name-in-module
 from lib.backup_manager.backup_manager import BackupManager
 from lib.ui.dialogs.backup_dialog import BackupDialog
 from lib.ui.dialogs.create_backup_dialog import CreateBackupDialog
+from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS
 from lib.ui.widgets.buttons.backup_button import BackupButton, CreateBackupButton
 
@@ -16,6 +17,7 @@ class BackupLayout(QHBoxLayout):
     """
     def __init__(self, backup_manager: BackupManager, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.BACKUP_LAYOUT)
         self.backup_button = BackupButton()
         self.create_backup_button = CreateBackupButton()
 

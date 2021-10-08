@@ -9,6 +9,7 @@ from lib.ui.dialogs.confirm_dialog import ConfirmDialog
 from lib.ui.dialogs.error_dialog import ErrorDialog
 from lib.ui.icons.icons import ShoppingListIcon
 from lib.ui.layouts.articles_dialog_layout import ArticlesDialogLayout
+from lib.ui.object_names.object_names import ObjectNames
 
 
 class ArticlesDialog(QDialog):
@@ -17,6 +18,7 @@ class ArticlesDialog(QDialog):
     """
     def __init__(self, items_list: ShoppingList, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.ARTICLES_DIALOG)
         self._items_list = items_list
         self.setWindowTitle('Baza artykułów')
         self.setWindowIcon(ShoppingListIcon.q_icon())
