@@ -10,8 +10,8 @@ class ErrorDialog(QDialog):
     """
     Implementation of error dialog
     """
-    def __init__(self, text: str):
-        super().__init__()
+    def __init__(self, text: str, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.setWindowTitle('Błąd!')
         self.setWindowIcon(ErrorIcon.q_icon())
         layout = QVBoxLayout()

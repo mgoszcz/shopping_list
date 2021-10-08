@@ -12,8 +12,8 @@ class AddNewArticleDialog(QDialog):
     """
     Implementation for add new article dialog
     """
-    def __init__(self, items_list: ShoppingArticlesList):
-        super().__init__()
+    def __init__(self, items_list: ShoppingArticlesList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._items_list = items_list
         self.setWindowTitle('Dodaj artykuł...')
         self.setWindowIcon(ShoppingListIcon.q_icon())

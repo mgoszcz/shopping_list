@@ -116,8 +116,8 @@ class _AddCategoryLayout(QHBoxLayout):
     """
     Implements add category field layout
     """
-    def __init__(self, category_list: CategoryList):
-        super().__init__()
+    def __init__(self, category_list: CategoryList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._category_list = category_list
         self.category_combobox = CategoryComboBox(self._category_list)
         self.add_button = AddButton()
@@ -129,8 +129,8 @@ class CategoriesDialogLayout(QVBoxLayout):
     """
     Implements categories dialog layout
     """
-    def __init__(self, shops_list: ShopsList):
-        super().__init__()
+    def __init__(self, shops_list: ShopsList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._shops_list = shops_list
         self.combobox_layout = _AddCategoryLayout(self._shops_list.categories)
         self.category_list_layout = _CategoryListLayout(self._shops_list.selected_shop.category_list)

@@ -14,8 +14,8 @@ UNORDERED_COLOR = QColor(255, 150, 150)
 
 class ShoppingListTable(BaseTableWidget):
     """Implementation of shopping list table"""
-    def __init__(self, items_list: Union[ShoppingList, ShoppingArticlesList], columns_count: int):
-        super().__init__(items_list, columns_count)
+    def __init__(self, items_list: Union[ShoppingList, ShoppingArticlesList], columns_count: int, *args, **kwargs):
+        super().__init__(items_list, columns_count, *args, **kwargs)
         LIST_SIGNALS.shop_changed.connect(self._shop_changed)
         LIST_SIGNALS.category_list_changed.connect(self._category_list_changed)
 

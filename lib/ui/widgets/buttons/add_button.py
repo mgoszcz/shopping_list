@@ -8,6 +8,7 @@ class AddButton(QPushButton):
     """
     Add Button implementation
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setObjectName('add_button')
         self.setText('Dodaj')

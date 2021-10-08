@@ -17,13 +17,14 @@ class MainWindow(QMainWindow):
     """
     def __init__(self, interface: ShoppingListInterface, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setObjectName('main_window')
         self.setWindowTitle('Shopping List')
         self.setWindowIcon(ShoppingListIcon.q_icon())
         self.interface = interface
         self.layout = QVBoxLayout()
-        self._add_article_layout = AddArticleLayout(self.interface.shopping_list)
-        self._shopping_list_layout = ShoppingListLayout(self.interface.shopping_list)
-        self._shop_layout = ShopLayout(self.interface.shops)
+        self._add_article_layout = AddArticleLayout(self.interface.shopping_list, self)
+        self._shopping_list_layout = ShoppingListLayout(self.interface.shopping_list, self)
+        self._shop_layout = ShopLayout(self.interface.shops, self)
         self._backup_layout = BackupLayout(self.interface.backup_manager)
 
         self.layout.addLayout(self._add_article_layout)

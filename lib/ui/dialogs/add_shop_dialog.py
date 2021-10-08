@@ -12,8 +12,8 @@ class AddShopDialog(QDialog):
     """
     Implementation of add shop dialog
     """
-    def __init__(self, shops_list: ShopsList):
-        super().__init__()
+    def __init__(self, shops_list: ShopsList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._shops_list = shops_list
         self.setWindowTitle('Dodaj sklep...')
         self.setWindowIcon(ShoppingListIcon.q_icon())

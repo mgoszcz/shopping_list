@@ -2,7 +2,7 @@
 Contains class AddArticleLayout
 """
 
-from PyQt5.QtWidgets import QHBoxLayout # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QHBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.shopping_article.shopping_article import ShoppingArticle
 from lib.shopping_article_list.shopping_list import ShoppingList
@@ -16,11 +16,12 @@ class AddArticleLayout(QHBoxLayout):
     Class hold layout for add article widgets
     """
 
-    def __init__(self, shopping_list: ShoppingList):
-        super().__init__()
+    def __init__(self, shopping_list: ShoppingList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setObjectName('add_article_layout')
         self._shopping_list = shopping_list
         self._article_combo_box = ArticleComboBox(self._shopping_list.shopping_articles_list)
-        self.add_button = AddButton()
+        self.add_button = AddButton(self.parentWidget())
         self.addWidget(self._article_combo_box)
         self.addWidget(self.add_button)
 

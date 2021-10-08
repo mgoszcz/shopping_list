@@ -10,8 +10,8 @@ class CategoryComboBox(QComboBox):
     """
     Implementation of combo box to select categories in shop's category dialog box
     """
-    def __init__(self, category_list: CategoryList):
-        super().__init__()
+    def __init__(self, category_list: CategoryList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.items = category_list
 
         self._populate_list()

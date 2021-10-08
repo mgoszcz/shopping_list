@@ -7,8 +7,8 @@ from lib.ui.signals.list_signals import LIST_SIGNALS
 
 class ShopsComboBox(QComboBox):
     """Implementation of combobox to select current shop"""
-    def __init__(self, shops_list: ShopsList):
-        super().__init__()
+    def __init__(self, shops_list: ShopsList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.items = shops_list
 
         self._populate_list()

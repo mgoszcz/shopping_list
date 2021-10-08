@@ -15,8 +15,8 @@ class ArticlesDialog(QDialog):
     """
     Implementation of articles list dialog
     """
-    def __init__(self, items_list: ShoppingList):
-        super().__init__()
+    def __init__(self, items_list: ShoppingList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._items_list = items_list
         self.setWindowTitle('Baza artykułów')
         self.setWindowIcon(ShoppingListIcon.q_icon())

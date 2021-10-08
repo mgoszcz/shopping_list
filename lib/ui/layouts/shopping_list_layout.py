@@ -15,8 +15,8 @@ class ShoppingListLayout(QVBoxLayout):
     """
     Class setting layout for shopping list field
     """
-    def __init__(self, shopping_list: ShoppingList):
-        super().__init__()
+    def __init__(self, shopping_list: ShoppingList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._shopping_list = shopping_list
         self._printer = Printer(self._shopping_list)
         self._shopping_list_table = ShoppingListTable(self._shopping_list, 3)

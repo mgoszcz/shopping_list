@@ -15,8 +15,8 @@ class ArticleComboBox(QComboBox):
     """
     Implementation of combo box with articles from articles list
     """
-    def __init__(self, items_list: ShoppingArticlesList):
-        super().__init__()
+    def __init__(self, items_list: ShoppingArticlesList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._items = items_list
         self.combobox_items = []
 

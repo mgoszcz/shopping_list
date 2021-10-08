@@ -8,8 +8,8 @@ class BackupButton(QPushButton):
     """
     Implements Backup button to open backups dialog
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.setText('Punkty przywracania')
 
 
@@ -17,6 +17,6 @@ class CreateBackupButton(QPushButton):
     """
     Implements create backup button to create user backup
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.setText('Utwórz punkt przywracania')

@@ -8,6 +8,6 @@ class CategoryListButton(QPushButton):
     """
     Implements push button to open category dialog
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.setText('Kategorie')

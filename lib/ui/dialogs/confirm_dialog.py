@@ -10,8 +10,8 @@ class ConfirmDialog(QDialog):
     """
     Implementation of confirm dialog (Yes/No)
     """
-    def __init__(self, text: str):
-        super().__init__()
+    def __init__(self, text: str, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.setWindowTitle('Potwierdź...')
         self.setWindowIcon(QuestionIcon.q_icon())
         layout = QVBoxLayout()

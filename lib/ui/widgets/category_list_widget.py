@@ -11,8 +11,8 @@ class CategoryListWidget(QListWidget):
     """
     Implementation of category list widget used in category dialog
     """
-    def __init__(self, category_list: CategoryList):
-        super().__init__()
+    def __init__(self, category_list: CategoryList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._category_list = category_list
 
         self._populate_list()

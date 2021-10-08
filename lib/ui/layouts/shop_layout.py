@@ -13,11 +13,12 @@ from lib.ui.widgets.combo_boxes.shops_combo_box import ShopsComboBox
 
 class ShopLayout(QHBoxLayout):
     """Implementation of shop field layout"""
-    def __init__(self, shops_list: ShopsList):
-        super().__init__()
+    def __init__(self, shops_list: ShopsList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setObjectName('shop_layout')
         self._shops_list = shops_list
         self._shops_combo_box = ShopsComboBox(self._shops_list)
-        self._add_shop_button = AddButton()
+        self._add_shop_button = AddButton(self.parentWidget())
         self._remove_shop_button = RemoveButton()
         self._category_list_button = CategoryListButton()
         self.addWidget(QLabel('SKLEP:'))

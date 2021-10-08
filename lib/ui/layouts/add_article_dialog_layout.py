@@ -14,8 +14,8 @@ class AddArticleDialogLayout(QGridLayout):
     Add new article dialog
     """
 
-    def __init__(self, items_list: ShoppingArticlesList):
-        super().__init__()
+    def __init__(self, items_list: ShoppingArticlesList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._items_list = items_list
         self.product = QLineEdit()
         self.category = CategoryComboBox(self._items_list.shopping_categories)

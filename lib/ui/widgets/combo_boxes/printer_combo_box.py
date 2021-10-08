@@ -10,8 +10,8 @@ class PrinterComboBox(QComboBox):
     """
     Class with printer combobox implementation
     """
-    def __init__(self, printer: Printer):
-        super().__init__()
+    def __init__(self, printer: Printer, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._printer = printer
 
         self._populate_list()

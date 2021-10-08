@@ -8,6 +8,6 @@ class CancelButton(QPushButton):
     """
     Implementation of cancel button
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.setText('Anuluj')

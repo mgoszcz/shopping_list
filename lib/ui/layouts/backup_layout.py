@@ -14,8 +14,8 @@ class BackupLayout(QHBoxLayout):
     """
     Implements backup layout on main window
     """
-    def __init__(self, backup_manager: BackupManager):
-        super().__init__()
+    def __init__(self, backup_manager: BackupManager, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.backup_button = BackupButton()
         self.create_backup_button = CreateBackupButton()
 

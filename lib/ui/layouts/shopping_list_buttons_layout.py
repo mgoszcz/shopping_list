@@ -13,8 +13,8 @@ from lib.ui.widgets.combo_boxes.printer_combo_box import PrinterComboBox
 
 class _ShoppingListButtons(QHBoxLayout):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.remove_button = RemoveButton()
         self.clear_list_button = ClearListButton()
         self.article_list_button = ArticleListButton()
@@ -25,8 +25,8 @@ class _ShoppingListButtons(QHBoxLayout):
 
 class _PrinterButtons(QHBoxLayout):
 
-    def __init__(self, printer: Printer):
-        super().__init__()
+    def __init__(self, printer: Printer, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.printer_selector = PrinterComboBox(printer)
         self.print_button = PrintButton()
         self.addWidget(self.printer_selector)
@@ -37,8 +37,8 @@ class ShoppingListButtonsLayout(QVBoxLayout):
     """
     Layout with buttons handling shopping list and printing
     """
-    def __init__(self, printer: Printer):
-        super().__init__()
+    def __init__(self, printer: Printer, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.shopping_list_buttons = _ShoppingListButtons()
         self.printer_buttons = _PrinterButtons(printer)
         self.addLayout(self.shopping_list_buttons)

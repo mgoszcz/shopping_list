@@ -8,6 +8,6 @@ class PrintButton(QPushButton):
     """
     Implementation of print button
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.setText('Drukuj')

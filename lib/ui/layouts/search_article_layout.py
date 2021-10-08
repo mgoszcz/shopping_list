@@ -7,8 +7,8 @@ from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesLis
 
 class SearchArticleLayout(QVBoxLayout):
     """Class holds implementation of search article entry"""
-    def __init__(self, shopping_articles_list: ShoppingArticlesList):
-        super().__init__()
+    def __init__(self, shopping_articles_list: ShoppingArticlesList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._articles = shopping_articles_list
         self.search = ArticleSearch(self._articles)
         self.search_box = QLineEdit()

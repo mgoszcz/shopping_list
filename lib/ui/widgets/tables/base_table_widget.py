@@ -16,8 +16,8 @@ class BaseTableWidget(QTableWidget):
     """
     Implementation of base table widget - all common properties and actions, interface implementation
     """
-    def __init__(self, items_list: Union[ShoppingList, ShoppingArticlesList], columns_count: int):
-        super().__init__()
+    def __init__(self, items_list: Union[ShoppingList, ShoppingArticlesList], columns_count: int, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.items_list = items_list
         self._columns_count = columns_count
         self.setColumnCount(self._columns_count)

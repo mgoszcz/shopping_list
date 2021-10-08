@@ -14,8 +14,8 @@ class _BackupDialogButtonsLayout(QHBoxLayout):
     """
     Layout for Backup Dialog Buttons field
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.revert_button = RevertButton()
         self.remove_button = RemoveButton()
         self.cancel_button = CancelButton()
@@ -28,8 +28,8 @@ class BackupDialogLayout(QVBoxLayout):
     """
     Layout for backup dialog
     """
-    def __init__(self, backup_manager: BackupManager):
-        super().__init__()
+    def __init__(self, backup_manager: BackupManager, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.backup_list = BackupListWidget(backup_manager)
         self.buttons = _BackupDialogButtonsLayout()
         self.addWidget(self.backup_list)

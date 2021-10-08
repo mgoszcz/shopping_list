@@ -12,8 +12,8 @@ class CategoriesDialog(QDialog):
     """
     Implementation of categories dialog used by shops
     """
-    def __init__(self, shop_list: ShopsList):
-        super().__init__()
+    def __init__(self, shop_list: ShopsList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._shops_list = shop_list
         self.setWindowTitle('Kategorie artykułów w sklepie')
         self.setWindowIcon(ShoppingListIcon.q_icon())

@@ -12,8 +12,8 @@ class _BackupNameLayout(QHBoxLayout):
     """
     Layout of backup name field
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._label = QLabel('Nazwa: ')
         self.name = QLineEdit()
 
@@ -25,8 +25,8 @@ class _CreateBackupButtonsLayout(QHBoxLayout):
     """
     Buttons layout
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.ok_button = QPushButton('Ok')
         self.cancel_button = CancelButton()
         self.addWidget(self.ok_button)
@@ -37,8 +37,8 @@ class CreateBackupDialog(QDialog):
     """
     Implementation of create backup dialog - for user backups
     """
-    def __init__(self, backup_manager: BackupManager):
-        super().__init__()
+    def __init__(self, backup_manager: BackupManager, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._backup_manager = backup_manager
         self.setWindowTitle('Utwórz punkt przywracania...')
         self.setWindowIcon(ShoppingListIcon.q_icon())

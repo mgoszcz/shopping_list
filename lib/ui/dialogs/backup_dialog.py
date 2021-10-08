@@ -14,8 +14,8 @@ class BackupDialog(QDialog):
     """
     Implementation of Backup Dialog
     """
-    def __init__(self, backup_manager: BackupManager):
-        super().__init__()
+    def __init__(self, backup_manager: BackupManager, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._backup_manager = backup_manager
         self.setWindowTitle('Punkty przywracania')
         self.setWindowIcon(ShoppingListIcon.q_icon())

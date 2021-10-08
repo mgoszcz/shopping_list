@@ -8,8 +8,8 @@ class AddShopDialogLayout(QGridLayout):
     """
     Layout for add shop dialog
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.name = QLineEdit()
         self.logo = QLabel('<logo>')
         self.addWidget(QLabel('Nazwa: '), 0, 0)

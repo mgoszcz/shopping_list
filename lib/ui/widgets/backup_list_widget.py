@@ -10,8 +10,8 @@ class BackupListWidget(QListWidget):
     """
     Implements backups list widget
     """
-    def __init__(self, backup_manager: BackupManager):
-        super().__init__()
+    def __init__(self, backup_manager: BackupManager, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._backup_manager = backup_manager
 
         self.populate_list()

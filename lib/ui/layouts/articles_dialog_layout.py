@@ -17,8 +17,8 @@ class ArticlesDialogLayout(QVBoxLayout):
     Layout for articles dialog
     """
 
-    def __init__(self, items_list: ShoppingList):
-        super().__init__()
+    def __init__(self, items_list: ShoppingList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._items_list = items_list
         self.articles_table = ArticlesListTableAlphabetical(self._items_list.shopping_articles_list, 2)
         self.add_button = AddButton()
