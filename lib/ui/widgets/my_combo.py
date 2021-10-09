@@ -39,24 +39,23 @@ class TextEdit(QLineEdit):
         FOCUS_SIGNAL.list_view_key_pressed.connect(self.setFocus)
 
     def focusInEvent(self, QFocusEvent):
+        """POTRZEBNE"""
         super().focusInEvent(QFocusEvent)
         print('in')
         FOCUS_SIGNAL.text_edit_focus_in.emit()
 
     def focusOutEvent(self, QFocusEvent):
+        """POTRZEBNE"""
         super().focusOutEvent(QFocusEvent)
         print('out')
         FOCUS_SIGNAL.text_edit_focus_out.emit()
 
     def keyReleaseEvent(self, a0: QtGui.QKeyEvent) -> None:
+        """POTRZEBNE"""
         super().keyReleaseEvent(a0)
         if a0.key() == Qt.Key_Down:
             FOCUS_SIGNAL.text_edit_key_down.emit()
         # print(a0.key() == Qt.Key_Down)
-
-    def set_focus(self):
-        print('abc')
-        self.setFocus()
 
 
 class MyListWidget(QListWidget):
@@ -69,12 +68,14 @@ class MyListWidget(QListWidget):
         self._populate_list()
 
     def _populate_list(self):
+        """POTRZEBNE"""
         self.clear()
         self.addItem('Dodaj...')
         for item in sorted(self.displayed_items):
             self.addItem(item)
 
     def filter_article(self, current_text):
+        """POTRZEBNE"""
         if not current_text:
             self.displayed_items = [item.name for item in self._items_list]
         else:
@@ -83,15 +84,18 @@ class MyListWidget(QListWidget):
         self._populate_list()
 
     def focusOutEvent(self, e: QtGui.QFocusEvent) -> None:
+        """POTRZEBNE"""
         print('listwidget out')
         FOCUS_SIGNAL.list_view_focus_out.emit()
 
     def focusInEvent(self, e: QtGui.QFocusEvent) -> None:
+        """POTRZEBNE"""
         print('listwidget in')
         FOCUS_SIGNAL.list_view_focus_in.emit()
 
     def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:
         """
+        POTRZEBNE
         musi dzialac
         Escape, Home, End, Up, Down, pageup, pagedown,
         musi dzialac altgr + key
@@ -112,7 +116,7 @@ class MyListWidget(QListWidget):
 
 
 class MyDropDown(QDialog):
-
+    """WSZYSTKO POTRZEBNE"""
     def __init__(self, parent, items_list):
         super().__init__(parent=parent, flags=Qt.FramelessWindowHint)
         self.list_widget = MyListWidget(items_list)
@@ -155,12 +159,14 @@ class MyCombo(QHBoxLayout):
         FOCUS_SIGNAL.list_view_return_pressed.connect(self.select_article_from_dropdown)
 
     def aaa(self, key):
+        """POTRZEBNE"""
         print(f'aaa {key}')
         self.test_entry.activateWindow()
         if key not in (Qt.Key_Backspace, Qt.Key_Alt):
             self.test_entry.insert(chr(key).lower())
 
     def close_widget(self):
+        """POTRZEBNE"""
         if self.dropdown.list_widget.hasFocus():
             return
         if self.test_entry.hasFocus():
@@ -169,7 +175,7 @@ class MyCombo(QHBoxLayout):
         self.dropdown.close()
 
     def new_widget(self):
-
+        """POTRZEBNE"""
         if self.dropdown.isVisible():
             return
         self.dropdown.set_position_and_geometry()
@@ -177,10 +183,12 @@ class MyCombo(QHBoxLayout):
         self.test_entry.activateWindow()
 
     def filter_article(self):
+        """POTRZEBNE"""
         self.dropdown.list_widget.filter_article(self.test_entry.text())
         print('jestem')
 
     def select_article_from_dropdown(self):
+        """POTRZEBNE"""
         article_name = self.dropdown.list_widget.currentItem().text()
         if article_name and article_name != 'Dodaj...':
             self.test_entry.setText(article_name)
@@ -189,21 +197,11 @@ class MyCombo(QHBoxLayout):
             dialog.exec_()
 
     def set_focus_on_dropdown(self):
+        """POTRZEBNE"""
         self.dropdown.list_widget.setCurrentRow(0)
         self.dropdown.activateWindow()
 
     def filter_article(self):
+        """POTRZEBNE"""
         self.dropdown.list_widget.filter_article(self.test_entry.text())
         print('jestem')
-
-    def select_article_from_dropdown(self):
-        article_name = self.dropdown.list_widget.currentItem().text()
-        if article_name and article_name != 'Dodaj...':
-            self.test_entry.setText(article_name)
-        elif article_name == 'Dodaj...':
-            dialog = AddNewArticleDialog(self._items)
-            dialog.exec_()
-
-    def set_focus_on_dropdown(self):
-        self.dropdown.list_widget.setCurrentRow(0)
-        self.dropdown.activateWindow()
