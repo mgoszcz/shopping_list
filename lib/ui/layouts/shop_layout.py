@@ -19,7 +19,7 @@ class ShopLayout(QHBoxLayout):
         self.setObjectName(ObjectNames.SHOP_LAYOUT)
         self._shops_list = shops_list
         self._shops_combo_box = ShopsComboBox(self._shops_list)
-        self._add_shop_button = AddButton(self.parentWidget())
+        self._add_shop_button = AddButton()
         self._remove_shop_button = RemoveButton()
         self._category_list_button = CategoryListButton()
         self.addWidget(QLabel('SKLEP:'))
