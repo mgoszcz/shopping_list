@@ -23,9 +23,9 @@ class MainWindow(QMainWindow):
         self.setWindowIcon(ShoppingListIcon.q_icon())
         self.interface = interface
         self.layout = QVBoxLayout()
-        self._add_article_layout = AddArticleLayout(self.interface.shopping_list, self)
-        self._shopping_list_layout = ShoppingListLayout(self.interface.shopping_list, self)
-        self._shop_layout = ShopLayout(self.interface.shops, self)
+        self._add_article_layout = AddArticleLayout(self.interface.shopping_list)
+        self._shopping_list_layout = ShoppingListLayout(self.interface.shopping_list)
+        self._shop_layout = ShopLayout(self.interface.shops)
         self._backup_layout = BackupLayout(self.interface.backup_manager)
 
         self.layout.addLayout(self._add_article_layout)
