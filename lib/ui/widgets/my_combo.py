@@ -4,19 +4,11 @@ from PyQt5.QtWidgets import QLineEdit, QDialog, QListWidget, QHBoxLayout
 
 from lib.search.article_search import ArticleSearch
 from lib.ui.dialogs.add_new_article import AddNewArticleDialog
+from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.main_window_signals import MAIN_WINDOW_SIGNALS
 
 """
-Filtrowanie wrzucic w list widget ZROBIONE
-poprawcowac nad focusem - po kliknieciu w text edit focus powinien pozostac w text edit ZROBIONE
-gdy focus jest w text edit to strzalki gora dol powinny przelaczyc na dialog, nastepnie nacisniecie innego przycisku niz
- enter lub gora dol powinien spowodowac pisanie dalej
-dopracowac resize i move ZROBIONE
-pomyslec nad rozmiarem
-pomyslec nad sorrtowaniem w dropdown
-obsluzyc selekcje ZROBIONE
-    na pozniej - selekcja powinna zamknac dropdown mimo focusa na entry
-ogarnac 'Dodaj...' - powiniene zawsze sei wsywietlac na gorze ZROBIONE
+POC ready, let's implement it!
 """
 
 DROPDOWN_KEYS_CHANGE_FOCUS = (Qt.Key_1, Qt.Key_2, Qt.Key_3, Qt.Key_4, Qt.Key_5, Qt.Key_6, Qt.Key_7, Qt.Key_8, Qt.Key_9,
@@ -66,27 +58,28 @@ class TextEdit(QLineEdit):
         print('abc')
         self.setFocus()
 
+
 class MyListWidget(QListWidget):
 
     def __init__(self, items_list):
         super().__init__()
         self._items_list = items_list
-        self._displayed_items = items_list
+        self.displayed_items = [item.name for item in items_list]
 
         self._populate_list()
 
     def _populate_list(self):
         self.clear()
         self.addItem('Dodaj...')
-        for item in self._displayed_items:
-            self.addItem(item.name)
+        for item in sorted(self.displayed_items):
+            self.addItem(item)
 
     def filter_article(self, current_text):
         if not current_text:
-            self._displayed_items = self._items_list
+            self.displayed_items = [item.name for item in self._items_list]
         else:
             print('a')
-            self._displayed_items = ArticleSearch(self._items_list).search_by_name(current_text)
+            self.displayed_items = [item.name for item in ArticleSearch(self._items_list).search_by_name(current_text)]
         self._populate_list()
 
     def focusOutEvent(self, e: QtGui.QFocusEvent) -> None:
@@ -129,13 +122,15 @@ class MyDropDown(QDialog):
         self.layout.addWidget(self.list_widget)
         self.setLayout(self.layout)
 
-        self.set_position_and_geometry()
-
         MAIN_WINDOW_SIGNALS.window_moved.connect(self.set_position_and_geometry)
 
     def set_position_and_geometry(self):
         geometry = self.parent().mapToGlobal(QPoint(0, self.parent().height()))
-        self.setGeometry(geometry.x(), geometry.y(), self.parent().width(), 100)
+        parent = self.parentWidget()
+        while not parent.objectName() == ObjectNames.MAIN_WINDOW:
+            parent = parent.parentWidget()
+        main_window_height = parent.height()
+        self.setGeometry(geometry.x(), geometry.y(), self.parent().width(), int(main_window_height / 2))
 
 
 class MyCombo(QHBoxLayout):
