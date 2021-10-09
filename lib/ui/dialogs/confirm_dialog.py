@@ -4,14 +4,16 @@ Module contains class ConfirmDialog
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDialogButtonBox, QLabel  # pylint: disable=no-name-in-module
 
 from lib.ui.icons.icons import QuestionIcon
+from lib.ui.object_names.object_names import ObjectNames
 
 
 class ConfirmDialog(QDialog):
     """
     Implementation of confirm dialog (Yes/No)
     """
-    def __init__(self, text: str):
-        super().__init__()
+    def __init__(self, text: str, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.CONFIRM_DIALOG)
         self.setWindowTitle('Potwierdź...')
         self.setWindowIcon(QuestionIcon.q_icon())
         layout = QVBoxLayout()

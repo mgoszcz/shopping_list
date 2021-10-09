@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QHBoxLayout, QLineEdit, QLabel, QPushButton, \
     QGridLayout  # pylint: disable=no-name-in-module
 
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
+from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.widgets.combo_boxes.category_combo_box import CategoryComboBox
 
 
@@ -14,8 +15,9 @@ class AddArticleDialogLayout(QGridLayout):
     Add new article dialog
     """
 
-    def __init__(self, items_list: ShoppingArticlesList):
-        super().__init__()
+    def __init__(self, items_list: ShoppingArticlesList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.ADD_ARTICLE_DIALOG_LAYOUT)
         self._items_list = items_list
         self.product = QLineEdit()
         self.category = CategoryComboBox(self._items_list.shopping_categories)

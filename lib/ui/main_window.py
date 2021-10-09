@@ -9,6 +9,7 @@ from lib.ui.layouts.backup_layout import BackupLayout
 from lib.ui.layouts.shop_layout import ShopLayout
 from lib.ui.layouts.shopping_list_layout import ShoppingListLayout
 from lib.ui.icons.icons import ShoppingListIcon
+from lib.ui.object_names.object_names import ObjectNames
 
 
 class MainWindow(QMainWindow):
@@ -17,6 +18,7 @@ class MainWindow(QMainWindow):
     """
     def __init__(self, interface: ShoppingListInterface, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.MAIN_WINDOW)
         self.setWindowTitle('Shopping List')
         self.setWindowIcon(ShoppingListIcon.q_icon())
         self.interface = interface
@@ -34,6 +36,7 @@ class MainWindow(QMainWindow):
         self._add_article_layout.add_button.pressed.connect(self.add_article_to_shopping_list)
 
         widget = QWidget()
+        widget.setObjectName(ObjectNames.MAIN_WINDOW_CENTRAL_WIDGET)
         widget.setLayout(self.layout)
         self.setCentralWidget(widget)
 

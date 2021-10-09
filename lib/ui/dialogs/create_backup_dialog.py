@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QDialog, QHBoxLayout, QLabel, QLineEdit, QVBoxLayout
 
 from lib.backup_manager.backup_manager import BackupManager, AUTO_BACKUP_PREFIX
 from lib.ui.icons.icons import ShoppingListIcon
+from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.widgets.buttons.cancel_button import CancelButton
 
 
@@ -12,8 +13,8 @@ class _BackupNameLayout(QHBoxLayout):
     """
     Layout of backup name field
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self._label = QLabel('Nazwa: ')
         self.name = QLineEdit()
 
@@ -25,8 +26,8 @@ class _CreateBackupButtonsLayout(QHBoxLayout):
     """
     Buttons layout
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.ok_button = QPushButton('Ok')
         self.cancel_button = CancelButton()
         self.addWidget(self.ok_button)
@@ -37,8 +38,9 @@ class CreateBackupDialog(QDialog):
     """
     Implementation of create backup dialog - for user backups
     """
-    def __init__(self, backup_manager: BackupManager):
-        super().__init__()
+    def __init__(self, backup_manager: BackupManager, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.CREATE_BACKUP_DIALOG)
         self._backup_manager = backup_manager
         self.setWindowTitle('Utwórz punkt przywracania...')
         self.setWindowIcon(ShoppingListIcon.q_icon())

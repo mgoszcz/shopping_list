@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QComboBox  # pylint: disable=no-name-in-module
 from lib.shopping_article.shopping_article import ShoppingArticle
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
 from lib.ui.dialogs.add_new_article import AddNewArticleDialog
+from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
@@ -15,8 +16,9 @@ class ArticleComboBox(QComboBox):
     """
     Implementation of combo box with articles from articles list
     """
-    def __init__(self, items_list: ShoppingArticlesList):
-        super().__init__()
+    def __init__(self, items_list: ShoppingArticlesList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.ARTICLE_COMBO_BOX)
         self._items = items_list
         self.combobox_items = []
 

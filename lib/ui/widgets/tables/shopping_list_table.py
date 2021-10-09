@@ -6,6 +6,7 @@ from PyQt5.QtGui import QColor  # pylint: disable=no-name-in-module
 from lib.shopping_article.shopping_article import ShoppingArticle
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
 from lib.shopping_article_list.shopping_list import ShoppingList
+from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS
 from lib.ui.widgets.tables.base_table_widget import BaseTableWidget
 
@@ -14,8 +15,9 @@ UNORDERED_COLOR = QColor(255, 150, 150)
 
 class ShoppingListTable(BaseTableWidget):
     """Implementation of shopping list table"""
-    def __init__(self, items_list: Union[ShoppingList, ShoppingArticlesList], columns_count: int):
-        super().__init__(items_list, columns_count)
+    def __init__(self, items_list: Union[ShoppingList, ShoppingArticlesList], columns_count: int, *args, **kwargs):
+        super().__init__(items_list, columns_count, *args, **kwargs)
+        self.setObjectName(ObjectNames.SHOPPING_LIST_TABLE)
         LIST_SIGNALS.shop_changed.connect(self._shop_changed)
         LIST_SIGNALS.category_list_changed.connect(self._category_list_changed)
 

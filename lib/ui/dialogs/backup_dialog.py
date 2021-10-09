@@ -7,6 +7,7 @@ from lib.backup_manager.backup_manager import BackupManager
 from lib.ui.dialogs.confirm_dialog import ConfirmDialog
 from lib.ui.icons.icons import ShoppingListIcon
 from lib.ui.layouts.backup_dialog_layout import BackupDialogLayout
+from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
@@ -14,8 +15,9 @@ class BackupDialog(QDialog):
     """
     Implementation of Backup Dialog
     """
-    def __init__(self, backup_manager: BackupManager):
-        super().__init__()
+    def __init__(self, backup_manager: BackupManager, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.BACKUP_DIALOG)
         self._backup_manager = backup_manager
         self.setWindowTitle('Punkty przywracania')
         self.setWindowIcon(ShoppingListIcon.q_icon())

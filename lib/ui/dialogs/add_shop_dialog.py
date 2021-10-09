@@ -6,14 +6,16 @@ from PyQt5.QtWidgets import QDialog  # pylint: disable=no-name-in-module
 from lib.shop.shops_list import ShopsList
 from lib.ui.icons.icons import ShoppingListIcon
 from lib.ui.layouts.add_shop_dialog_layout import AddShopDialogLayout
+from lib.ui.object_names.object_names import ObjectNames
 
 
 class AddShopDialog(QDialog):
     """
     Implementation of add shop dialog
     """
-    def __init__(self, shops_list: ShopsList):
-        super().__init__()
+    def __init__(self, shops_list: ShopsList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.ADD_SHOP_DIALOG)
         self._shops_list = shops_list
         self.setWindowTitle('Dodaj sklep...')
         self.setWindowIcon(ShoppingListIcon.q_icon())

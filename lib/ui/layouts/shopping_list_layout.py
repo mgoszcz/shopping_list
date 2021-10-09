@@ -8,6 +8,7 @@ from lib.printer.printer import Printer
 from lib.shopping_article_list.shopping_list import ShoppingList
 from lib.ui.dialogs.articles_dialog import ArticlesDialog
 from lib.ui.layouts.shopping_list_buttons_layout import ShoppingListButtonsLayout
+from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.widgets.tables.shopping_list_table import ShoppingListTable
 
 
@@ -15,8 +16,9 @@ class ShoppingListLayout(QVBoxLayout):
     """
     Class setting layout for shopping list field
     """
-    def __init__(self, shopping_list: ShoppingList):
-        super().__init__()
+    def __init__(self, shopping_list: ShoppingList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.SHOPPING_LIST_LAYOUT)
         self._shopping_list = shopping_list
         self._printer = Printer(self._shopping_list)
         self._shopping_list_table = ShoppingListTable(self._shopping_list, 3)

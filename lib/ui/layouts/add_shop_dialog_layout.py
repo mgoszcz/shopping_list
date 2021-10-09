@@ -3,13 +3,16 @@ Module contains class AddShopDialogLayout
 """
 from PyQt5.QtWidgets import QGridLayout, QLineEdit, QLabel, QDialogButtonBox  # pylint: disable=no-name-in-module
 
+from lib.ui.object_names.object_names import ObjectNames
+
 
 class AddShopDialogLayout(QGridLayout):
     """
     Layout for add shop dialog
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.ADD_SHOP_DIALOG_LAYOUT)
         self.name = QLineEdit()
         self.logo = QLabel('<logo>')
         self.addWidget(QLabel('Nazwa: '), 0, 0)

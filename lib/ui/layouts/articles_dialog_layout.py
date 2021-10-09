@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QPushButton  # pylint: dis
 from lib.search.article_search import ArticleSearch
 from lib.shopping_article_list.shopping_list import ShoppingList
 from lib.ui.layouts.search_article_layout import SearchArticleLayout
+from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.widgets.buttons.add_button import AddButton
 from lib.ui.widgets.buttons.clear_list_button import ClearListButton
 from lib.ui.widgets.buttons.remove_button import RemoveButton
@@ -17,8 +18,9 @@ class ArticlesDialogLayout(QVBoxLayout):
     Layout for articles dialog
     """
 
-    def __init__(self, items_list: ShoppingList):
-        super().__init__()
+    def __init__(self, items_list: ShoppingList, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.setObjectName(ObjectNames.ARTICLES_DIALOG_LAYOUT)
         self._items_list = items_list
         self.articles_table = ArticlesListTableAlphabetical(self._items_list.shopping_articles_list, 2)
         self.add_button = AddButton()
