@@ -13,7 +13,7 @@ from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
-class ArticleComboBox(QComboBox):
+class LegacyArticleComboBox(QComboBox):
     """
     Implementation of combo box with articles from articles list
     """

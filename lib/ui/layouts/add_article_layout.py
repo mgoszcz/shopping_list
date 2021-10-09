@@ -8,7 +8,7 @@ from lib.shopping_article_list.shopping_list import ShoppingList
 from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS
 from lib.ui.widgets.buttons.add_button import AddButton
-from lib.ui.widgets.combo_boxes.combo_box import ArticleComboBox
+from lib.ui.widgets.combo_boxes.combo_box import LegacyArticleComboBox
 from lib.ui.widgets.my_combo import MyCombo
 
 
@@ -21,7 +21,7 @@ class AddArticleLayout(QHBoxLayout):
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.ADD_ARTICLE_LAYOUT)
         self._shopping_list = shopping_list
-        self._article_combo_box = ArticleComboBox(self._shopping_list.shopping_articles_list)
+        self._article_combo_box = LegacyArticleComboBox(self._shopping_list.shopping_articles_list)
         self.add_button = AddButton()
         self.my_combo = MyCombo(self._shopping_list.shopping_articles_list)
         self.addWidget(self._article_combo_box)
