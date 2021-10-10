@@ -21,9 +21,9 @@ class ShoppingListLayout(QVBoxLayout):
         self.setObjectName(ObjectNames.SHOPPING_LIST_LAYOUT)
         self._shopping_list = shopping_list
         self._printer = Printer(self._shopping_list)
-        self._shopping_list_table = ShoppingListTable(self._shopping_list, 3)
+        self.shopping_list_table = ShoppingListTable(self._shopping_list, 3)
         self._shopping_list_buttons_layout = ShoppingListButtonsLayout(self._printer)
-        self.addWidget(self._shopping_list_table)
+        self.addWidget(self.shopping_list_table)
         self.addLayout(self._shopping_list_buttons_layout)
 
         self._shopping_list_buttons_layout.shopping_list_buttons.remove_button.pressed.connect(self.remove_article)
@@ -36,10 +36,10 @@ class ShoppingListLayout(QVBoxLayout):
         """
         Action after pressing remove button
         """
-        self._shopping_list_table.blockSignals(True)
-        article = self._shopping_list_table.item(self._shopping_list_table.currentRow(), 0).text()
+        self.shopping_list_table.blockSignals(True)
+        article = self.shopping_list_table.item(self.shopping_list_table.currentRow(), 0).text()
         self._shopping_list.remove_article(article)
-        self._shopping_list_table.blockSignals(False)
+        self.shopping_list_table.blockSignals(False)
 
     def clear_list(self):
         """
@@ -51,25 +51,25 @@ class ShoppingListLayout(QVBoxLayout):
         """
         Action after pressing articles list button (opens articles list dialog)
         """
-        self._shopping_list_table.blockSignals(True)
+        self.shopping_list_table.blockSignals(True)
         dialog = ArticlesDialog(self._shopping_list)
         dialog.exec_()
-        self._shopping_list_table.blockSignals(False)
+        self.shopping_list_table.blockSignals(False)
 
     def select_item(self, item_name: str):
         """
         Select specific article on list, used when adding new article to select newly added article
         :param item_name: name of article
         """
-        items = self._shopping_list_table.findItems(item_name, Qt.MatchExactly)
+        items = self.shopping_list_table.findItems(item_name, Qt.MatchExactly)
         if len(items) > 1:
             columns = [item.column() for item in items]
             if columns.count(0) > 1:
                 raise RuntimeError('More than one item found')
         if items:
-            row = self._shopping_list_table.row(items[0])
-            self._shopping_list_table.setCurrentCell(row, 2)
-            self._shopping_list_table.scrollToItem(items[0])
+            row = self.shopping_list_table.row(items[0])
+            self.shopping_list_table.setCurrentCell(row, 2)
+            self.shopping_list_table.scrollToItem(items[0])
 
     def print_list(self):
         """

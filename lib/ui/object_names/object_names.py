@@ -48,3 +48,7 @@ class ObjectNames:
     MAIN_WINDOW = 'main_window'
     MAIN_WINDOW_CENTRAL_WIDGET = 'main_window_central_widget'
     CREATE_BACKUP_BUTTON = 'create_backup_button'
+    ADD_ARTICLE_COMBOBOX = 'add_article_combobox'
+    ADD_ARTICLE_LIST_WIDGET = 'add_article_list_widget'
+    ADD_ARTICLE_DROPDOWN = 'add_article_dropdown'
+    ADD_ARTICLE_TEXT_ENTRY = 'add_article_text_entry'
