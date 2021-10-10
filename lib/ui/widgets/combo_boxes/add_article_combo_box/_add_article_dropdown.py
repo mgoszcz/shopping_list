@@ -1,7 +1,7 @@
 """Module contains _AddArticleListWidget and AddArticleDropdown classes"""
-from PyQt5 import QtGui
-from PyQt5.QtCore import Qt, QPoint
-from PyQt5.QtWidgets import QListWidget, QDialog, QHBoxLayout
+from PyQt5 import QtGui  # pylint: disable=no-name-in-module
+from PyQt5.QtCore import Qt, QPoint  # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QListWidget, QDialog, QHBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.search.article_search import ArticleSearch
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
@@ -43,15 +43,15 @@ class _AddArticleListWidget(QListWidget):
             self.displayed_items = [item.name for item in ArticleSearch(self._items_list).search_by_name(current_text)]
         self._populate_list()
 
-    def focusOutEvent(self, e: QtGui.QFocusEvent) -> None:
+    def focusOutEvent(self, e: QtGui.QFocusEvent) -> None:  # pylint: disable=invalid-name
         """Overload method to have specific signal emitted"""
         ADD_ARTICLE_COMBO_SIGNALS.list_view_focus_out.emit()
 
-    def focusInEvent(self, e: QtGui.QFocusEvent) -> None:
+    def focusInEvent(self, e: QtGui.QFocusEvent) -> None:  # pylint: disable=invalid-name
         """Overload method to have specific signal emitted"""
         ADD_ARTICLE_COMBO_SIGNALS.list_view_focus_in.emit()
 
-    def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:
+    def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:  # pylint: disable=invalid-name
         """Overload method to have specific signal emitted"""
         if a0.key() in (Qt.Key_Return, Qt.Key_Enter):
             ADD_ARTICLE_COMBO_SIGNALS.list_view_return_pressed.emit()

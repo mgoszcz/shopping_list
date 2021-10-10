@@ -1,8 +1,8 @@
 """Module contains AddArticleComboBox class"""
 from typing import Optional
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QHBoxLayout
+from PyQt5.QtCore import Qt  # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QHBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.shopping_article.shopping_article import ShoppingArticle
 from lib.ui.dialogs.add_new_article import AddNewArticleDialog
