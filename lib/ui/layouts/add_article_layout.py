@@ -1,7 +1,6 @@
 """
 Contains class AddArticleLayout
 """
-
 from PyQt5.QtWidgets import QHBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.shopping_article.shopping_article import ShoppingArticle
@@ -9,7 +8,7 @@ from lib.shopping_article_list.shopping_list import ShoppingList
 from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS
 from lib.ui.widgets.buttons.add_button import AddButton
-from lib.ui.widgets.combo_boxes.combo_box import ArticleComboBox
+from lib.ui.widgets.combo_boxes.add_article_combo_box.add_article_combo_box import AddArticleComboBox
 
 
 class AddArticleLayout(QHBoxLayout):
@@ -21,14 +20,14 @@ class AddArticleLayout(QHBoxLayout):
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.ADD_ARTICLE_LAYOUT)
         self._shopping_list = shopping_list
-        self._article_combo_box = ArticleComboBox(self._shopping_list.shopping_articles_list)
+        self._article_combo_box = AddArticleComboBox(self._shopping_list.shopping_articles_list)
         self.add_button = AddButton()
-        self.addWidget(self._article_combo_box)
+        self.addLayout(self._article_combo_box)
         self.addWidget(self.add_button)
 
         self.disable_button_when_item_added()
 
-        self._article_combo_box.activated.connect(self.disable_button_when_item_added)
+        self._article_combo_box.text_entry.textChanged.connect(self.disable_button_when_item_added)
         LIST_SIGNALS.list_changed.connect(self.disable_button_when_item_added)
 
     def add_article_to_list(self) -> ShoppingArticle:
@@ -45,7 +44,7 @@ class AddArticleLayout(QHBoxLayout):
         """
         Disable add button if item is already added to shopping list
         """
-        if self._article_combo_box.currentIndex() <= 0:
+        if not self._article_combo_box.get_current_article():
             self.add_button.setDisabled(True)
         else:
             if self._article_combo_box.get_current_article() in self._shopping_list:
