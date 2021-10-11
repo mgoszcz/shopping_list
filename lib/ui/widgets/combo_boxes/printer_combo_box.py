@@ -11,7 +11,7 @@ class PrinterComboBox(QComboBox):
     """
     Class with printer combobox implementation
     """
-    def __init__(self, printer: Printer, *args, **kwargs):
+    def __init__(self, printer: Printer, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.PRINTER_COMBO_BOX)
         self._printer = printer
@@ -22,12 +22,17 @@ class PrinterComboBox(QComboBox):
 
         self.currentTextChanged.connect(self._set_printer)
 
-    def _populate_list(self):
+    def _populate_list(self) -> None:
+        """Fill combobox with printers"""
+        selected_item = self.currentText()
         for i in reversed(range(0, self.count())):
             self.removeItem(i)
         self.addItems(self._printer.printers)
+        if selected_item and selected_item in self._printer.printers:
+            self.setCurrentText(selected_item)
 
-    def _set_printer(self):
+    def _set_printer(self) -> None:
+        """set current printer"""
         self._printer.printer_name = self.currentText()
 
     def showPopup(self) -> None:  # pylint: disable=invalid-name
