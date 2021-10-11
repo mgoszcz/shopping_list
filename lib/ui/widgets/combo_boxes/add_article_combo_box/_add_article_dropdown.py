@@ -20,7 +20,7 @@ DROPDOWN_KEYS_CHANGE_FOCUS = (Qt.Key_1, Qt.Key_2, Qt.Key_3, Qt.Key_4, Qt.Key_5, 
 class _AddArticleListWidget(QListWidget):
     """List of articles disaplyed in add article combo box"""
 
-    def __init__(self, items_list: ShoppingArticlesList, *args, **kwargs):
+    def __init__(self, items_list: ShoppingArticlesList, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.ADD_ARTICLE_LIST_WIDGET)
         self._items_list = items_list
@@ -28,14 +28,14 @@ class _AddArticleListWidget(QListWidget):
 
         self._populate_list()
 
-    def _populate_list(self):
+    def _populate_list(self) -> None:
         """Populate list of articles"""
         self.clear()
         self.addItem('Dodaj...')
         for item in sorted(self.displayed_items):
             self.addItem(item)
 
-    def filter_article(self, current_text):
+    def filter_article(self, current_text: str) -> None:
         """Filter articles list, they are filtered based on text entry string"""
         if not current_text:
             self.displayed_items = [item.name for item in self._items_list]
@@ -63,8 +63,8 @@ class _AddArticleListWidget(QListWidget):
 
 class AddArticleDropdown(QDialog):
     """add article dropdown implementation"""
-    def __init__(self, parent, items_list) -> None:
-        super().__init__(parent=parent, flags=Qt.FramelessWindowHint)
+    def __init__(self, items_list: ShoppingArticlesList, *args, **kwargs) -> None:
+        super().__init__(flags=Qt.FramelessWindowHint, *args, **kwargs)
         self.setObjectName(ObjectNames.ADD_ARTICLE_DROPDOWN)
         self.list_widget = _AddArticleListWidget(items_list)
         self.layout = QHBoxLayout()
