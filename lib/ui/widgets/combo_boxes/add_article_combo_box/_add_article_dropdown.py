@@ -43,11 +43,11 @@ class _AddArticleListWidget(QListWidget):
             self.displayed_items = [item.name for item in ArticleSearch(self._items_list).search_by_name(current_text)]
         self._populate_list()
 
-    def focusOutEvent(self, e: QtGui.QFocusEvent) -> None:  # pylint: disable=invalid-name
+    def focusOutEvent(self, e: QtGui.QFocusEvent) -> None:  # pylint: disable=invalid-name, unused-argument, no-self-use
         """Overload method to have specific signal emitted"""
         ADD_ARTICLE_COMBO_SIGNALS.list_view_focus_out.emit()
 
-    def focusInEvent(self, e: QtGui.QFocusEvent) -> None:  # pylint: disable=invalid-name
+    def focusInEvent(self, e: QtGui.QFocusEvent) -> None:  # pylint: disable=invalid-name, unused-argument, no-self-use
         """Overload method to have specific signal emitted"""
         ADD_ARTICLE_COMBO_SIGNALS.list_view_focus_in.emit()
 

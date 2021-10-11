@@ -42,10 +42,10 @@ class MainWindow(QMainWindow):
         widget.setLayout(self.layout)
         self.setCentralWidget(widget)
 
-    def moveEvent(self, a0: QtGui.QMoveEvent) -> None:  # pylint: disable=invalid-name
+    def moveEvent(self, a0: QtGui.QMoveEvent) -> None:  # pylint: disable=invalid-name, unused-argument, no-self-use
         MAIN_WINDOW_SIGNALS.window_moved.emit()
 
-    def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:  # pylint: disable=invalid-name
+    def resizeEvent(self, a0: QtGui.QResizeEvent) -> None:  # pylint: disable=invalid-name, unused-argument, no-self-use
         MAIN_WINDOW_SIGNALS.window_moved.emit()
 
     def add_article_to_shopping_list(self):
