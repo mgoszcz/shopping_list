@@ -15,6 +15,7 @@ from lib.shopping_list_interface import ShoppingListInterface
 from lib.ui.main_window import MainWindow
 
 interface = ShoppingListInterface()
+interface.shops.get_shop_by_name('Auchan').logo = 'resources/icons/download.png'
 
 app = QApplication(sys.argv)
 window = MainWindow(interface)

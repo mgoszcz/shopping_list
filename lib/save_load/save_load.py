@@ -75,6 +75,6 @@ class AutoSave(Thread):
         while not self.stop.is_set():
             if SAVE_NEEDED.is_set():
                 print('Save needed, save data')
-                self._save_load.save_data_to_server()
+                # self._save_load.save_data_to_server()
                 SAVE_NEEDED.clear()
             time.sleep(5)
