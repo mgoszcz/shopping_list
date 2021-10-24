@@ -1,4 +1,5 @@
 """Module contains class ShopsList"""
+import os
 from typing import Union
 
 from lib.lists.list_without_duplicates import ShoppingListWithoutDuplicates
@@ -62,7 +63,10 @@ class ShopsList(ShoppingListWithoutDuplicates):
         :param name: name of shop
         """
         shop = self.get_shop_by_name(name)
+        logo = shop.logo
         self.remove(shop)
+        if logo:
+            os.remove(logo)
         if self.selected_shop == shop:
             if self:
                 self.selected_shop = self[0]

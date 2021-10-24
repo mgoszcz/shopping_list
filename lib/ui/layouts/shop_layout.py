@@ -56,6 +56,7 @@ class ShopLayout(QHBoxLayout):
         dialog = AddShopDialog(self._shops_list)
         dialog.exec_()
         self._disable_buttons()
+        self._set_shop_icon()
 
     def _remove_shop(self):
         shop_name = self._shops_combo_box.currentText()
@@ -64,6 +65,7 @@ class ShopLayout(QHBoxLayout):
             if dialog.exec_():
                 self._shops_list.remove_shop(shop_name)
         self._disable_buttons()
+        self._set_shop_icon()
 
     def _categories_dialog(self):
         dialog = CategoriesDialog(self._shops_list)

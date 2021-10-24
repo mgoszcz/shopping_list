@@ -1,4 +1,5 @@
 """Module contains SaveLoad and AutoSave class"""
+import base64
 import os
 import time
 from threading import Thread, Event
@@ -43,6 +44,15 @@ class SaveLoad:
                     new_shop.category_list.append(category)
                 self._interface.shops.append(new_shop)
 
+    def _load_shops_icons_from_server(self, items: dict):
+        if items.get('shops_icons'):
+            icons_path = 'resources/icons/shops'
+            for filename, image in items.get('shops_icons').items():
+                if os.path.exists(f'{icons_path}/{filename}'):
+                    os.remove(f'{icons_path}/{filename}')
+                with open(f'{icons_path}/{filename}', 'wb') as decodeit:
+                    decodeit.write(base64.b64decode((bytes(image, 'utf-8'))))
+
     def save_data_to_server(self):
         """Save data to rest api server"""
         save_items(self._interface)
@@ -55,6 +65,7 @@ class SaveLoad:
         self._load_articles_from_server(data_from_server)
         self._load_shopping_list_from_server(data_from_server)
         self._load_shops_from_server(data_from_server)
+        self._load_shops_icons_from_server(data_from_server)
         if data_from_server.get('current_shop'):
             shop = self._interface.shops.get_shop_by_name(data_from_server.get('current_shop'))
             self._interface.shops.selected_shop = shop
@@ -75,6 +86,6 @@ class AutoSave(Thread):
         while not self.stop.is_set():
             if SAVE_NEEDED.is_set():
                 print('Save needed, save data')
-                # self._save_load.save_data_to_server()
+                self._save_load.save_data_to_server()
                 SAVE_NEEDED.clear()
             time.sleep(5)
