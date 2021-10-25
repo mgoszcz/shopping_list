@@ -7,9 +7,10 @@ from lib.ui.dialogs.categories_dialog import CategoriesDialog
 from lib.ui.dialogs.confirm_dialog import ConfirmDialog
 from lib.ui.icons.shop_icons import DEFAULT_SHOP_ICON, ShopIcon
 from lib.ui.object_names.object_names import ObjectNames
-from lib.ui.widgets.buttons.add_button import AddButton
+from lib.ui.widgets.buttons.add_button import AddButton, AddButtonWithIcon
 from lib.ui.widgets.buttons.category_list_button import CategoryListButton
-from lib.ui.widgets.buttons.remove_button import RemoveButton
+from lib.ui.widgets.buttons.edit_button import EditButtonWithIcon
+from lib.ui.widgets.buttons.remove_button import RemoveButton, RemoveButtonWithIcon
 from lib.ui.widgets.combo_boxes.shops_combo_box import ShopsComboBox
 
 
@@ -20,15 +21,17 @@ class ShopLayout(QHBoxLayout):
         self.setObjectName(ObjectNames.SHOP_LAYOUT)
         self._shops_list = shops_list
         self._shops_combo_box = ShopsComboBox(self._shops_list)
-        self._add_shop_button = AddButton()
-        self._remove_shop_button = RemoveButton()
+        self._add_shop_button = AddButtonWithIcon()
+        self._remove_shop_button = RemoveButtonWithIcon()
+        self._edit_shop_icon = EditButtonWithIcon()
         self._category_list_button = CategoryListButton()
         self.addWidget(QLabel('SKLEP:'))
+        self.addWidget(self._add_shop_button)
+        self.addWidget(self._remove_shop_button)
+        self.addWidget(self._edit_shop_icon)
         self.addWidget(self._shops_combo_box)
         self.shop_icon = QLabel()
         self.addWidget(self.shop_icon)
-        self.addWidget(self._add_shop_button)
-        self.addWidget(self._remove_shop_button)
         self.addWidget(self._category_list_button)
         self._disable_buttons()
         self._set_shop_icon()
