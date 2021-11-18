@@ -1,6 +1,7 @@
 """Module contains Shop class"""
 from lib.save_load.events import SAVE_NEEDED
 from lib.shopping_categories.category_list import CategoryList
+from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
 class Shop:
@@ -23,6 +24,8 @@ class Shop:
     def name(self, value):
         """Set name of shop"""
         self._name = value
+        SAVE_NEEDED.set()
+        LIST_SIGNALS.shop_list_changed.emit()
 
     @property
     def logo(self):
@@ -33,6 +36,8 @@ class Shop:
     def logo(self, value):
         """Set logo of shop"""
         self._logo = value
+        SAVE_NEEDED.set()
+        LIST_SIGNALS.shop_list_changed.emit()
 
     @property
     def category_list(self):
