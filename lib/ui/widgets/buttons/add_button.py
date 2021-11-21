@@ -27,3 +27,4 @@ class AddButtonWithIcon(QPushButton):
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.ADD_BUTTON_WITH_ICON)
         self.setIcon(AddIcon.q_icon())
+        self.setToolTip('Dodaj')

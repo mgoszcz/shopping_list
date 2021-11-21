@@ -4,6 +4,13 @@ Main module to start shopping list application
 For debugging purposes there is timer added to have a possibility to pause application and interact with console
 """
 
+# TODO:
+"""
+Testy
+    1. Zapis i odczyt obrazu w bazie na serwerze
+    
+    
+"""
 
 import sys
 

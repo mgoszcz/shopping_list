@@ -27,3 +27,4 @@ class RemoveButtonWithIcon(QPushButton):
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.REMOVE_BUTTON_WITH_ICON)
         self.setIcon(RemoveIcon.q_icon())
+        self.setToolTip('Usuń')

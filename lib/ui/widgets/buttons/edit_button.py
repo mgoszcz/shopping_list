@@ -24,3 +24,4 @@ class EditButtonWithIcon(QPushButton):
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.EDIT_BUTTON_WITH_ICON)
         self.setIcon(EditIcon.q_icon())
+        self.setToolTip('Edytuj')
