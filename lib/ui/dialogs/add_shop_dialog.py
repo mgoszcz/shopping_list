@@ -101,7 +101,8 @@ class EditShopDialog(AddEditShopDialog):
     def _remove_old_logo_file_if_needed(self, old_logo: str, name_changed: bool) -> None:
         if old_logo:
             if not self.new_shop.logo.file_path.text() or name_changed:
-                os.remove(old_logo)
+                if os.path.exists(old_logo):
+                    os.remove(old_logo)
 
     def accept_button(self):
         """

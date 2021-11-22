@@ -47,6 +47,8 @@ class SaveLoad:
     def _load_shops_icons_from_server(self, items: dict):
         if items.get('shops_icons'):
             icons_path = 'resources/icons/shops'
+            if not os.path.isdir(icons_path):
+                os.mkdir(icons_path)
             for filename, image in items.get('shops_icons').items():
                 if os.path.exists(f'{icons_path}/{filename}'):
                     os.remove(f'{icons_path}/{filename}')

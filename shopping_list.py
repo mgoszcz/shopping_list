@@ -8,7 +8,20 @@ For debugging purposes there is timer added to have a possibility to pause appli
 """
 Testy
     1. Zapis i odczyt obrazu w bazie na serwerze
-    
+    2. Zapis sciezki do obrazu w sklepie
+    3. Dodawanie, usuwanie sklepu z logiem i bez
+        kopiowanie pliku pod nazwe sklepu
+        usuwanie pliku przy usuwaniu sklepu
+        brak dostepu do pliku, zanlokowany plik
+            Dodac obsluge PermissionError
+    4. Edycja sklepu
+        z logiem na bez loga - usuwanie pliku i wyswietlanie w gui
+        z logiem na z logiem - zmiana obrazu pod nazwa sklepu (plus brak dostepu)
+        bez loga na z logiem - obraz jest kopiowany pod nazwa sklepu
+        zmiana nazwy + z logiem na bez loga - usuwanie pliku i wyswietlanie w gui
+        zmiana nazwy + z logiem na z logiem - kopiowanie nowego loga pod nowa nazwe, usuniecie starego loga pod stara nazwa 
+        bez loga na z logiem - obraz jest kopiowany pod nową nazwa sklepu
+        
     
 """
 
