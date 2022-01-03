@@ -6,6 +6,7 @@ from typing import List, Union
 import os
 
 from lib.shop.shop import Shop
+from resources.paths.paths import SHOPS_ICONS_PATH
 
 
 class DbToJson:
@@ -47,13 +48,13 @@ class DbToJson:
         return None
 
     def _get_shops_icons(self):
-        images_paths = [f for f in os.listdir('resources/icons/shops') if
-                        os.path.isfile(os.path.join('resources/icons/shops', f))]
+        images_paths = [f for f in os.listdir(SHOPS_ICONS_PATH) if
+                        os.path.isfile(os.path.join(SHOPS_ICONS_PATH, f))]
         icons = {}
         for image in images_paths:
             if os.path.splitext(image)[1] not in ('.png', '.jpg', '.bmp'):
                 continue
-            with open(f'resources/icons/shops/{image}', "rb") as image2string:
+            with open(os.path.join(SHOPS_ICONS_PATH, image), "rb") as image2string:
                 converted_string = str(base64.b64encode(image2string.read()), 'utf-8')
             icons[image] = converted_string
         return icons

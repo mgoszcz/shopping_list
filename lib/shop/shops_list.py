@@ -66,7 +66,10 @@ class ShopsList(ShoppingListWithoutDuplicates):
         logo = shop.logo
         self.remove(shop)
         if logo:
-            os.remove(logo)
+            try:
+                os.remove(logo)
+            except FileNotFoundError:
+                print('File not found!')
         if self.selected_shop == shop:
             if self:
                 self.selected_shop = self[0]

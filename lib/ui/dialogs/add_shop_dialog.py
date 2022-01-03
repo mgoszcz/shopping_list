@@ -12,6 +12,7 @@ from lib.ui.dialogs.error_dialog import ErrorDialog
 from lib.ui.icons.icons import ShoppingListIcon
 from lib.ui.layouts.add_shop_dialog_layout import AddShopDialogLayout
 from lib.ui.object_names.object_names import ObjectNames
+from resources.paths.paths import SHOPS_ICONS_PATH
 
 
 class AddEditShopDialog(QDialog):
@@ -50,7 +51,7 @@ class AddEditShopDialog(QDialog):
         if not os.path.exists(logo_path):
             ErrorDialog('Logo file path does not exist.').exec_()
             return False
-        if file_extension not in ('.png', '.jpg', '.bmp'):
+        if file_extension.lower() not in ('.png', '.jpg', '.bmp'):
             ErrorDialog('Invalid extension on logo file. Allowed extensions: bmp, png, jpg.').exec_()
             return False
         return True
@@ -59,9 +60,9 @@ class AddEditShopDialog(QDialog):
         if not logo_path:
             return ''
         filename, file_extension = os.path.splitext(logo_path)
-        if not os.path.isdir('resources/icons/shops'):
-            os.mkdir('resources/icons/shops')
-        new_icon_path = f'resources/icons/shops/{self._shop_name}{file_extension}'
+        if not os.path.isdir(SHOPS_ICONS_PATH):
+            os.mkdir(SHOPS_ICONS_PATH)
+        new_icon_path = os.path.join(SHOPS_ICONS_PATH, f'{self._shop_name}{file_extension.lower()}')
         copyfile(logo_path, new_icon_path)
         return new_icon_path
 

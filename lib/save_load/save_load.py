@@ -9,6 +9,7 @@ from lib.rest_api.client import save_items, get_items
 from lib.save_load.events import AUTO_SAVE_PAUSED, SAVE_NEEDED
 from lib.shop.shop import Shop
 from lib.shopping_article.shopping_article import ShoppingArticle
+from resources.paths.paths import SHOPS_ICONS_PATH
 
 if TYPE_CHECKING:
     from lib.shopping_list_interface import ShoppingListInterface
@@ -46,13 +47,12 @@ class SaveLoad:
 
     def _load_shops_icons_from_server(self, items: dict):
         if items.get('shops_icons'):
-            icons_path = 'resources/icons/shops'
-            if not os.path.isdir(icons_path):
-                os.mkdir(icons_path)
+            if not os.path.isdir(SHOPS_ICONS_PATH):
+                os.mkdir(SHOPS_ICONS_PATH)
             for filename, image in items.get('shops_icons').items():
-                if os.path.exists(f'{icons_path}/{filename}'):
-                    os.remove(f'{icons_path}/{filename}')
-                with open(f'{icons_path}/{filename}', 'wb') as decodeit:
+                if os.path.exists(os.path.join(SHOPS_ICONS_PATH, filename)):
+                    os.remove(os.path.join(SHOPS_ICONS_PATH, filename))
+                with open(os.path.join(SHOPS_ICONS_PATH, filename), 'wb') as decodeit:
                     decodeit.write(base64.b64decode((bytes(image, 'utf-8'))))
 
     def save_data_to_server(self):
