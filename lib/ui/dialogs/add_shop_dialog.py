@@ -3,9 +3,11 @@ class AddShopDialog
 """
 import os
 from shutil import copyfile
+from typing import Union
 
 from PyQt5.QtWidgets import QDialog  # pylint: disable=no-name-in-module
 
+from lib.file_manager.file_object import FileObject, FileObjectException
 from lib.shop.shop import Shop
 from lib.shop.shops_list import ShopsList
 from lib.ui.dialogs.error_dialog import ErrorDialog
@@ -56,15 +58,21 @@ class AddEditShopDialog(QDialog):
             return False
         return True
 
-    def _set_shop_logo(self, logo_path: str):
+    def _set_shop_logo(self, logo_path: str) -> Union[str, bool]:
         if not logo_path:
             return ''
         filename, file_extension = os.path.splitext(logo_path)
         if not os.path.isdir(SHOPS_ICONS_PATH):
             os.mkdir(SHOPS_ICONS_PATH)
-        new_icon_path = os.path.join(SHOPS_ICONS_PATH, f'{self._shop_name}{file_extension.lower()}')
-        copyfile(logo_path, new_icon_path)
-        return new_icon_path
+        new_icon_file = FileObject(os.path.join(SHOPS_ICONS_PATH, f'{self._shop_name}{file_extension.lower()}'))
+        if new_icon_file.exists():
+            try:
+                new_icon_file.remove()
+            except FileObjectException as e:
+                ErrorDialog(str(e)).exec_()
+                return False
+        copyfile(logo_path, new_icon_file.file_path)
+        return new_icon_file.file_path
 
     def accept_button(self):
         """
@@ -87,8 +95,9 @@ class AddShopDialog(AddEditShopDialog):
         self._shop_name = self.new_shop.name.text()
         logo_path = self.new_shop.logo.file_path.text()
         new_logo_path = self._set_shop_logo(logo_path)
-        self._shops_list.add_shop(self._shop_name, new_logo_path)
-        self.accept()
+        if new_logo_path is not False:
+            self._shops_list.add_shop(self._shop_name, new_logo_path)
+            self.accept()
 
 
 class EditShopDialog(AddEditShopDialog):
@@ -102,8 +111,11 @@ class EditShopDialog(AddEditShopDialog):
     def _remove_old_logo_file_if_needed(self, old_logo: str, name_changed: bool) -> None:
         if old_logo:
             if not self.new_shop.logo.file_path.text() or name_changed:
-                if os.path.exists(old_logo):
-                    os.remove(old_logo)
+                if FileObject(old_logo).exists():
+                    try:
+                        FileObject(old_logo).remove()
+                    except FileObjectException as e:
+                        print(e)
 
     def accept_button(self):
         """
@@ -119,6 +131,10 @@ class EditShopDialog(AddEditShopDialog):
             self._current_shop.name = self.new_shop.name.text()
             name_changed = True
         if old_logo != self.new_shop.logo.file_path.text():
-            self._current_shop.logo = self._set_shop_logo(self.new_shop.logo.file_path.text())
+            new_logo_path = self._set_shop_logo(self.new_shop.logo.file_path.text())
+            if new_logo_path is not False:
+                self._current_shop.logo = new_logo_path
+            else:
+                ErrorDialog('Logo was unchanged').exec_()
             self._remove_old_logo_file_if_needed(old_logo, name_changed)
         self.accept()

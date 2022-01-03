@@ -1,7 +1,7 @@
 """Module contains class ShopsList"""
-import os
 from typing import Union
 
+from lib.file_manager.file_object import FileObject, FileObjectException
 from lib.lists.list_without_duplicates import ShoppingListWithoutDuplicates
 from lib.save_load.events import SAVE_NEEDED
 from lib.shop.shop import Shop
@@ -67,9 +67,9 @@ class ShopsList(ShoppingListWithoutDuplicates):
         self.remove(shop)
         if logo:
             try:
-                os.remove(logo)
-            except FileNotFoundError:
-                print('File not found!')
+                FileObject(logo).remove()
+            except FileObjectException as e:
+                print(str(e))
         if self.selected_shop == shop:
             if self:
                 self.selected_shop = self[0]

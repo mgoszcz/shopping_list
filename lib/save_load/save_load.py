@@ -5,6 +5,7 @@ import time
 from threading import Thread, Event
 from typing import TYPE_CHECKING
 
+from lib.file_manager.file_object import FileObject
 from lib.rest_api.client import save_items, get_items
 from lib.save_load.events import AUTO_SAVE_PAUSED, SAVE_NEEDED
 from lib.shop.shop import Shop
@@ -50,9 +51,10 @@ class SaveLoad:
             if not os.path.isdir(SHOPS_ICONS_PATH):
                 os.mkdir(SHOPS_ICONS_PATH)
             for filename, image in items.get('shops_icons').items():
-                if os.path.exists(os.path.join(SHOPS_ICONS_PATH, filename)):
-                    os.remove(os.path.join(SHOPS_ICONS_PATH, filename))
-                with open(os.path.join(SHOPS_ICONS_PATH, filename), 'wb') as decodeit:
+                icon_file = FileObject(os.path.join(SHOPS_ICONS_PATH, filename))
+                if icon_file.exists():
+                    icon_file.remove()
+                with open(icon_file.file_path, 'wb') as decodeit:
                     decodeit.write(base64.b64decode((bytes(image, 'utf-8'))))
 
     def save_data_to_server(self):
