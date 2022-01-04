@@ -5,8 +5,8 @@ from lib.rest_api.server_backup import ServerBackup
 
 app = Flask(__name__)
 
-shopping_list = dict()
-shopping_list_test = dict()
+shopping_list = {}
+shopping_list_test = {}
 
 
 @app.route('/')
@@ -22,12 +22,17 @@ def get_items():
 
 
 def _set_shopping_list(shopping_list_local: dict):
+    if 'shops_icons' in request.json:
+        icons = request.json['shops_icons']
+    else:
+        icons = {}
     current_list = {
         'shopping_articles_list': request.json['shopping_articles_list'],
         'shopping_list': request.json['shopping_list'],
         'categories': request.json['categories'],
         'shops': request.json['shops'],
-        'current_shop': request.json['current_shop']
+        'current_shop': request.json['current_shop'],
+        'shops_icons': icons
     }
     shopping_list_local['shopping_list'] = current_list
     return jsonify(shopping_list_local), 201

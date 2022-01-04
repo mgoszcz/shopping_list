@@ -1,13 +1,16 @@
 """Module contains SaveLoad and AutoSave class"""
+import base64
 import os
 import time
 from threading import Thread, Event
 from typing import TYPE_CHECKING
 
+from lib.file_manager.file_object import FileObject
 from lib.rest_api.client import save_items, get_items
 from lib.save_load.events import AUTO_SAVE_PAUSED, SAVE_NEEDED
 from lib.shop.shop import Shop
 from lib.shopping_article.shopping_article import ShoppingArticle
+from resources.paths.paths import SHOPS_ICONS_PATH
 
 if TYPE_CHECKING:
     from lib.shopping_list_interface import ShoppingListInterface
@@ -43,6 +46,18 @@ class SaveLoad:
                     new_shop.category_list.append(category)
                 self._interface.shops.append(new_shop)
 
+    @staticmethod
+    def _load_shops_icons_from_server(items: dict):
+        if items.get('shops_icons'):
+            if not os.path.isdir(SHOPS_ICONS_PATH):
+                os.mkdir(SHOPS_ICONS_PATH)
+            for filename, image in items.get('shops_icons').items():
+                icon_file = FileObject(os.path.join(SHOPS_ICONS_PATH, filename))
+                if icon_file.exists():
+                    icon_file.remove()
+                with open(icon_file.file_path, 'wb') as decodeit:
+                    decodeit.write(base64.b64decode((bytes(image, 'utf-8'))))
+
     def save_data_to_server(self):
         """Save data to rest api server"""
         save_items(self._interface)
@@ -55,6 +70,7 @@ class SaveLoad:
         self._load_articles_from_server(data_from_server)
         self._load_shopping_list_from_server(data_from_server)
         self._load_shops_from_server(data_from_server)
+        self._load_shops_icons_from_server(data_from_server)
         if data_from_server.get('current_shop'):
             shop = self._interface.shops.get_shop_by_name(data_from_server.get('current_shop'))
             self._interface.shops.selected_shop = shop

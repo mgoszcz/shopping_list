@@ -1,6 +1,7 @@
 """Module contains class ShopsList"""
 from typing import Union
 
+from lib.file_manager.file_object import FileObject, FileObjectException
 from lib.lists.list_without_duplicates import ShoppingListWithoutDuplicates
 from lib.save_load.events import SAVE_NEEDED
 from lib.shop.shop import Shop
@@ -62,7 +63,13 @@ class ShopsList(ShoppingListWithoutDuplicates):
         :param name: name of shop
         """
         shop = self.get_shop_by_name(name)
+        logo = shop.logo
         self.remove(shop)
+        if logo:
+            try:
+                FileObject(logo).remove()
+            except FileObjectException as error:
+                print(str(error))
         if self.selected_shop == shop:
             if self:
                 self.selected_shop = self[0]
