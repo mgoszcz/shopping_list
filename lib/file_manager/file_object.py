@@ -31,3 +31,14 @@ class FileObject:
             raise FileObjectException(f'File {self._file_path} not found')
         except PermissionError:
             raise FileObjectException(f'Access to file {self._file_path} denied')
+
+    def rename(self, new_name: str) -> None:
+        file_path, file_name = os.path.split(self._file_path)
+        extension = os.path.splitext(file_name)[1]
+        try:
+            os.rename(self._file_path, os.path.join(file_path, f'{new_name}{extension}'))
+            self._file_path = os.path.join(file_path, f'{new_name}{extension}')
+        except FileNotFoundError as e:
+            raise FileObjectException(str(e))
+        except PermissionError as e:
+            raise FileObjectException(str(e))

@@ -122,10 +122,10 @@ class EditShopDialog(AddEditShopDialog):
         Action on pressing OK button - add shop to list
         """
         old_name = self._current_shop.name
+        old_logo = self._current_shop.logo
         name_changed = False
         if not self._validate_fields(old_name == self.new_shop.name.text()):
             return
-        old_logo = self._current_shop.logo
         self._shop_name = self.new_shop.name.text()
         if old_name != self._shop_name:
             self._current_shop.name = self.new_shop.name.text()
@@ -137,4 +137,12 @@ class EditShopDialog(AddEditShopDialog):
             else:
                 ErrorDialog('Logo was unchanged').exec_()
             self._remove_old_logo_file_if_needed(old_logo, name_changed)
+        elif name_changed and self._current_shop.logo:
+            logo_file = FileObject(self._current_shop.logo)
+            try:
+                logo_file.rename(self._current_shop.name)
+                self._current_shop.logo = logo_file.file_path
+            except FileObjectException as e:
+                ErrorDialog(f'{e}\nLogo is unchanged').exec_()
+
         self.accept()

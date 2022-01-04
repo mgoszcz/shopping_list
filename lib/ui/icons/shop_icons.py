@@ -1,6 +1,8 @@
 """Module with class ShopIcon"""
 from PyQt5.QtGui import QPixmap
 
+from resources.paths.paths import DEFAULT_SHOP_ICON_PATH
+
 SHOP_ICON_SIZE = 25
 
 
@@ -17,4 +19,4 @@ class ShopIcon:
         return pixmap
 
 
-DEFAULT_SHOP_ICON = ShopIcon('C:\\Users\\mgoszcz\\repo\\shopping_list\\resources\\icons\\default_shop.png')
+DEFAULT_SHOP_ICON = ShopIcon(DEFAULT_SHOP_ICON_PATH)
