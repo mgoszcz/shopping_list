@@ -21,7 +21,7 @@ try:
     interface = ShoppingListInterface()
 except FileObjectException as e:
     ErrorDialog(str(e)).exec_()
-    exit(2)
+    sys.exit(2)
 window = MainWindow(interface)
 window.show()
 

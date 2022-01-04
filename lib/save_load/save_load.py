@@ -46,7 +46,8 @@ class SaveLoad:
                     new_shop.category_list.append(category)
                 self._interface.shops.append(new_shop)
 
-    def _load_shops_icons_from_server(self, items: dict):
+    @staticmethod
+    def _load_shops_icons_from_server(items: dict):
         if items.get('shops_icons'):
             if not os.path.isdir(SHOPS_ICONS_PATH):
                 os.mkdir(SHOPS_ICONS_PATH)

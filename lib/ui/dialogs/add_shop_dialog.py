@@ -49,7 +49,7 @@ class AddEditShopDialog(QDialog):
         logo_path = self.new_shop.logo.file_path.text()
         if not logo_path:
             return True
-        filename, file_extension = os.path.splitext(logo_path)
+        _, file_extension = os.path.splitext(logo_path)
         if not os.path.exists(logo_path):
             ErrorDialog('Logo file path does not exist.').exec_()
             return False
@@ -61,15 +61,15 @@ class AddEditShopDialog(QDialog):
     def _set_shop_logo(self, logo_path: str) -> Union[str, bool]:
         if not logo_path:
             return ''
-        filename, file_extension = os.path.splitext(logo_path)
+        _, file_extension = os.path.splitext(logo_path)
         if not os.path.isdir(SHOPS_ICONS_PATH):
             os.mkdir(SHOPS_ICONS_PATH)
         new_icon_file = FileObject(os.path.join(SHOPS_ICONS_PATH, f'{self._shop_name}{file_extension.lower()}'))
         if new_icon_file.exists():
             try:
                 new_icon_file.remove()
-            except FileObjectException as e:
-                ErrorDialog(str(e)).exec_()
+            except FileObjectException as error:
+                ErrorDialog(str(error)).exec_()
                 return False
         copyfile(logo_path, new_icon_file.file_path)
         return new_icon_file.file_path
@@ -81,7 +81,7 @@ class AddEditShopDialog(QDialog):
 
 
 class AddShopDialog(AddEditShopDialog):
-
+    """Class with implementation of add shop dialog layout"""
     def __init__(self, shops_list: ShopsList, *args, **kwargs):
         super().__init__(shops_list, *args, **kwargs)
         self.setWindowTitle('Dodaj sklep...')
@@ -101,6 +101,7 @@ class AddShopDialog(AddEditShopDialog):
 
 
 class EditShopDialog(AddEditShopDialog):
+    """Class with implementation of edit shop dialog layout"""
     def __init__(self, shops_list: ShopsList, current_shop: Shop, *args, **kwargs):
         super().__init__(shops_list, *args, **kwargs)
         self._current_shop = current_shop
@@ -114,8 +115,8 @@ class EditShopDialog(AddEditShopDialog):
                 if FileObject(old_logo).exists():
                     try:
                         FileObject(old_logo).remove()
-                    except FileObjectException as e:
-                        print(e)
+                    except FileObjectException as error:
+                        print(error)
 
     def accept_button(self):
         """
@@ -142,7 +143,7 @@ class EditShopDialog(AddEditShopDialog):
             try:
                 logo_file.rename(self._current_shop.name)
                 self._current_shop.logo = logo_file.file_path
-            except FileObjectException as e:
-                ErrorDialog(f'{e}\nLogo is unchanged').exec_()
+            except FileObjectException as error:
+                ErrorDialog(f'{error}\nLogo is unchanged').exec_()
 
         self.accept()

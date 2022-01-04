@@ -68,8 +68,8 @@ class ShopsList(ShoppingListWithoutDuplicates):
         if logo:
             try:
                 FileObject(logo).remove()
-            except FileObjectException as e:
-                print(str(e))
+            except FileObjectException as error:
+                print(str(error))
         if self.selected_shop == shop:
             if self:
                 self.selected_shop = self[0]

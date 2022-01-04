@@ -5,8 +5,8 @@ from lib.rest_api.server_backup import ServerBackup
 
 app = Flask(__name__)
 
-shopping_list = dict()
-shopping_list_test = dict()
+shopping_list = {}
+shopping_list_test = {}
 
 
 @app.route('/')

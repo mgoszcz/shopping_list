@@ -1,9 +1,9 @@
 """
 Module contains class AddShopDialogLayout
 """
+from pathlib import Path
 from PyQt5.QtWidgets import QGridLayout, QLineEdit, QLabel, QDialogButtonBox, \
     QHBoxLayout, QPushButton, QFileDialog  # pylint: disable=no-name-in-module
-from pathlib import Path
 
 from lib.ui.object_names.object_names import ObjectNames
 
@@ -20,6 +20,7 @@ class _LogoBrowser(QHBoxLayout):
         self.browser_button.pressed.connect(self.open_browser)
 
     def open_browser(self):
+        """Open file browser to select logo file"""
         dialog = QFileDialog(caption='Open Image', directory=str(Path.home()), filter='Image Files (*.png *.jpg *.bmp)')
         dialog.setAcceptMode(QFileDialog.AcceptOpen)
         if dialog.exec_():

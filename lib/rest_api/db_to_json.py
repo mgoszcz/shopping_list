@@ -47,7 +47,8 @@ class DbToJson:
             return self.interface.shops.selected_shop.name
         return None
 
-    def _get_shops_icons(self):
+    @staticmethod
+    def _get_shops_icons():
         images_paths = [f for f in os.listdir(SHOPS_ICONS_PATH) if
                         os.path.isfile(os.path.join(SHOPS_ICONS_PATH, f))]
         icons = {}

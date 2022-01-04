@@ -17,6 +17,7 @@ from lib.ui.widgets.combo_boxes.shops_combo_box import ShopsComboBox
 
 class ShopLayout(QHBoxLayout):
     """Implementation of shop field layout"""
+
     def __init__(self, shops_list: ShopsList, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.SHOP_LAYOUT)
@@ -90,4 +91,3 @@ class ShopLayout(QHBoxLayout):
             self._remove_shop_button.setDisabled(True)
             self._category_list_button.setDisabled(True)
             self._edit_shop_button.setDisabled(True)
-
