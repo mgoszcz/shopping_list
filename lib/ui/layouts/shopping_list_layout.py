@@ -20,7 +20,7 @@ class ShoppingListLayout(QVBoxLayout):
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.SHOPPING_LIST_LAYOUT)
         self._shopping_list = shopping_list
-        self._printer = Printer(self._shopping_list)
+        self._printer = Printer(self._shopping_list).printer
         self.shopping_list_table = ShoppingListTable(self._shopping_list, 3)
         self._shopping_list_buttons_layout = ShoppingListButtonsLayout(self._printer)
         self.addWidget(self.shopping_list_table)
