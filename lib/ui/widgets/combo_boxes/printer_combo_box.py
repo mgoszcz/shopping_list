@@ -3,7 +3,7 @@ Module contains class PrinterComboBox
 """
 from PyQt5.QtWidgets import QComboBox  # pylint: disable=no-name-in-module
 
-from lib.printer.printer import Printer
+from lib.printer.printer_interface import PrinterInterface
 from lib.ui.object_names.object_names import ObjectNames
 
 
@@ -11,7 +11,7 @@ class PrinterComboBox(QComboBox):
     """
     Class with printer combobox implementation
     """
-    def __init__(self, printer: Printer, *args, **kwargs) -> None:
+    def __init__(self, printer: PrinterInterface, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.PRINTER_COMBO_BOX)
         self._printer = printer

@@ -1,7 +1,9 @@
 from typing import List
 
+from lib.printer.printer_interface import PrinterInterface
 
-class PrinterMac:
+
+class PrinterMac(PrinterInterface):
     """
     Class handling printing
     """
@@ -9,7 +11,6 @@ class PrinterMac:
         """
         Print current shopping list
         """
-
 
     @property
     def printers(self) -> List[str]:

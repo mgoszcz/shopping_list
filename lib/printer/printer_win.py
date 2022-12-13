@@ -7,24 +7,25 @@ import win32gui
 import win32print
 import win32ui
 
+from lib.printer.printer_interface import PrinterInterface
 from lib.shopping_article_list.shopping_list import ShoppingList
 from lib.printer.printer_statics import PrinterStatics
 
 
-class PrinterWin:
+class PrinterWin(PrinterInterface):
     """
     Class handling printing
     """
     def __init__(self, shopping_list: ShoppingList):
         self._shopping_list = shopping_list
-        self.printer_name = win32print.GetDefaultPrinter()
+        self._printer_name = win32print.GetDefaultPrinter()
         self._printers = None
         self.file_path = None
         self._devmode = None
-        print(self.printer_name)
+        print(self._printer_name)
 
     def _printer_initialize(self):
-        hprinter = win32print.OpenPrinter(self.printer_name)
+        hprinter = win32print.OpenPrinter(self._printer_name)
         self._devmode = win32print.GetPrinter(hprinter, 2)["pDevMode"]
         self._devmode.PaperSize = PrinterStatics.FORMAT
         self._devmode.PrintQuality = PrinterStatics.DPI
@@ -42,7 +43,7 @@ class PrinterWin:
         return max_length + 100, max_height
 
     def _prepare_document(self):
-        hdc = win32gui.CreateDC("WINSPOOL", self.printer_name, self._devmode)
+        hdc = win32gui.CreateDC("WINSPOOL", self._printer_name, self._devmode)
         document = win32ui.CreateDCFromHandle(hdc)
         length, height = self._get_max_text_size(document)
         if self.file_path:
@@ -60,6 +61,14 @@ class PrinterWin:
             i += 1
         document.EndPage()
         document.EndDoc()
+
+    @property
+    def printer_name(self) -> str:
+        return self._printer_name
+
+    @printer_name.setter
+    def printer_name(self, value) -> None:
+        self._printer_name = value
 
     def print(self):
         """
