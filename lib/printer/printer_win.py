@@ -22,6 +22,7 @@ class PrinterWin(PrinterInterface):
         self._printers = None
         self.file_path = None
         self._devmode = None
+        self._supported = True
         print(self._printer_name)
 
     def _printer_initialize(self):
@@ -61,6 +62,11 @@ class PrinterWin(PrinterInterface):
             i += 1
         document.EndPage()
         document.EndDoc()
+
+
+    @property
+    def supported(self) -> bool:
+        return self._supported
 
     @property
     def printer_name(self) -> str:

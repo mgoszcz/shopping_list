@@ -16,6 +16,11 @@ class PrinterComboBox(QComboBox):
         self.setObjectName(ObjectNames.PRINTER_COMBO_BOX)
         self._printer = printer
 
+        if not self._printer.supported:
+            self.addItems(['Printers are not supported on this OS'])
+            self.setCurrentText('Printers are not supported on this OS')
+            return
+
         self._populate_list()
         self.setEditable(False)
         self.setCurrentText(self._printer.printer_name)

@@ -4,6 +4,13 @@ from lib.printer.printer_interface import PrinterInterface
 
 
 class PrinterMac(PrinterInterface):
+    def __init__(self):
+        self._supported = False
+
+    @property
+    def supported(self) -> bool:
+        return self._supported
+
     """
     Class handling printing
     """

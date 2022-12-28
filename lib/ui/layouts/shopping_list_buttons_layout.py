@@ -32,6 +32,9 @@ class _PrinterButtons(QHBoxLayout):
         self.print_button = PrintButton()
         self.addWidget(self.printer_selector)
         self.addWidget(self.print_button)
+        if not printer.supported:
+            self.print_button.setDisabled(True)
+            self.printer_selector.setDisabled(True)
 
 
 class ShoppingListButtonsLayout(QVBoxLayout):

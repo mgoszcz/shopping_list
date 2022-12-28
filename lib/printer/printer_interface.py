@@ -6,6 +6,11 @@ class PrinterInterface(ABC):
 
     @property
     @abstractmethod
+    def supported(self) -> bool:
+        """Is printing supported"""
+
+    @property
+    @abstractmethod
     def printer_name(self) -> str:
         """Return current printer name"""
 
