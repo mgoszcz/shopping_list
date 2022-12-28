@@ -61,7 +61,10 @@ class AddArticleComboBox(QHBoxLayout):
 
     def select_article_from_dropdown(self) -> None:
         """action on selection of item in dropdown"""
-        article_name = self.dropdown.list_widget.currentItem().text()
+        current_item = self.dropdown.list_widget.currentItem()
+        if not current_item:
+            return
+        article_name = current_item.text()
         if article_name and article_name != 'Dodaj...':
             self.text_entry.setText(article_name)
         elif article_name == 'Dodaj...':
