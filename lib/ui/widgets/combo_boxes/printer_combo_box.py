@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QComboBox  # pylint: disable=no-name-in-module
 from lib.printer.printer_interface import PrinterInterface
 from lib.ui.object_names.object_names import ObjectNames
 
+UNSUPPORTED_PRINTER_MESSAGE = 'Printers are not supported on this OS'
 
 class PrinterComboBox(QComboBox):
     """
@@ -17,8 +18,8 @@ class PrinterComboBox(QComboBox):
         self._printer = printer
 
         if not self._printer.supported:
-            self.addItems(['Printers are not supported on this OS'])
-            self.setCurrentText('Printers are not supported on this OS')
+            self.addItems([UNSUPPORTED_PRINTER_MESSAGE])
+            self.setCurrentText(UNSUPPORTED_PRINTER_MESSAGE)
             return
 
         self._populate_list()

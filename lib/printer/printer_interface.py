@@ -1,8 +1,10 @@
+"""Printer interface"""
 from abc import ABC, abstractmethod
 from typing import List
 
 
 class PrinterInterface(ABC):
+    """Abstract class for printers"""
 
     @property
     @abstractmethod
@@ -24,7 +26,6 @@ class PrinterInterface(ABC):
         """
         Print current shopping list
         """
-
 
     @property
     @abstractmethod

@@ -1,9 +1,12 @@
+"""Module contains PrinterMac class"""
 from typing import List
 
 from lib.printer.printer_interface import PrinterInterface
 
 
 class PrinterMac(PrinterInterface):
+    """Printer for MacOS (printing is nto supported on this OS)"""
+
     def __init__(self):
         self._supported = False
 
@@ -11,9 +14,6 @@ class PrinterMac(PrinterInterface):
     def supported(self) -> bool:
         return self._supported
 
-    """
-    Class handling printing
-    """
     def print(self):
         """
         Print current shopping list
