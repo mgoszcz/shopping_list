@@ -3,7 +3,7 @@ Module contains classes _ShoppingListButtons, _PrinterButtons and ShoppingListBu
 """
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout  # pylint: disable=no-name-in-module
 
-from lib.printer.printer import Printer
+from lib.printer.printer_interface import PrinterInterface
 from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.widgets.buttons.article_list_button import ArticleListButton
 from lib.ui.widgets.buttons.clear_list_button import ClearListButton
@@ -26,19 +26,22 @@ class _ShoppingListButtons(QHBoxLayout):
 
 class _PrinterButtons(QHBoxLayout):
 
-    def __init__(self, printer: Printer, *args, **kwargs):
+    def __init__(self, printer: PrinterInterface, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.printer_selector = PrinterComboBox(printer)
         self.print_button = PrintButton()
         self.addWidget(self.printer_selector)
         self.addWidget(self.print_button)
+        if not printer.supported:
+            self.print_button.setDisabled(True)
+            self.printer_selector.setDisabled(True)
 
 
 class ShoppingListButtonsLayout(QVBoxLayout):
     """
     Layout with buttons handling shopping list and printing
     """
-    def __init__(self, printer: Printer, *args, **kwargs):
+    def __init__(self, printer: PrinterInterface, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.SHOPPING_LIST_BUTTONS_LAYOUT)
         self.shopping_list_buttons = _ShoppingListButtons()
