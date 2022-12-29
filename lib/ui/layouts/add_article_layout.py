@@ -1,6 +1,8 @@
 """
 Contains class AddArticleLayout
 """
+from typing import Optional
+
 from PyQt5.QtWidgets import QHBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.shopping_article.shopping_article import ShoppingArticle
@@ -30,11 +32,13 @@ class AddArticleLayout(QHBoxLayout):
         self._article_combo_box.text_entry.textChanged.connect(self.disable_button_when_item_added)
         LIST_SIGNALS.list_changed.connect(self.disable_button_when_item_added)
 
-    def add_article_to_list(self) -> ShoppingArticle:
+    def add_article_to_list(self) -> Optional[ShoppingArticle]:
         """
         Add to shopping list article selected in list box
         :return: article added
         """
+        if not self.add_button.isEnabled():
+            return
         article = self._article_combo_box.get_current_article()
         self._shopping_list.add_existing_article(article)
         self.disable_button_when_item_added()

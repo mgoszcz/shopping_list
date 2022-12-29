@@ -10,6 +10,7 @@ from lib.ui.signals.add_article_combo_signals import ADD_ARTICLE_COMBO_SIGNALS
 
 class AddArticleTextEntry(QLineEdit):
     """add article text entry implementation, add article text entry is part of add article combo box"""
+
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.ADD_ARTICLE_TEXT_ENTRY)
@@ -30,3 +31,9 @@ class AddArticleTextEntry(QLineEdit):
         super().keyReleaseEvent(a0)
         if a0.key() == Qt.Key_Down:
             ADD_ARTICLE_COMBO_SIGNALS.text_edit_key_down.emit()
+
+    def keyPressEvent(self, a0) -> None:
+        """Overload method to have specific signal emitted"""
+        super().keyPressEvent(a0)
+        if a0.key() in (Qt.Key_Return, Qt.Key_Enter):
+            ADD_ARTICLE_COMBO_SIGNALS.text_edit_return_key.emit()

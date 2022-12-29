@@ -11,6 +11,7 @@ class AddArticleComboSignals(QObject):
     list_view_key_pressed = pyqtSignal(int)
     list_view_return_pressed = pyqtSignal()
     text_edit_key_down = pyqtSignal()
+    text_edit_return_key = pyqtSignal()
 
 
 ADD_ARTICLE_COMBO_SIGNALS = AddArticleComboSignals()
