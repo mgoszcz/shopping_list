@@ -9,6 +9,7 @@ from lib.ui.layouts.add_article_layout import AddArticleLayout
 from lib.ui.layouts.backup_layout import BackupLayout
 from lib.ui.layouts.shop_layout import ShopLayout
 from lib.ui.layouts.shopping_list_layout import ShoppingListLayout
+from lib.ui.signals.add_article_combo_signals import ADD_ARTICLE_COMBO_SIGNALS
 from lib.ui.signals.main_window_signals import MAIN_WINDOW_SIGNALS
 from lib.ui.icons.icons import ShoppingListIcon
 from lib.ui.object_names.object_names import ObjectNames
@@ -36,6 +37,7 @@ class MainWindow(QMainWindow):
         self.layout.addLayout(self._backup_layout)
 
         self._add_article_layout.add_button.pressed.connect(self.add_article_to_shopping_list)
+        ADD_ARTICLE_COMBO_SIGNALS.text_edit_return_key.connect(self.add_article_to_shopping_list)
 
         widget = QWidget()
         widget.setObjectName(ObjectNames.MAIN_WINDOW_CENTRAL_WIDGET)
@@ -53,4 +55,6 @@ class MainWindow(QMainWindow):
         Method using two different widgets to add article to shopping list
         """
         article = self._add_article_layout.add_article_to_list()
-        self._shopping_list_layout.select_item(article.name)
+        if article:
+            self._shopping_list_layout.select_item(article.name)
+            self._shopping_list_layout.shopping_list_table.setFocus()

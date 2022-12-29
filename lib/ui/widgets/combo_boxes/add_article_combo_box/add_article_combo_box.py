@@ -67,6 +67,7 @@ class AddArticleComboBox(QHBoxLayout):
         article_name = current_item.text()
         if article_name and article_name != 'Dodaj...':
             self.text_entry.setText(article_name)
+            self.text_entry.activateWindow()
         elif article_name == 'Dodaj...':
             dialog = AddNewArticleDialog(self._items)
             dialog.exec_()
