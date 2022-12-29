@@ -56,5 +56,5 @@ class MainWindow(QMainWindow):
         """
         article = self._add_article_layout.add_article_to_list()
         if article:
-            self._shopping_list_layout.shopping_list_table.activateWindow()
             self._shopping_list_layout.select_item(article.name)
+            self._shopping_list_layout.shopping_list_table.setFocus()

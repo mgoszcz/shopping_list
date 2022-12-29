@@ -42,6 +42,8 @@ class AddArticleLayout(QHBoxLayout):
         article = self._article_combo_box.get_current_article()
         self._shopping_list.add_existing_article(article)
         self.disable_button_when_item_added()
+        self._article_combo_box.text_entry.setText('')
+        self._article_combo_box.text_entry.clearFocus()
         return article
 
     def disable_button_when_item_added(self):
