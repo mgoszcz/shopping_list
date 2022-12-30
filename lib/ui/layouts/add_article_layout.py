@@ -6,7 +6,7 @@ from typing import Optional
 from PyQt5.QtWidgets import QHBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.shopping_article.shopping_article import ShoppingArticle
-from lib.shopping_article_list.shopping_list import ShoppingList
+from lib.shopping_list.shopping_list import NewShoppingList
 from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS
 from lib.ui.widgets.buttons.add_button import AddButton
@@ -18,7 +18,7 @@ class AddArticleLayout(QHBoxLayout):
     Class hold layout for add article widgets
     """
 
-    def __init__(self, shopping_list: ShoppingList, *args, **kwargs):
+    def __init__(self, shopping_list: NewShoppingList, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.ADD_ARTICLE_LAYOUT)
         self._shopping_list = shopping_list
@@ -53,7 +53,7 @@ class AddArticleLayout(QHBoxLayout):
         if not self._article_combo_box.get_current_article():
             self.add_button.setDisabled(True)
         else:
-            if self._article_combo_box.get_current_article() in self._shopping_list:
+            if self._article_combo_box.get_current_article() in [item.article for item in self._shopping_list]:
                 self.add_button.setDisabled(True)
             elif not self._article_combo_box.get_current_article():
                 self.add_button.setDisabled(True)

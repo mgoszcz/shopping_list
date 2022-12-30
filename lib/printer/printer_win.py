@@ -8,15 +8,15 @@ import win32print
 import win32ui
 
 from lib.printer.printer_interface import PrinterInterface
-from lib.shopping_article_list.shopping_list import ShoppingList
 from lib.printer.printer_statics import PrinterStatics
+from lib.shopping_list.shopping_list import NewShoppingList
 
 
 class PrinterWin(PrinterInterface):
     """
     Class handling printing
     """
-    def __init__(self, shopping_list: ShoppingList):
+    def __init__(self, shopping_list: NewShoppingList):
         self._shopping_list = shopping_list
         self._printer_name = win32print.GetDefaultPrinter()
         self._printers = None
@@ -36,7 +36,7 @@ class PrinterWin(PrinterInterface):
         max_length = 0
         max_height = 0
         for item in self._shopping_list:
-            size = document.GetTextExtent(f'{item.name} {item.amount}')
+            size = document.GetTextExtent(f'{item.article.name} {item.amount}')
             if size[0] > max_length:
                 max_length = size[0]
             if size[1] > max_height:
@@ -58,7 +58,7 @@ class PrinterWin(PrinterInterface):
             if i == PrinterStatics.ITEMS_PER_COLUMN + 1:
                 x_pos += length
                 i = 1
-            document.TextOut(x_pos, i * height, f'{value.name} {value.amount}')
+            document.TextOut(x_pos, i * height, f'{value.article.name} {value.amount}')
             i += 1
         document.EndPage()
         document.EndDoc()

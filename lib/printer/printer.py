@@ -1,13 +1,13 @@
 """Module contains Printer class"""
 import os
 
-from lib.shopping_article_list.shopping_list import ShoppingList
+from lib.shopping_list.shopping_list import NewShoppingList
 
 
 class Printer:
     """Factory class that determines type of printer based on current OS"""
 
-    def __init__(self, shopping_list: ShoppingList):
+    def __init__(self, shopping_list: NewShoppingList):
         if os.name == 'posix':
             from lib.printer.printer_mac import PrinterMac  # pylint: disable=import-outside-toplevel
             self.printer = PrinterMac()

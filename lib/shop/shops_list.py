@@ -2,14 +2,14 @@
 from typing import Union
 
 from lib.file_manager.file_object import FileObject, FileObjectException
-from lib.lists.list_without_duplicates import ShoppingListWithoutDuplicates
+from lib.lists.list_without_duplicates import ShopAndArticleListWithoutDuplicates
 from lib.save_load.events import SAVE_NEEDED
 from lib.shop.shop import Shop
 from lib.shopping_categories.category_list import CategoryList
 from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
-class ShopsList(ShoppingListWithoutDuplicates):
+class ShopsList(ShopAndArticleListWithoutDuplicates):
     """Shops list implementation"""
     def __init__(self, categories: CategoryList):
         super().__init__()

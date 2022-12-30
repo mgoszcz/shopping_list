@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt  # pylint: disable=no-name-in-module
 from PyQt5.QtWidgets import QVBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.printer.printer import Printer
-from lib.shopping_article_list.shopping_list import ShoppingList
+from lib.shopping_list.shopping_list import NewShoppingList
 from lib.ui.dialogs.articles_dialog import ArticlesDialog
 from lib.ui.layouts.shopping_list_buttons_layout import ShoppingListButtonsLayout
 from lib.ui.object_names.object_names import ObjectNames
@@ -16,7 +16,7 @@ class ShoppingListLayout(QVBoxLayout):
     """
     Class setting layout for shopping list field
     """
-    def __init__(self, shopping_list: ShoppingList, *args, **kwargs):
+    def __init__(self, shopping_list: NewShoppingList, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.SHOPPING_LIST_LAYOUT)
         self._shopping_list = shopping_list

@@ -10,6 +10,7 @@ from lib.rest_api.client import save_items, get_items
 from lib.save_load.events import AUTO_SAVE_PAUSED, SAVE_NEEDED
 from lib.shop.shop import Shop
 from lib.shopping_article.shopping_article import ShoppingArticle
+from lib.shopping_list.shopping_list_item import ShoppingListItem
 from resources.paths.paths import SHOPS_ICONS_PATH
 
 if TYPE_CHECKING:
@@ -20,6 +21,7 @@ MAIN_DIRECTORY = os.path.join('..', os.path.dirname(os.path.dirname(os.path.real
 
 class SaveLoad:
     """Class responsible for save and load handling"""
+
     def __init__(self, interface: 'ShoppingListInterface'):
         self._interface = interface
 
@@ -33,9 +35,15 @@ class SaveLoad:
 
     def _load_shopping_list_from_server(self, items: dict):
         if items.get('shopping_list'):
-            for article_name in items.get('shopping_list'):
-                article = self._interface.shopping_articles.get_article_by_name(article_name)
-                self._interface.shopping_list.append(article)
+            for item in items.get('shopping_list'):
+                article = self._interface.shopping_articles.get_article_by_name(item.get('article_name'))
+                if isinstance(item, dict):
+                    self._interface.shopping_list.append(
+                        ShoppingListItem(article, item.get('amount'), item.get('checked')))
+                elif isinstance(item, str):
+                    self._interface.shopping_list.append(ShoppingListItem(article))
+                else:
+                    raise RuntimeError('Invalid shopping list data from server')
 
     def _load_shops_from_server(self, items: dict):
         if items.get('shops'):
@@ -81,6 +89,7 @@ class SaveLoad:
 
 class AutoSave(Thread):
     """Class responsible for auto save running in separate thread"""
+
     def __init__(self, save_load: SaveLoad):
         super().__init__()
         self._save_load = save_load

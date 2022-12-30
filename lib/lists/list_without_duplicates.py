@@ -1,5 +1,5 @@
 """
-Module contains classes StringListWithoutDuplicates, ShoppingListWithoutDuplicates
+Module contains classes StringListWithoutDuplicates, ShopAndArticleListWithoutDuplicates
 """
 from typing import Union, TYPE_CHECKING
 
@@ -9,12 +9,14 @@ from lib.ui.signals.list_signals import LIST_SIGNALS
 if TYPE_CHECKING:
     from lib.shop.shop import Shop
     from lib.shopping_article.shopping_article import ShoppingArticle
+    from lib.shopping_list.shopping_list_item import ShoppingListItem
 
 
 class StringListWithoutDuplicates(list):
     """
     Implementation of list of strings without duplicates allowed
     """
+
     def __init__(self):
         super().__init__()
         self.custom_sort = False
@@ -42,11 +44,12 @@ class StringListWithoutDuplicates(list):
         LIST_SIGNALS.category_list_changed.emit()
 
 
-class ShoppingListWithoutDuplicates(list):
+class ShopAndArticleListWithoutDuplicates(list):
     """
     Implementation of shopping list that does not allow duplicates
     """
-    def append(self, element: Union['ShoppingArticle', 'Shop']) -> None:
+
+    def append(self, element: Union['ShoppingListItem', 'ShoppingArticle', 'Shop']) -> None:
         """
         Append item to list and trigged auto save and list changed signal
         :param element: element to be added (ShoppingArticle or Shop)
@@ -100,3 +103,17 @@ class ShoppingListWithoutDuplicates(list):
         self.clear_silent()
         SAVE_NEEDED.set()
         LIST_SIGNALS.list_changed.emit()
+
+
+class ShoppingListWithoutDuplicates(ShopAndArticleListWithoutDuplicates):
+
+    def append_silent(self, element: Union['ShoppingListItem']) -> None:
+        """
+        Append item to list without save and list changed signal.
+        Raise an error when element already on the list
+        :param element: element to be added (ShoppingListItem)
+        """
+        if not element.article.name.lower() in [item.article.name.lower() for item in self]:
+            super(ShopAndArticleListWithoutDuplicates, self).append(element)
+        else:
+            raise AttributeError(f'Item with name {element.article.name} already exists')
