@@ -115,6 +115,6 @@ class ShoppingListWithoutDuplicates(ShopAndArticleListWithoutDuplicates):
         :param element: element to be added (ShoppingListItem)
         """
         if not element.article.name.lower() in [item.article.name.lower() for item in self]:
-            super(ShopAndArticleListWithoutDuplicates, self).append(element)
+            super(ShopAndArticleListWithoutDuplicates, self).append(element)  # pylint: disable=bad-super-call
         else:
             raise AttributeError(f'Item with name {element.article.name} already exists')

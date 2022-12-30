@@ -32,7 +32,7 @@ class AddArticleTextEntry(QLineEdit):
         if a0.key() == Qt.Key_Down:
             ADD_ARTICLE_COMBO_SIGNALS.text_edit_key_down.emit()
 
-    def keyPressEvent(self, a0) -> None:
+    def keyPressEvent(self, a0) -> None:  # pylint: disable=invalid-name
         """Overload method to have specific signal emitted"""
         super().keyPressEvent(a0)
         if a0.key() in (Qt.Key_Return, Qt.Key_Enter):

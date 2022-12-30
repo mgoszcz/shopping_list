@@ -2,7 +2,7 @@
 from typing import Union
 
 from PyQt5.QtGui import QColor  # pylint: disable=no-name-in-module
-from PyQt5.QtWidgets import QTableWidgetItem
+from PyQt5.QtWidgets import QTableWidgetItem  # pylint: disable=no-name-in-module
 
 from lib.shopping_article.shopping_article import ShoppingArticle
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
@@ -80,7 +80,8 @@ class ShoppingListTable(BaseTableWidget):
         modified_list = self._items_modifier()
         self.setRowCount(len(modified_list))
         for row, item in enumerate(modified_list):
-            for column, value in zip(range(self._columns_count), [item.article.name, item.article.category, item.amount]):
+            for column, value in zip(
+                    range(self._columns_count), [item.article.name, item.article.category, item.amount]):
                 self.setItem(row, column, QTableWidgetItem(str(value)))
         self._color_unordered_rows()
         self.blockSignals(False)

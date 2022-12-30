@@ -38,7 +38,7 @@ class AddArticleLayout(QHBoxLayout):
         :return: article added
         """
         if not self.add_button.isEnabled():
-            return
+            return None
         article = self._article_combo_box.get_current_article()
         self._shopping_list.add_existing_article(article)
         self.disable_button_when_item_added()
