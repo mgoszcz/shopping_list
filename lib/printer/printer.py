@@ -1,7 +1,7 @@
 """Module contains Printer class"""
 import os
 
-from lib.shopping_article_list.shopping_list import ShoppingList
+from lib.shopping_list.shopping_list import ShoppingList
 
 
 class Printer:

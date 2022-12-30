@@ -2,7 +2,7 @@
 Module contains class DbToJson
 """
 import base64
-from typing import List, Union
+from typing import List, Union, Dict
 import os
 
 from lib.shop.shop import Shop
@@ -24,10 +24,10 @@ class DbToJson:
                                   'selection': article.selection})
         return articles_list
 
-    def _get_shopping_list(self) -> List[str]:
+    def _get_shopping_list(self) -> List[Dict[str, str]]:
         shopping_list = []
-        for article in self.interface.shopping_list:
-            shopping_list.append(article.name)
+        for item in self.interface.shopping_list:
+            shopping_list.append({'article_name': item.article.name, 'amount': item.amount, 'checked': item.checked})
         return shopping_list
 
     def _get_categories(self) -> List[str]:

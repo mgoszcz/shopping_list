@@ -5,7 +5,7 @@ from typing import List, Union
 
 from lib.shopping_article.shopping_article import ShoppingArticle
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
-from lib.shopping_article_list.shopping_list import ShoppingList
+from lib.shopping_list.shopping_list import ShoppingList
 from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.widgets.tables.base_table_widget import BaseTableWidget
 

@@ -3,7 +3,8 @@ Module contains class ArticlesDialog
 """
 from PyQt5.QtWidgets import QDialog  # pylint: disable=no-name-in-module
 
-from lib.shopping_article_list.shopping_list import ShoppingList
+from lib.shopping_list.shopping_list import ShoppingList
+from lib.shopping_list.shopping_list_item import ShoppingListItem
 from lib.ui.dialogs.add_new_article import AddNewArticleDialog
 from lib.ui.dialogs.confirm_dialog import ConfirmDialog
 from lib.ui.dialogs.error_dialog import ErrorDialog
@@ -42,7 +43,7 @@ class ArticlesDialog(QDialog):
         Action on pressing remove article button - Removes article (requires user confirmation)
         """
         article = self.layout.articles_table.item(self.layout.articles_table.currentRow(), 0).text()
-        if article in [a.name for a in self._items_list]:
+        if article in [a.article.name for a in self._items_list]:
             text = 'Czy jesteś pewien aby usunąć artykuł?\nArtykuł zostanie również usunięty z listy zakupowej'
         else:
             text = 'Czy jesteś pewien aby usunąć artykuł?'
@@ -50,7 +51,7 @@ class ArticlesDialog(QDialog):
         if dialog.exec_():
             self._items_list.shopping_articles_list.remove_article(article)
             try:
-                self._items_list.get_article_by_name(article)
+                self._items_list.get_item_by_article_name(article)
                 self._items_list.remove_article(article)
             except AttributeError:
                 pass
@@ -73,11 +74,11 @@ class ArticlesDialog(QDialog):
             return
         article_name = self.layout.articles_table.item(self.layout.articles_table.currentRow(), 0).text()
         article = self.layout.articles_table.items_list.get_article_by_name(article_name)
-        if article in self._items_list:
+        if article in [item.article for item in self._items_list]:
             dialog = ErrorDialog('Artykuł już jest na liscie')
             dialog.exec_()
             return
         if article:
-            self._items_list.append(article)
+            self._items_list.append(ShoppingListItem(article))
         else:
             raise Exception('Undefined state when adding article to list')

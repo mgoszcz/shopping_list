@@ -3,8 +3,8 @@ from lib.backup_manager.backup_manager import BackupManager
 from lib.save_load.save_load import SaveLoad, AutoSave
 from lib.shop.shops_list import ShopsList
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
-from lib.shopping_article_list.shopping_list import ShoppingList
 from lib.shopping_categories.category_list import CategoryList
+from lib.shopping_list.shopping_list import ShoppingList
 
 
 class ShoppingListInterface:

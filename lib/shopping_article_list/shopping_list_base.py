@@ -1,9 +1,9 @@
 """Contains class ShoppingListBase"""
-from lib.lists.list_without_duplicates import ShoppingListWithoutDuplicates
+from lib.lists.list_without_duplicates import ShopAndArticleListWithoutDuplicates
 from lib.shopping_article.shopping_article import ShoppingArticle
 
 
-class ShoppingListBase(ShoppingListWithoutDuplicates):
+class ShoppingListBase(ShopAndArticleListWithoutDuplicates):
     """Implementation of base list object used by shopping list and shopping articles list"""
     def get_article_by_name(self, name: str) -> ShoppingArticle:
         """

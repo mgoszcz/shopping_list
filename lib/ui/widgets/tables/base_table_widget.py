@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem  # pylint: disable=no
 
 from lib.shopping_article.shopping_article import ShoppingArticle
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
-from lib.shopping_article_list.shopping_list import ShoppingList
+from lib.shopping_list.shopping_list import ShoppingList
 from lib.ui.dialogs.error_dialog import ErrorDialog
 from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS

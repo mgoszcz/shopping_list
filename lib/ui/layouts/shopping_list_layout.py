@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt  # pylint: disable=no-name-in-module
 from PyQt5.QtWidgets import QVBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.printer.printer import Printer
-from lib.shopping_article_list.shopping_list import ShoppingList
+from lib.shopping_list.shopping_list import ShoppingList
 from lib.ui.dialogs.articles_dialog import ArticlesDialog
 from lib.ui.layouts.shopping_list_buttons_layout import ShoppingListButtonsLayout
 from lib.ui.object_names.object_names import ObjectNames
