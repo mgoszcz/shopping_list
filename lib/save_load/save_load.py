@@ -36,11 +36,12 @@ class SaveLoad:
     def _load_shopping_list_from_server(self, items: dict):
         if items.get('shopping_list'):
             for item in items.get('shopping_list'):
-                article = self._interface.shopping_articles.get_article_by_name(item.get('article_name'))
                 if isinstance(item, dict):
+                    article = self._interface.shopping_articles.get_article_by_name(item.get('article_name'))
                     self._interface.shopping_list.append(
                         ShoppingListItem(article, item.get('amount'), item.get('checked')))
                 elif isinstance(item, str):
+                    article = self._interface.shopping_articles.get_article_by_name(item)
                     self._interface.shopping_list.append(ShoppingListItem(article))
                 else:
                     raise RuntimeError('Invalid shopping list data from server')
