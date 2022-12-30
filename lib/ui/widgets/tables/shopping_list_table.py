@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QTableWidgetItem
 
 from lib.shopping_article.shopping_article import ShoppingArticle
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
-from lib.shopping_list.shopping_list import NewShoppingList
+from lib.shopping_list.shopping_list import ShoppingList
 from lib.shopping_list.shopping_list_item import ShoppingListItem
 from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS
@@ -17,7 +17,7 @@ UNORDERED_COLOR = QColor(255, 150, 150)
 
 class ShoppingListTable(BaseTableWidget):
     """Implementation of shopping list table"""
-    def __init__(self, items_list: Union[NewShoppingList, ShoppingArticlesList], columns_count: int, *args, **kwargs):
+    def __init__(self, items_list: Union[ShoppingList, ShoppingArticlesList], columns_count: int, *args, **kwargs):
         super().__init__(items_list, columns_count, *args, **kwargs)
         self.setObjectName(ObjectNames.SHOPPING_LIST_TABLE)
         LIST_SIGNALS.shop_changed.connect(self._shop_changed)
@@ -50,7 +50,7 @@ class ShoppingListTable(BaseTableWidget):
         self.items_list.sort_by_shop()
         return True
 
-    def _action_if_existing_article(self, list_item: ShoppingListItem, shopping_list: NewShoppingList,
+    def _action_if_existing_article(self, list_item: ShoppingListItem, shopping_list: ShoppingList,
                                     new_value: str) -> bool:
         try:
             new_article = shopping_list.shopping_articles_list.get_article_by_name(new_value)
@@ -61,7 +61,7 @@ class ShoppingListTable(BaseTableWidget):
         except AttributeError:
             return False
 
-    def _action_if_non_existing_article(self, list_item: ShoppingListItem, shopping_list: NewShoppingList,
+    def _action_if_non_existing_article(self, list_item: ShoppingListItem, shopping_list: ShoppingList,
                                         new_value: str) -> bool:
         shopping_list.add_new_article(new_value, list_item.article.category, list_item.amount, list_item.checked)
         shopping_list.remove(list_item)

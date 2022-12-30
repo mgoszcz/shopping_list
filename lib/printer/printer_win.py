@@ -9,14 +9,14 @@ import win32ui
 
 from lib.printer.printer_interface import PrinterInterface
 from lib.printer.printer_statics import PrinterStatics
-from lib.shopping_list.shopping_list import NewShoppingList
+from lib.shopping_list.shopping_list import ShoppingList
 
 
 class PrinterWin(PrinterInterface):
     """
     Class handling printing
     """
-    def __init__(self, shopping_list: NewShoppingList):
+    def __init__(self, shopping_list: ShoppingList):
         self._shopping_list = shopping_list
         self._printer_name = win32print.GetDefaultPrinter()
         self._printers = None

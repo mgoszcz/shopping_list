@@ -3,7 +3,7 @@ Module contains class ArticlesDialog
 """
 from PyQt5.QtWidgets import QDialog  # pylint: disable=no-name-in-module
 
-from lib.shopping_list.shopping_list import NewShoppingList
+from lib.shopping_list.shopping_list import ShoppingList
 from lib.shopping_list.shopping_list_item import ShoppingListItem
 from lib.ui.dialogs.add_new_article import AddNewArticleDialog
 from lib.ui.dialogs.confirm_dialog import ConfirmDialog
@@ -17,7 +17,7 @@ class ArticlesDialog(QDialog):
     """
     Implementation of articles list dialog
     """
-    def __init__(self, items_list: NewShoppingList, *args, **kwargs):
+    def __init__(self, items_list: ShoppingList, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.ARTICLES_DIALOG)
         self._items_list = items_list

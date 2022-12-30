@@ -10,7 +10,7 @@ from lib.save_load.events import AUTO_SAVE_PAUSED, SAVE_NEEDED
 from lib.shop.shops_list import ShopsList
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
 from lib.shopping_categories.category_list import CategoryList
-from lib.shopping_list.shopping_list import NewShoppingList
+from lib.shopping_list.shopping_list import ShoppingList
 
 AUTO_BACKUP_PREFIX = '_auto_backup_'
 
@@ -56,7 +56,7 @@ class BackupManager:
         self._interface.categories = CategoryList()
         self._interface.shops = ShopsList(self._interface.categories)
         self._interface.shopping_articles = ShoppingArticlesList(self._interface.categories, self._interface.shops)
-        self._interface.shopping_list = NewShoppingList(self._interface.shopping_articles, self._interface.shops)
+        self._interface.shopping_list = ShoppingList(self._interface.shopping_articles, self._interface.shops)
 
     def _add_backup_to_list(self, backup_name: str):
         if backup_name.lower() in [bkp.lower() for bkp in self.backups_list]:

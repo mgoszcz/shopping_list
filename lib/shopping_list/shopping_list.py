@@ -1,3 +1,5 @@
+"""Module contains Shopping list"""
+
 from lib.lists.list_without_duplicates import ShoppingListWithoutDuplicates
 from lib.save_load.events import SAVE_NEEDED
 from lib.shop.shops_list import ShopsList
@@ -7,7 +9,9 @@ from lib.shopping_list.shopping_list_item import ShoppingListItem
 from lib.ui.signals.list_signals import LIST_SIGNALS
 
 
-class NewShoppingList(ShoppingListWithoutDuplicates):
+class ShoppingList(ShoppingListWithoutDuplicates):
+    """Implementation of shopping list logic"""
+
     def __init__(self, shopping_articles_list: ShoppingArticlesList, shops_list: ShopsList):
         super().__init__()
         self.shopping_articles_list = shopping_articles_list

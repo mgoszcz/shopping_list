@@ -6,7 +6,7 @@ from typing import Optional
 from PyQt5.QtWidgets import QHBoxLayout  # pylint: disable=no-name-in-module
 
 from lib.shopping_article.shopping_article import ShoppingArticle
-from lib.shopping_list.shopping_list import NewShoppingList
+from lib.shopping_list.shopping_list import ShoppingList
 from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS
 from lib.ui.widgets.buttons.add_button import AddButton
@@ -18,7 +18,7 @@ class AddArticleLayout(QHBoxLayout):
     Class hold layout for add article widgets
     """
 
-    def __init__(self, shopping_list: NewShoppingList, *args, **kwargs):
+    def __init__(self, shopping_list: ShoppingList, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.ADD_ARTICLE_LAYOUT)
         self._shopping_list = shopping_list

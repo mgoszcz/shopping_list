@@ -1,8 +1,11 @@
+"""Module contains class ShoppingListItem"""
 from lib.save_load.events import SAVE_NEEDED
 from lib.shopping_article.shopping_article import ShoppingArticle
 
 
 class ShoppingListItem:
+    """Implementation of single item on shopping list"""
+
     def __init__(self, shopping_article: ShoppingArticle, amount: int = 1, checked: bool = False):
         self.article = shopping_article
         self.amount = amount

@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem  # pylint: disable=no
 
 from lib.shopping_article.shopping_article import ShoppingArticle
 from lib.shopping_article_list.shopping_articles_list import ShoppingArticlesList
-from lib.shopping_list.shopping_list import NewShoppingList
+from lib.shopping_list.shopping_list import ShoppingList
 from lib.ui.dialogs.error_dialog import ErrorDialog
 from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.signals.list_signals import LIST_SIGNALS
@@ -17,7 +17,7 @@ class BaseTableWidget(QTableWidget):
     """
     Implementation of base table widget - all common properties and actions, interface implementation
     """
-    def __init__(self, items_list: Union[NewShoppingList, ShoppingArticlesList], columns_count: int, *args, **kwargs):
+    def __init__(self, items_list: Union[ShoppingList, ShoppingArticlesList], columns_count: int, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.BASE_TABLE_WIDGET)
         self.items_list = items_list
@@ -52,10 +52,10 @@ class BaseTableWidget(QTableWidget):
         self._color_unordered_rows()
         self.blockSignals(False)
 
-    def _action_if_existing_article(self, article: ShoppingArticle, shopping_list: NewShoppingList, new_value: str):
+    def _action_if_existing_article(self, article: ShoppingArticle, shopping_list: ShoppingList, new_value: str):
         raise NotImplementedError
 
-    def _action_if_non_existing_article(self, article: ShoppingArticle, shopping_list: NewShoppingList, new_value: str):
+    def _action_if_non_existing_article(self, article: ShoppingArticle, shopping_list: ShoppingList, new_value: str):
         raise NotImplementedError
 
     def _amount_changed(self, article: ShoppingArticle, new_value: str):
@@ -67,7 +67,7 @@ class BaseTableWidget(QTableWidget):
             ErrorDialog(f'Artykuł {new_value} juz jest na liscie').exec_()
             return False
         except AttributeError:
-            if isinstance(self.items_list, NewShoppingList):
+            if isinstance(self.items_list, ShoppingList):
                 if self._action_if_existing_article(article, self.items_list, new_value):
                     return True
             if self._action_if_non_existing_article(article, self.items_list, new_value):

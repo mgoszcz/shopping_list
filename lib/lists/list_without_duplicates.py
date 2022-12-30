@@ -106,6 +106,7 @@ class ShopAndArticleListWithoutDuplicates(list):
 
 
 class ShoppingListWithoutDuplicates(ShopAndArticleListWithoutDuplicates):
+    """Implementation of shopping list without duplicates (used in shopping list view)"""
 
     def append_silent(self, element: Union['ShoppingListItem']) -> None:
         """

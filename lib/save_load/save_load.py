@@ -37,10 +37,12 @@ class SaveLoad:
         if items.get('shopping_list'):
             for item in items.get('shopping_list'):
                 if isinstance(item, dict):
+                    # New format of data on server - dictionary
                     article = self._interface.shopping_articles.get_article_by_name(item.get('article_name'))
                     self._interface.shopping_list.append(
                         ShoppingListItem(article, item.get('amount'), item.get('checked')))
                 elif isinstance(item, str):
+                    # Old format of data no server - string with article name
                     article = self._interface.shopping_articles.get_article_by_name(item)
                     self._interface.shopping_list.append(ShoppingListItem(article))
                 else:

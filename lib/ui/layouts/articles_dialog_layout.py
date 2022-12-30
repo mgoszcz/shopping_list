@@ -4,7 +4,7 @@ Module contains ArticlesDialogLayout class
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QPushButton  # pylint: disable=no-name-in-module
 
 from lib.search.article_search import ArticleSearch
-from lib.shopping_list.shopping_list import NewShoppingList
+from lib.shopping_list.shopping_list import ShoppingList
 from lib.ui.layouts.search_article_layout import SearchArticleLayout
 from lib.ui.object_names.object_names import ObjectNames
 from lib.ui.widgets.buttons.add_button import AddButton
@@ -18,7 +18,7 @@ class ArticlesDialogLayout(QVBoxLayout):
     Layout for articles dialog
     """
 
-    def __init__(self, items_list: NewShoppingList, *args, **kwargs):
+    def __init__(self, items_list: ShoppingList, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setObjectName(ObjectNames.ARTICLES_DIALOG_LAYOUT)
         self._items_list = items_list
