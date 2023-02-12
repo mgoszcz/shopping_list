@@ -83,4 +83,4 @@ class ServerData:
         
     def write_server_data(self, list_to_write, incoming_data):
         self.data_updater(list_to_write.get('shopping_list'), incoming_data)
-        list_to_write['timestamp'] = datetime.now().timestamp()
+        list_to_write.get('shopping_list')['timestamp'] = datetime.now().timestamp()

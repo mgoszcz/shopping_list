@@ -23,19 +23,31 @@ def get_items():
     response = jsonify(server_data.shopping_list)
     return response
 
+@app.route('/shopping_list/timestamp')
+@cross_origin()
+def get_timestamp():
+    """Get all items from shopping list in json format for GET request"""
+    response = {'timestamp': server_data.shopping_list.get('shopping_list').get('timestamp')}
+    return response
 
 def _set_shopping_list(shopping_list_local: dict):
     print(request.json)
     server_data.write_server_data(shopping_list_local, request.json)
-    response = {'timestamp': shopping_list_local.get('timestamp')}
+    response = {'timestamp': shopping_list_local.get('shopping_list').get('timestamp')}
     return response, 201
-
 
 @app.route('/shopping_list_test')
 @cross_origin()
 def get_items_test():
     """Get all items from test shopping list in json format for GET request"""
     response = jsonify(server_data.shopping_list_test)
+    return response
+
+@app.route('/shopping_list_test/timestamp')
+@cross_origin()
+def get_timestamp_test():
+    """Get all items from test shopping list in json format for GET request"""
+    response = {'timestamp': server_data.shopping_list_test.get('shopping_list').get('timestamp')}
     return response
 
 
