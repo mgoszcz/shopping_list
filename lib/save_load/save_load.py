@@ -26,6 +26,8 @@ class SaveLoad:
         self._interface = interface
 
     def _load_articles_from_server(self, items: dict):
+        if not items:
+            return
         if items.get('shopping_articles_list'):
             for article in items.get('shopping_articles_list'):
                 new_article = ShoppingArticle(name=article.get('name'), category=article.get('category'),
@@ -34,6 +36,8 @@ class SaveLoad:
                 self._interface.shopping_articles.append(new_article)
 
     def _load_shopping_list_from_server(self, items: dict):
+        if not items:
+            return
         if items.get('shopping_list'):
             for item in items.get('shopping_list'):
                 if isinstance(item, dict):
@@ -49,6 +53,8 @@ class SaveLoad:
                     raise RuntimeError('Invalid shopping list data from server')
 
     def _load_shops_from_server(self, items: dict):
+        if not items:
+            return
         if items.get('shops'):
             for shop in items.get('shops'):
                 new_shop = Shop(name=shop.get('name'), logo=shop.get('logo'))
@@ -59,6 +65,8 @@ class SaveLoad:
 
     @staticmethod
     def _load_shops_icons_from_server(items: dict):
+        if not items:
+            return
         if items.get('shops_icons'):
             if not os.path.isdir(SHOPS_ICONS_PATH):
                 os.mkdir(SHOPS_ICONS_PATH)
@@ -82,6 +90,8 @@ class SaveLoad:
         self._load_shopping_list_from_server(data_from_server)
         self._load_shops_from_server(data_from_server)
         self._load_shops_icons_from_server(data_from_server)
+        if not data_from_server:
+            return
         if data_from_server.get('current_shop'):
             shop = self._interface.shops.get_shop_by_name(data_from_server.get('current_shop'))
             self._interface.shops.selected_shop = shop
