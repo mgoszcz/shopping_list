@@ -2,12 +2,14 @@
 from flask import Flask, jsonify, request
 from flask_cors import cross_origin
 
+from lib.rest_api.data_updater import DataUpdater, RequestError
 from lib.rest_api.server_backup import ServerBackup
 from lib.rest_api.server_data import ServerData
 
 app = Flask(__name__)
 
 server_data = ServerData()
+
 
 
 @app.route('/')
@@ -59,6 +61,27 @@ def set_shopping_list():
     ServerBackup(server_data.shopping_list).create_backup()
     return returned_list
 
+def _shopping_list_update(shopping_list, incoming_data, updater):
+    try:
+        updater.update(incoming_data)
+        ServerBackup(shopping_list).create_backup()
+        return {'timestamp': shopping_list.get('shopping_list').get('timestamp')}, 201
+    except RequestError as e:
+        return {'Error': str(e)}, 400
+    except NotImplementedError as e:
+        return {'Error': str(e)}, 501
+    except Exception as e:
+        return {'Error': str(e)}, 500
+
+@app.route('/shopping_list/update', methods=['POST'])
+@cross_origin()
+def update_shopping_list():
+    return _shopping_list_update(server_data.shopping_list, request.json, prod_server_updater)
+
+@app.route('/shopping_list_test/update', methods=['POST'])
+@cross_origin()
+def update_test_shopping_list():
+    return _shopping_list_update(server_data.shopping_list_test, request.json, test_server_updater)
 
 @app.route('/shopping_list_test', methods=['POST'])
 @cross_origin()
@@ -82,4 +105,6 @@ def load_backup():
 
 if __name__ == '__main__':
     load_backup()
+    prod_server_updater = DataUpdater(server_data.shopping_list.get('shopping_list'))
+    test_server_updater = DataUpdater(server_data.shopping_list_test.get('shopping_list'))
     app.run(debug=True)

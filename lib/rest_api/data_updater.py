@@ -45,6 +45,7 @@ shop_icons:
 3. Modify icon
 {shop_icon, icon_name, update, {icon_img: path}}
 """
+from datetime import datetime
 from typing import Dict
 
 from lib.rest_api.data_updater_model import DataUpdaterRequestModel
@@ -121,6 +122,7 @@ class DataUpdater:
     def _update_shopping_list(self, item):
         id_name = 'article_name'
         list_to_update = self.server_data.get('shopping_list')
+        print(list_to_update)
         self._dict_list_update(list_to_update, item, id_name, self._add_shooping_list_item)
 
     def _update_categories(self, item):
@@ -178,8 +180,10 @@ class DataUpdater:
                 raise RequestError(f'Invalid dataset {other}')
 
     def update(self, incoming_data):
+        print(incoming_data)
         if not incoming_data:
             return True
         for item in incoming_data:
             self._update_item(item)
+        self.server_data['timestamp'] = datetime.now().timestamp()
         return True
